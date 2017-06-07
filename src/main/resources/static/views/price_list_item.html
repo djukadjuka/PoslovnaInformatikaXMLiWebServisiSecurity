@@ -1,0 +1,160 @@
+<div ng-controller="price_list_item_controller">
+
+    <h1>Price list item</h1>
+
+    <table id="table">
+        <tr class = "header">
+            <th>ID</th>
+            <th>Price</th>
+            <th>Item ID</th>
+            <th>Item name</th>
+            <th>Price list ID</th>
+            <th>Price list valid from</th>
+            <th>Currency ID</th>
+            <th>Currency name</th>
+        </tr>
+        <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
+            <td class="id">{{o.price_list_item_id}}</td>
+            <td class="price">{{o.price }}</td>
+
+            <td class="item_id">{{o.item.item_id}}</td>
+            <td class="item_name">{{o.item.name}}</td>
+            <td class="price_list_id">{{o.price_list.price_list_id}}</td>
+            <td class="price_list_valid_from">{{o.price_list.valid_from | date:'yyyy-MM-dd HH:mm'}}</td>
+            <td class="currency_id">{{o.currency.currency_id}}</td>
+            <td class="currency_name">{{o.currency.name}}</td>
+
+        </tr>
+    </table>
+
+    <div class = "panel">
+        <p>
+            <input type = "hidden" ng-model="obj.price_item_id"/>
+        </p>
+        <p>
+            <label>Price</label>
+            <input type = "text" ng-model="obj.price"/>
+        </p>
+        <p>
+            <label>Item</label>
+            <select ng-model="obj.item" ng-options="soo.name for soo in subObjectsOne track by soo.item_id" id="selectionOne">
+            </select>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
+        </p>
+        <p>
+            <label>Price_list</label>
+            <select ng-model="obj.price_list" ng-options="sot.valid_from for sot in subObjectsTwo track by sot.price_list_id" id="selectTwo">
+            </select>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTwo">...</button>
+        </p>
+        <p>
+            <label>Currency</label>
+            <select ng-model="obj.currency" ng-options="soth.name for soth in subObjectsThree track by soth.currency_id" id="selectThree">
+            </select>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThree">...</button>
+        </p>
+
+        <p>
+        <div id = "formActions">
+            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
+            <a id="rollback" style="margin-left:1em">Rollback</a>
+        </div>
+        </p>
+    </div>
+
+    <p><h1>STANJE:{{state}}</h1></p>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalOne" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Items
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Is service</th>
+                            <th>Item group ID</th>
+                            <th>Item group name</th>
+                            <th>Units of measurement ID</th>
+                            <th>Units of measurement name</th>
+                        </tr>
+                        <tr ng-repeat="soo in subObjectsOne" ng-click="fook($event, soo)" >
+                            <td class="sooid">{{soo.item_id}}</td>
+                            <td class="sooname">{{soo.name}}</td>
+                            <td class="soodescription">{{soo.description}}</td>
+                            <td class="soois_service">{{soo.is_service}}</td>
+
+                            <td class="sooitem_group_id">{{soo.item_group.item_group_id}}</td>
+                            <td class="sooitem_group_name">{{soo.item_group.name}}</td>
+                            <td class="soounits_of_measurement_id">{{soo.units_of_measurement.units_of_measurement_id}}</td>
+                            <td class="soounits_of_measurement_name">{{soo.units_of_measurement.name}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "moPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalTwo" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Price lists
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Valid from</th>
+                        </tr>
+                        <tr ng-repeat="sot in subObjectsTwo" ng-click="fookk($event, sot)" >
+                            <td class="sotid">{{sot.price_list_id}}</td>
+                            <td class="sotvalid_from">{{sot.valid_from | date:'yyyy-MM-dd HH:mm'}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "mtPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalThree" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Currencies
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Abbreviation</th>
+                        </tr>
+                        <tr ng-repeat="soth in subObjectsThree" ng-click="fookkk($event, soth)" >
+                            <td class="sothid">{{soth.currency_id}}</td>
+                            <td class="sothname">{{soth.name}}</td>
+                            <td class="sothabbreviation">{{soth.abbreviation}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "mthPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

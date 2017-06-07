@@ -1,0 +1,80 @@
+<div ng-controller="vat_rate_controller">
+
+    <h1>VAT rates</h1>
+
+    <table id="table">
+        <tr class = "header">
+            <th>ID</th>
+            <th>Date</th>
+            <th>Percentage of VAT rate</th>
+            <th>Vat type ID</th>
+            <th>Vat type name</th>
+        </tr>
+        <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
+            <td class="id">{{o.vat_rate_id}}</td>
+            <td class="date">{{o.date | date:'yyyy-MM-dd HH:mm'}}</td>
+            <td class="percentage">{{o.percentage_of_vatr}}</td>
+            <td class="vat_type_id">{{o.vat_type.vat_type_id}}</td>
+            <td class="vat_type_name">{{o.vat_type.name}}</td>
+
+        </tr>
+    </table>
+
+    <div class = "panel">
+        <p>
+            <input type = "hidden" ng-model="obj.vat_rate_id"/>
+        </p>
+        <p>
+            <label>Percentage of VAT rate</label>
+            <input type = "text" ng-model="obj.percentage_of_vatr"/>
+        </p>
+        <p>
+            <label>Date</label>
+            <input type="datetime-local" name="bday" ng-model="obj.date"/>
+        </p>
+
+        <p>
+        <p>
+            <label>Vat type</label>
+            <select ng-model="obj.vat_type" ng-options="soo.name for soo in subObjectsOne track by soo.vat_type_id" id="selectionOne">
+            </select>
+           <!-- <select ng-model="vtID" id="selectionOne">
+                <option ng-repeat="soo in subObjectsOne" value="{{soo.vat_type_id}}">{{soo.name}}</option>
+            </select>-->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
+        </p>
+        <div id = "formActions">
+            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
+            <a id="rollback" style="margin-left:1em">Rollback</a>
+        </div>
+        </p>
+    </div>
+
+    <p><h1>STANJE:{{state}}</h1></p>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalOne" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    VAT types
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                        </tr>
+                        <tr ng-repeat="soo in subObjectsOne" ng-click="fook($event, soo)" >
+                            <td class="sooid">{{soo.vat_type_id}}</td>
+                            <td class="sooname">{{soo.name}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "vtPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

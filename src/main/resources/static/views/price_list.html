@@ -1,0 +1,66 @@
+<div ng-controller="price_list_controller">
+
+    <h1>Price list</h1>
+
+    <table id="table">
+        <tr class = "header">
+            <th>ID</th>
+            <th>Valid from</th>
+        </tr>
+        <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
+            <td class="id">{{o.price_list_id}}</td>
+            <td class="valid_from">{{o.valid_from | date:'yyyy-MM-dd HH:mm'}}</td>
+        </tr>
+    </table>
+
+    <div class = "panel">
+        <p>
+            <input type = "hidden" ng-model="obj.price_list_id"/>
+        </p>
+        <p>
+            <label>Valid from</label>
+            <input type="datetime-local" name="bday" ng-model="obj.valid_from"/>
+        </p>
+
+        <p>
+        <div id = "formActions">
+            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
+            <a id="rollback" style="margin-left:1em">Rollback</a>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne" ng-disabled="obj.price_list_id==null">Copy price list</button>
+        </div>
+        </p>
+    </div>
+
+    <p><h1>STANJE:{{state}}</h1></p>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalOne" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Copy price list
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <label>Valid from for new price list</label>
+                        <input type="datetime-local" name="bday" ng-model="valid_from"/>
+                    </p>
+                    <p>
+                        <label>Increase</label>
+                        <input type="checkbox" ng-model="increase"/>
+                        <!--<input type = "text" ng-model="obj.is_service"/>-->
+                    </p>
+                    <p>
+                        <label>Percent of price</label>
+                        <input type="number" ng-model="percent"/>
+                    </p>
+
+                    <div class="modal-footer">
+                        <input id = "moPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

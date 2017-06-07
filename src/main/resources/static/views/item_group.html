@@ -1,0 +1,69 @@
+<div ng-controller="item_group_controller">
+
+    <h1>Item group</h1>
+
+    <table id="table">
+        <tr class = "header">
+            <th>ID</th>
+            <th>Name</th>
+            <th>Vat type ID</th>
+            <th>Vat type name</th>
+        </tr>
+        <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
+            <td class="id">{{o.item_group_id}}</td>
+            <td class="name">{{o.name}}</td>
+            <td class="vat_type_id">{{o.vat_type.vat_type_id}}</td>
+            <td class="vat_type_name">{{o.vat_type.name}}</td>
+        </tr>
+    </table>
+
+    <div class = "panel">
+        <p>
+            <input type = "hidden" ng-model="obj.item_group_id"/>
+        </p>
+        <p>
+            <label>Name</label>
+            <input type = "text" ng-model="obj.name"/>
+        </p>
+        <p>
+        <p>
+            <label>Vat type</label>
+            <select ng-model="obj.vat_type" ng-options="soo.name for soo in subObjectsOne track by soo.vat_type_id" id="selectionOne">
+            </select>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
+        </p>
+        <div id = "formActions">
+            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
+            <a id="rollback" style="margin-left:1em">Rollback</a>
+        </div>
+        </p>
+    </div>
+
+    <p><h1>STANJE:{{state}}</h1></p>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalOne" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    VAT types
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                        </tr>
+                        <tr ng-repeat="soo in subObjectsOne" ng-click="fook($event, soo)" >
+                            <td class="sooid">{{soo.vat_type_id}}</td>
+                            <td class="sooname">{{soo.name}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "vtPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

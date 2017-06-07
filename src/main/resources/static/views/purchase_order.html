@@ -1,0 +1,190 @@
+<div ng-controller="purchase_order_controller">
+
+    <h1>Purchase order</h1>
+
+    <table id="table">
+        <tr class = "header">
+            <th>ID</th>
+            <th>Date</th>
+            <th>Purchase order number</th>
+            <th>Company ID</th>
+            <th>Company name</th>
+            <th>Business partner ID</th>
+            <th>Business partner name</th>
+            <th>Fiscal year ID</th>
+            <th>Fiscal year number of FY</th>
+        </tr>
+        <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
+            <td class="id">{{o.purchase_order_id}}</td>
+            <td class="date">{{o.date | date:'yyyy-MM-dd HH:mm'}}</td>
+            <td class="purchase_order_number">{{o.purchase_order_number}}</td>
+
+            <td class="company_id">{{o.company.company_id}}</td>
+            <td class="company_name">{{o.company.name}}</td>
+            <td class="business_partner_id">{{o.business_partner.business_partner_id}}</td>
+            <td class="business_partner_name">{{o.business_partner.name}}</td>
+            <td class="fiscal_year_id">{{o.fiscal_year.fiscal_year_id}}</td>
+            <td class="fiscal_year_number_of_fy">{{o.fiscal_year.number_of_fy}}</td>
+
+        </tr>
+    </table>
+
+    <div class = "panel">
+        <p>
+            <input type = "hidden" ng-model="obj.purchase_order_id"/>
+        </p>
+        <p>
+            <label>Date</label>
+            <input type = "datetime-local" name="bday" ng-model="obj.date"/>
+        </p>
+        <p>
+            <label>Purchase order number</label>
+            <input type="number" name="bday" ng-model="obj.purchase_order_number"/>
+        </p>
+
+        <p>
+            <label>Company</label>
+            <select ng-model="obj.company" ng-options="soo.name for soo in subObjectsOne track by soo.company_id" id="selectOne" ng-change="changed(obj.company)">
+            </select>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
+        </p>
+        <p>
+            <label>Business partner</label>
+            <select ng-model="obj.business_partner" ng-options="sot.name for sot in subObjectsTwo track by sot.business_partner_id" id="selectTwo" ng-disabled="countryChoosen">
+            </select>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTwo" ng-disabled="countryChoosen">...</button>
+        </p>
+        <p>
+            <label>Fiscal year</label>
+            <select ng-model="obj.fiscal_year" ng-options="soth.number_of_fy for soth in subObjectsThree track by soth.fiscal_year_id" id="selectThree" ng-disabled="countryChoosen">
+            </select>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThree" ng-disabled="countryChoosen">...</button>
+        </p>
+
+        <p>
+        <div id = "formActions">
+            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
+            <a id="rollback" style="margin-left:1em">Rollback</a>
+        </div>
+        </p>
+    </div>
+
+    <p><h1>STANJE:{{state}}</h1></p>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalOne" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Companies
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>TIN</th>
+                            <th>City</th>
+                            <th>Adress</th>
+                            <th>Telephone</th>
+                            <th>Company number</th>
+                            <th>Current account</th>
+                        </tr>
+                        <tr ng-repeat="soo in subObjectsOne" ng-click="fook($event, soo)" >
+                            <td class="sooid">{{soo.company_id}}</td>
+                            <td class="sooname">{{soo.name}}</td>
+                            <td class="sootin">{{soo.tin}}</td>
+                            <td class="soocity">{{soo.city}}</td>
+                            <td class="sooadress">{{soo.adress}}</td>
+                            <td class="sootelephone">{{soo.telephone}}</td>
+                            <td class="soocompany_number">{{soo.company_number}}</td>
+                            <td class="soocurrent_account">{{soo.current_account}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "moPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalTwo" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Business partners
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>TIN</th>
+                            <th>City</th>
+                            <th>Adress</th>
+                            <th>Telephone</th>
+                            <th>Personal number</th>
+                            <th>Current account</th>
+                            <th>Type of BP</th>
+                            <th>Company ID</th>
+                            <th>Company name</th>
+                        </tr>
+                        <tr ng-repeat="sot in subObjectsTwo" ng-click="fookk($event, sot)" >
+                            <td class="sotid">{{sot.business_partner_id}}</td>
+                            <td class="sotname">{{sot.name}}</td>
+                            <td class="sottin">{{sot.tin}}</td>
+                            <td class="sotcity">{{sot.city}}</td>
+                            <td class="sotadress">{{sot.adress}}</td>
+                            <td class="sottelephone">{{sot.telephone}}</td>
+                            <td class="sotpersonal_number">{{sot.personal_number}}</td>
+                            <td class="sotcurrent_account">{{sot.current_account}}</td>
+                            <td class="sottype_of_bp">{{sot.type_of_bp}}</td>
+                            <td class="sotcompany_id">{{sot.company.company_id}}</td>
+                            <td class="sotcompany_name">{{sot.company.name}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "mtPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalThree" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Fiscal years
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Number of FY</th>
+                            <th>Active</th>
+                            <th>Company ID</th>
+                            <th>Company name</th>
+                        </tr>
+                        <tr ng-repeat="soth in subObjectsThree" ng-click="fookkk($event, soth)" >
+                            <td class="sothid">{{soth.fiscal_year_id}}</td>
+                            <td class="sothnumber_of_fy">{{soth.number_of_fy}}</td>
+                            <td class="sothactive">{{soth.active}}</td>
+
+                            <td class="sothcompany_id">{{soth.company.company_id}}</td>
+                            <td class="sothcompany_name">{{soth.company.name}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "mthPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

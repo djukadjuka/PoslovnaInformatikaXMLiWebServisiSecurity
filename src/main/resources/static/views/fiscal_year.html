@@ -1,0 +1,89 @@
+<div ng-controller="fiscal_year_controller">
+
+    <h1>Fiscal year</h1>
+
+    <table id="table">
+        <tr class = "header">
+            <th>ID</th>
+            <th>Number of FY</th>
+            <th>Active</th>
+            <th>Company ID</th>
+            <th>Company name</th>
+        </tr>
+        <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
+            <td class="id">{{o.fiscal_year_id}}</td>
+            <td class="number_of_fy">{{o.number_of_fy}}</td>
+            <td class="active">{{o.active}}</td>
+
+            <td class="company_id">{{o.company.company_id}}</td>
+            <td class="company_name">{{o.company.name}}</td>
+        </tr>
+    </table>
+
+    <div class = "panel">
+        <p>
+            <input type = "hidden" ng-model="obj.fiscal_year_id"/>
+        </p>
+        <p>
+            <label>Number of FY</label>
+            <input type = "number" ng-model="obj.number_of_fy"/>
+        </p>
+        <p>
+            <label>Active</label>
+            <input type="checkbox" ng-model="obj.active" ng-checked="obj.active"/>
+        </p>
+        <p>
+            <label>Company</label>
+            <select ng-model="obj.company" ng-options="soo.name for soo in subObjectsOne track by soo.company_id" id="selectOne">
+            </select>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
+        </p>
+
+        <p>
+        <div id = "formActions">
+            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
+            <a id="rollback" style="margin-left:1em">Rollback</a>
+        </div>
+        </p>
+    </div>
+
+    <p><h1>STANJE:{{state}}</h1></p>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalOne" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Companies
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>TIN</th>
+                            <th>City</th>
+                            <th>Adress</th>
+                            <th>Telephone</th>
+                            <th>Company number</th>
+                            <th>Current account</th>
+                        </tr>
+                        <tr ng-repeat="soo in subObjectsOne" ng-click="fook($event, soo)" >
+                            <td class="sooid">{{soo.company_id}}</td>
+                            <td class="sooname">{{soo.name}}</td>
+                            <td class="sootin">{{soo.tin}}</td>
+                            <td class="soocity">{{soo.city}}</td>
+                            <td class="sooadress">{{soo.adress}}</td>
+                            <td class="sootelephone">{{soo.telephone}}</td>
+                            <td class="soocompany_number">{{soo.company_number}}</td>
+                            <td class="soocurrent_account">{{soo.current_account}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "moPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

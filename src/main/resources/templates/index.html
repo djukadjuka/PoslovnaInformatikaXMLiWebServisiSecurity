@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="utf-8"> </meta>
+    <title>Invoicing project</title>
+    <script src="/webjars/angularjs/1.6.4/angular.js"></script>
+    <script src="/webjars/angularjs/1.6.4/angular-resource.js"></script>
+    <script src="/webjars/angularjs/1.6.4/angular-route.js"></script>
+    <script src="/webjars/angularjs/1.6.4/angular-cookies.min.js"></script>
+    <!--<script src="/webjars/angularjs/1.6.4/angular-cookies.js"></script>-->
+    <link rel="stylesheet" href="/stylesheets/main.css"> </link>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.css"> </link>
+    <script src="/webjars/jquery/3.2.0/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+
+    <script src="/controllers/app.js"></script>
+    <script src="/controllers/defaultController.js"></script>
+    <!--<link rel="stylesheet" href="stylesheets/main.css"> </link>-->
+    <script src="/controllers/vat_type_controller.js"></script>
+    <script src="/controllers/vat_rate_controller.js"></script>
+    <script src="/controllers/item_group_controller.js"></script>
+    <script src="/controllers/units_of_measurement_controller.js"></script>
+    <script src="/controllers/item_controller.js"></script>
+    <script src="/controllers/price_list_controller.js"></script>
+    <script src="/controllers/currency_controller.js"></script>
+    <script src="/controllers/price_list_item_controller.js"></script>
+    <script src="/controllers/company_controller.js"></script>
+    <script src="/controllers/business_partner_controller.js"></script>
+    <script src="/controllers/fiscal_year_controller.js"></script>
+    <script src="/controllers/purchase_order_controller.js"></script>
+    <script src="/controllers/purchase_order_item_controller.js"></script>
+    <script src="/controllers/invoice_controller.js"></script>
+    <script src="/controllers/invoice_item_controller.js"></script>
+</head>
+<body ng-app="app">
+    <nav class="navbar navbar-dark red">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/vat_type">VAT type</a></li>
+                    <li><a href="#/vat_rate">VAT rate</a></li>
+                    <li><a href="#/item_group">Item group</a></li>
+                    <li><a href="#/units_of_measurement">Units of measurement</a></li>
+                    <li><a href="#/item">Item</a></li>
+                    <li><a href="#/price_list">Price list</a></li>
+                    <li><a href="#/currency">Currency</a></li>
+                    <li><a href="#/price_list_item">Price list item</a></li>
+                    <li><a href="#/company">Company</a></li>
+                    <li><a href="#/business_partner">Business partner</a></li>
+                    <li><a href="#/fiscal_year">Fiscal year</a></li>
+                    <li><a href="#/purchase_order">Purchase order</a></li>
+                    <li><a href="#/purchase_order_item">Purchase order item</a></li>
+                    <li><a href="#/invoice">Invoice</a></li>
+                    <li><a href="#/invoice_item">Invoice item</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a>Uloguj se</a></li>
+                    <li><a>Izloguj se</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <p>
+        <ul>
+            <li><a id = "search"><img src="images/search.gif"/></a></li>
+            <li><a href="#" id = "refresh"><img src="images/refresh.gif"/></a></li>
+            <li><a href="#" id = "pickup"><img src="images/zoom-pickup.gif"/></a></li>
+            <li><a href="#" id = "help"><img src="images/help.gif"/></a></li>
+            <li><a id = "first"><img src="images/first.gif"/></a></li>
+            <li><a id = "prev"><img src="images/prev.gif"/></a></li>
+            <li><a id = "next"><img src="images/next.gif"/></a></li>
+            <li><a id = "last"><img src="images/last.gif"/></a></li>
+            <li><a id = "add"><img src="images/add.gif"/></a></li>
+            <li><a id = "remove"><img src="images/remove.gif"/></a></li>
+            <li><a id = "nextform"><img src="images/nextform.gif"/></a></li>
+        </ul>
+    </p>
+    <div ng-view=""></div>
+</body>
+</html>

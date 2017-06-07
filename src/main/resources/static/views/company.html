@@ -1,0 +1,69 @@
+<div ng-controller="company_controller">
+
+    <h1>Company</h1>
+
+    <table id="table">
+        <tr class = "header">
+            <th>ID</th>
+            <th>Name</th>
+            <th>TIN</th>
+            <th>City</th>
+            <th>Adress</th>
+            <th>Telephone</th>
+            <th>Company number</th>
+            <th>Current account</th>
+        </tr>
+        <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
+            <td class="id">{{o.company_id}}</td>
+            <td class="name">{{o.name}}</td>
+            <td class="tin">{{o.tin}}</td>
+            <td class="city">{{o.city}}</td>
+            <td class="adress">{{o.adress}}</td>
+            <td class="telephone">{{o.telephone}}</td>
+            <td class="company_number">{{o.company_number}}</td>
+            <td class="current_account">{{o.current_account}}</td>
+        </tr>
+    </table>
+
+    <div class = "panel">
+        <p>
+            <input type = "hidden" ng-model="obj.company_id"/>
+        </p>
+        <p>
+            <label>Name</label>
+            <input type = "text" ng-model="obj.name"/>
+        </p>
+        <p>
+            <label>TIN</label>
+            <input type = "number" ng-model="obj.tin"/>
+        </p>
+        <p>
+            <label>City</label>
+            <input type = "text" ng-model="obj.city"/>
+        </p>
+        <p>
+            <label>Adress</label>
+            <input type = "text" ng-model="obj.adress"/>
+        </p>
+        <p>
+            <label>Telephone</label>
+            <input type = "text" ng-model="obj.telephone"/>
+        </p>
+        <p>
+            <label>Company number</label>
+            <input type = "number" ng-model="obj.company_number"/>
+        </p>
+        <p>
+            <label>Current account</label>
+            <input type = "text" ng-model="obj.current_account"/>
+        </p>
+        <p>
+        <div id = "formActions">
+            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
+            <a id="rollback" style="margin-left:1em">Rollback</a>
+        </div>
+        </p>
+    </div>
+
+    <p><h1>STANJE:{{state}}</h1></p>
+</div>

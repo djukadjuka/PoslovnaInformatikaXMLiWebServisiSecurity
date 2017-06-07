@@ -1,0 +1,129 @@
+<div ng-controller="item_controller">
+
+    <h1>Item</h1>
+
+    <table id="table">
+        <tr class = "header">
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Is service</th>
+            <th>Item group ID</th>
+            <th>Item group name</th>
+            <th>Units of measurement ID</th>
+            <th>Units of measurement name</th>
+        </tr>
+        <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
+            <td class="id">{{o.item_id}}</td>
+            <td class="name">{{o.name}}</td>
+            <td class="description">{{o.description}}</td>
+            <td class="is_service">{{o.is_service}}</td>
+
+            <td class="item_group_id">{{o.item_group.item_group_id}}</td>
+            <td class="item_group_name">{{o.item_group.name}}</td>
+            <td class="units_of_measurement_id">{{o.units_of_measurement.units_of_measurement_id}}</td>
+            <td class="units_of_measurement_name">{{o.units_of_measurement.name}}</td>
+
+
+        </tr>
+    </table>
+
+    <div class = "panel">
+        <p>
+            <input type = "hidden" ng-model="obj.item_id"/>
+        </p>
+        <p>
+            <label>Name</label>
+            <input type = "text" ng-model="obj.name"/>
+        </p>
+        <p>
+            <label>Description</label>
+            <input type = "text" ng-model="obj.description"/>
+        </p>
+        <p>
+            <label>Is service</label>
+            <input type="checkbox" ng-model="obj.is_service" ng-checked="obj.is_service"/>
+            <!--<input type = "text" ng-model="obj.is_service"/>-->
+        </p>
+        <p>
+            <label>Item group</label>
+            <select ng-model="obj.item_group" ng-options="soo.name for soo in subObjectsOne track by soo.item_group_id" id="selectionOne">
+            </select>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
+        </p>
+        <p>
+            <label>Units of measurement</label>
+            <select ng-model="obj.units_of_measurement" ng-options="sot.name for sot in subObjectsTwo track by sot.units_of_measurement_id" id="selectTwo">
+            </select>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTwo">...</button>
+        </p>
+
+        <p>
+        <div id = "formActions">
+            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
+            <a id="rollback" style="margin-left:1em">Rollback</a>
+        </div>
+        </p>
+    </div>
+
+    <p><h1>STANJE:{{state}}</h1></p>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalOne" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Item groups
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Vat type ID</th>
+                            <th>Vat type name</th>
+                        </tr>
+                        <tr ng-repeat="soo in subObjectsOne" ng-click="fook($event, soo)" >
+                            <td class="sooid">{{soo.item_group_id}}</td>
+                            <td class="sooname">{{soo.name}}</td>
+                            <td class="soovat_type_id">{{soo.vat_type.vat_type_id}}</td>
+                            <td class="soovat_type_name">{{soo.vat_type.name}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "moPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalTwo" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Units of measurements
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Abbreviation</th>
+                        </tr>
+                        <tr ng-repeat="sot in subObjectsTwo" ng-click="fookk($event, sot)" >
+                            <td class="sotid">{{sot.units_of_measurement_id}}</td>
+                            <td class="sotname">{{sot.name}}</td>
+                            <td class="sotabbreviation">{{sot.abbreviation}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "mtPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,127 @@
+<div ng-controller="business_partner_controller">
+
+    <h1>Business partner</h1>
+
+    <table id="table">
+        <tr class = "header">
+            <th>ID</th>
+            <th>Name</th>
+            <th>TIN</th>
+            <th>City</th>
+            <th>Adress</th>
+            <th>Telephone</th>
+            <th>Personal number</th>
+            <th>Current account</th>
+            <th>Type of BP</th>
+            <th>Company ID</th>
+            <th>Company name</th>
+        </tr>
+        <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
+            <td class="id">{{o.business_partner_id}}</td>
+            <td class="name">{{o.name}}</td>
+            <td class="tin">{{o.tin}}</td>
+            <td class="city">{{o.city}}</td>
+            <td class="adress">{{o.adress}}</td>
+            <td class="telephone">{{o.telephone}}</td>
+            <td class="personal_number">{{o.personal_number}}</td>
+            <td class="current_account">{{o.current_account}}</td>
+            <td class="type_of_bp">{{o.type_of_bp}}</td>
+            <td class="company_id">{{o.company.company_id}}</td>
+            <td class="company_name">{{o.company.name}}</td>
+        </tr>
+    </table>
+
+    <div class = "panel">
+        <p>
+            <input type = "hidden" ng-model="obj.business_partner_id"/>
+        </p>
+        <p>
+            <label>Name</label>
+            <input type = "text" ng-model="obj.name"/>
+        </p>
+        <p>
+            <label>TIN</label>
+            <input type = "number" ng-model="obj.tin"/>
+        </p>
+        <p>
+            <label>City</label>
+            <input type = "text" ng-model="obj.city"/>
+        </p>
+        <p>
+            <label>Adress</label>
+            <input type = "text" ng-model="obj.adress"/>
+        </p>
+        <p>
+            <label>Telephone</label>
+            <input type = "text" ng-model="obj.telephone"/>
+        </p>
+        <p>
+            <label>Personal number</label>
+            <input type = "number" ng-model="obj.personal_number"/>
+        </p>
+        <p>
+            <label>Current account</label>
+            <input type = "text" ng-model="obj.current_account"/>
+        </p>
+        <p>
+            <label>Type of BP</label>
+            <select ng-model="obj.type_of_bp">
+                <option value="customer">Customer</option>
+                <option value="supplier">Supplier</option>
+                <option value="customer_and_supplier">Customer and Supplier</option>
+            </select>
+        </p>
+        <p>
+            <label>Company</label>
+            <select ng-model="obj.company" ng-options="soo.name for soo in subObjectsOne track by soo.company_id" id="selectOne">
+            </select>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
+        </p>
+        <p>
+        <div id = "formActions">
+            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
+            <a id="rollback" style="margin-left:1em">Rollback</a>
+        </div>
+        </p>
+    </div>
+
+    <p><h1>STANJE:{{state}}</h1></p>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalOne" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Companies
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>TIN</th>
+                            <th>City</th>
+                            <th>Adress</th>
+                            <th>Telephone</th>
+                            <th>Company number</th>
+                            <th>Current account</th>
+                        </tr>
+                        <tr ng-repeat="soo in subObjectsOne" ng-click="fook($event, soo)" >
+                            <td class="sooid">{{soo.company_id}}</td>
+                            <td class="sooname">{{soo.name}}</td>
+                            <td class="sootin">{{soo.tin}}</td>
+                            <td class="soocity">{{soo.city}}</td>
+                            <td class="sooadress">{{soo.adress}}</td>
+                            <td class="sootelephone">{{soo.telephone}}</td>
+                            <td class="soocompany_number">{{soo.company_number}}</td>
+                            <td class="soocurrent_account">{{soo.current_account}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "moPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

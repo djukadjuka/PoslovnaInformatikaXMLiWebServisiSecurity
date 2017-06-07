@@ -1,0 +1,39 @@
+<div ng-controller="currency_controller">
+
+    <h1>Currency </h1>
+
+    <table id="table">
+        <tr class = "header">
+            <th>ID</th>
+            <th>Name</th>
+            <th>Abbreviation</th>
+        </tr>
+        <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
+            <td class="id">{{o.currency_id}}</td>
+            <td class="name">{{o.name}}</td>
+            <td class="abbreviation">{{o.abbreviation}}</td>
+        </tr>
+    </table>
+
+    <div class = "panel">
+        <p>
+            <input type = "hidden" ng-model="obj.currency_id"/>
+        </p>
+        <p>
+            <label>Name</label>
+            <input type = "text" ng-model="obj.name"/>
+        </p>
+        <p>
+            <label>Abbreviation</label>
+            <input type = "text" ng-model="obj.abbreviation"/>
+        </p>
+        <p>
+        <div id = "formActions">
+            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
+            <a id="rollback" style="margin-left:1em">Rollback</a>
+        </div>
+        </p>
+    </div>
+
+    <p><h1>STANJE:{{state}}</h1></p>
+</div>
