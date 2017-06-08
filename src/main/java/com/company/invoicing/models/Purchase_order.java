@@ -1,33 +1,45 @@
 package com.company.invoicing.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 import java.util.Date;
 
 @Entity
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class Purchase_order{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @XmlAttribute
     private long purchase_order_id;
 
     @ManyToOne
+    @XmlElement
     private Fiscal_year fiscal_year;
 
     @ManyToOne
+    @XmlElement
     private Business_partner business_partner;
 
     @ManyToOne
+    @XmlElement
     private Company company;
 
+    @XmlElement
     private Date date;
 
+    @XmlElement
     private int purchase_order_number;
 
     @JsonIgnore
     @OneToMany(mappedBy="purchase_order", cascade = CascadeType.ALL)
+    @XmlElement(name="purchase_order_item")
+    @XmlElementWrapper(name="purchase_order_items")
     private List<Purchase_order_item> purchase_order_items;
 
     @JsonIgnore

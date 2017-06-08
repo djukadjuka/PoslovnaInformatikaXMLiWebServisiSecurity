@@ -9,24 +9,34 @@ import javax.persistence.Id;
 import java.util.List;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 
 @Entity
+@XmlAccessorType(XmlAccessType.NONE)
 public class Item{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @XmlAttribute
     private long item_id;
 
     @ManyToOne
     private Item_group item_group;
 
     @ManyToOne
+    @XmlElement
     private Units_of_measurement units_of_measurement;
 
+    @XmlElement
     private String name;
 
+    @XmlElement
     private String description;
 
+    @XmlElement
     private boolean is_service;
 
     @JsonIgnore

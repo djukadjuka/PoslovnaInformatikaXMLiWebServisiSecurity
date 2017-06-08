@@ -5,24 +5,33 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 
 @Entity
+@XmlAccessorType(XmlAccessType.NONE)
 public class Purchase_order_item{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @XmlAttribute
     private long purchase_order_item_id;
 
     private int price_list_item_id;
 
+    @XmlElement
     private int total_amount;
 
+    @XmlElement
     private double total_price;
 
     @ManyToOne
     private Purchase_order purchase_order;
 
     @ManyToOne
+    @XmlElement
     private Item item;
 
     public Purchase_order_item(int price_list_item_id, int total_amount, double total_price, Purchase_order purchase_order, Item item){

@@ -1,6 +1,7 @@
 package com.company.invoicing.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,26 +9,39 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.List;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 
 @Entity
+@XmlAccessorType(XmlAccessType.NONE)
 public class Company{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @XmlAttribute
     private long company_id;
 
+    @XmlElement
     private String name;
 
+    @XmlElement
     private int tin;
 
+    @XmlElement
     private String city;
 
+    @XmlElement
     private String adress;
 
+    @XmlElement
     private String telephone;
 
+    @XmlElement
     private int company_number;
 
+    @XmlElement
     private String current_account;
 
     @JsonIgnore

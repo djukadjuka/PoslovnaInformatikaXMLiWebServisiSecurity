@@ -65,6 +65,7 @@
         <div id = "formActions">
             <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
             <a id="rollback" style="margin-left:1em">Rollback</a>
+            <button ng-click="exportToXML(obj.purchase_order_id)" ng-disabled="obj.purchase_order_id==null">Export to XML</button>
         </div>
         </p>
     </div>

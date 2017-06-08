@@ -43,4 +43,9 @@ public class Purchase_orderController {
     public List<Purchase_order> search(@RequestBody Purchase_order purchase_order) {
         return service.search(purchase_order);
     }
+
+    @RequestMapping(value = "/exportToXML/{id}", method = RequestMethod.POST)
+    public void exportToXML(@PathVariable Long id) {
+        service.exportToXML(id);
+    }
 }

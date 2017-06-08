@@ -1,6 +1,7 @@
 package com.company.invoicing.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,12 +10,18 @@ import javax.persistence.Id;
 import java.util.List;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 
 @Entity
+@XmlAccessorType(XmlAccessType.NONE)
 public class Fiscal_year{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @XmlAttribute
     private long fiscal_year_id;
 
     @JsonIgnore
@@ -24,8 +31,10 @@ public class Fiscal_year{
     @ManyToOne
     private Company company;
 
+    @XmlElement
     private int number_of_fy;
 
+    @XmlElement
     private boolean active;
 
     @JsonIgnore

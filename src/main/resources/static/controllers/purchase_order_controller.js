@@ -178,4 +178,11 @@ app.controller("purchase_order_controller", function($scope,$http,$cookies,$loca
                 $scope.obj.fiscal_year=result;
             });
         });
+
+        $scope.exportToXML=function(id){
+            $http.post('/'+$cookies.get('repositorium')+'/exportToXML/'+id)
+               .then(function(response){
+                    alert("zavrsio");
+               });
+        };
 });

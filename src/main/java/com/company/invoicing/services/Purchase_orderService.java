@@ -5,6 +5,10 @@ import com.company.invoicing.repositoriums.Purchase_orderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,5 +55,27 @@ public class Purchase_orderService {
         }
         return purchase_orders;
     }
+
+    public void exportToXML(Long id){
+        Purchase_order po=repository.findOne(id);
+        System.out.println(id);
+        try {
+
+            File file = new File("file.xml");
+            JAXBContext jaxbContext = JAXBContext.newInstance(Purchase_order.class);
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+            // output pretty printed
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+            jaxbMarshaller.marshal(po, file);
+            jaxbMarshaller.marshal(po, System.out);
+
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 }
