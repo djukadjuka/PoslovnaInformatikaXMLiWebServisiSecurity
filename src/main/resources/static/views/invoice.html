@@ -21,6 +21,8 @@
             <th>Business partner name</th>
             <th>Fiscal year ID</th>
             <th>Fiscal year number of FY</th>
+
+            <th>Na osnovu narudzbenice sastavljena</th>
         </tr>
         <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
             <td class="id">{{o.invoice_id}}</td>
@@ -39,6 +41,8 @@
             <td class="business_partner_name">{{o.business_partner.name}}</td>
             <td class="fiscal_year_id">{{o.fiscal_year.fiscal_year_id}}</td>
             <td class="fiscal_year_number_of_fy">{{o.fiscal_year.number_of_fy}}</td>
+
+            <td>{{o.purchase_orders.length==0 ? 'false' : 'true'}}</td>
 
         </tr>
     </table>
@@ -103,6 +107,7 @@
         <div id = "formActions">
             <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
             <a id="rollback" style="margin-left:1em">Rollback</a>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalFour" style="margin-left:6em">Izgenerisi na osnovu narudzbenice</button>
         </div>
         </p>
     </div>
@@ -219,6 +224,47 @@
                     </table>
                     <div class="modal-footer">
                         <input id = "mthPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalFour" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Purchase orders
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Date</th>
+                            <th>Purchase order number</th>
+                            <th>Company ID</th>
+                            <th>Company name</th>
+                            <th>Business partner ID</th>
+                            <th>Business partner name</th>
+                            <th>Fiscal year ID</th>
+                            <th>Fiscal year number of FY</th>
+                        </tr>
+                        <tr ng-repeat="sof in subObjectsFour" ng-click="fookkkk($event, sof)" >
+                            <td class="sofid">{{sof.purchase_order_id}}</td>
+                            <td class="sofdate">{{sof.date | date:'yyyy-MM-dd HH:mm'}}</td>
+                            <td class="sofpurchase_order_number">{{sof.purchase_order_number}}</td>
+
+                            <td class="sofcompany_id">{{sof.company.company_id}}</td>
+                            <td class="sofcompany_name">{{sof.company.name}}</td>
+                            <td class="sofbusiness_partner_id">{{sof.business_partner.business_partner_id}}</td>
+                            <td class="sofbusiness_partner_name">{{sof.business_partner.name}}</td>
+                            <td class="soffiscal_year_id">{{sof.fiscal_year.fiscal_year_id}}</td>
+                            <td class="soffiscal_year_number_of_fy">{{sof.fiscal_year.number_of_fy}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "mfPickup" type = "button" value = "Accept"/>
                     </div>
                 </div>
             </div>

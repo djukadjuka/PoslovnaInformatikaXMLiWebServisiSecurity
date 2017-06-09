@@ -15,6 +15,10 @@ app.controller("invoice_controller", function($scope,$http,$cookies,$location,$w
        $cookies.put('subObjectsThree','fiscal_year');
     }
 
+    if($cookies.get('subObjectsFour')==null || $cookies.get('subObjectsFour')=="" || $cookies.get('subObjectsFour')!='purchase_order'){
+       $cookies.put('subObjectsFour','purchase_order');
+    }
+
     if($cookies.get('state')==null || $cookies.get('state')==""){
        $cookies.put('state','edit');
     }
@@ -32,6 +36,7 @@ app.controller("invoice_controller", function($scope,$http,$cookies,$location,$w
       $scope.setSubObjects();
       $scope.setSubObjectsTwo();
       $scope.setSubObjectsThree();
+      $scope.setSubObjectsFour();
 
 
       $scope.obj={};
@@ -96,7 +101,7 @@ app.controller("invoice_controller", function($scope,$http,$cookies,$location,$w
                   $scope.obj.billing_account=item.find(".billing_account").html();
                   $scope.obj.reference_number=item.find(".reference_number").html();
 
-                   i=$item.find(".company_id").html();
+                   i=item.find(".company_id").html();
                    var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.company_id === +i; })[ 0 ];
                    $scope.obj.company=result;
 
@@ -190,4 +195,26 @@ app.controller("invoice_controller", function($scope,$http,$cookies,$location,$w
                 $scope.obj.fiscal_year=result;
             });
         });
+
+        $scope.fookkkk = function(event, obj) {
+             $("#highlightedFour").removeClass("highlighted");
+             $('#highlightedFour').removeAttr('id');
+             $(event.currentTarget).attr('id', 'highlightedFour');
+             $(event.currentTarget).addClass("highlighted");
+          };
+
+          $("#mfPickup").off().on('click', function() {
+            $scope.$apply(function() {
+                i=$("#highlightedFour").find(".sofid").html();
+                $('#modalFour').modal('toggle');
+
+                $http.post('/'+$cookies.get('repositorium')+'/generateInvoice/'+i)
+                   .then(function(response){
+                        alert("zavrsio");
+                   });
+                //var result=$scope.subObjectsThree.filter(function( obj ) { return +obj.fiscal_year_id === +i; })[ 0 ];
+                //$scope.obj.fiscal_year=result;
+            });
+        });
+
 });

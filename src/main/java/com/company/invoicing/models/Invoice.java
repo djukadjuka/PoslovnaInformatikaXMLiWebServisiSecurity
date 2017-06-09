@@ -3,6 +3,7 @@ package com.company.invoicing.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 
@@ -42,7 +43,7 @@ public class  Invoice{
     @OneToMany(mappedBy="invoice", cascade = CascadeType.ALL)
     private List<Invoice_item> invoice_items;
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToMany
     private List<Purchase_order> purchase_orders;
 
@@ -188,6 +189,8 @@ public class  Invoice{
     }
 
     public List<Purchase_order> getPurchase_orders() {
+        if(purchase_orders==null)
+            purchase_orders=new ArrayList<>();
         return purchase_orders;
     }
 

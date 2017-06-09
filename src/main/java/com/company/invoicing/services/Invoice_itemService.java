@@ -1,12 +1,13 @@
 package com.company.invoicing.services;
 
-import com.company.invoicing.models.Invoice_item;
+import com.company.invoicing.models.*;
 import com.company.invoicing.repositoriums.InvoiceRepository;
 import com.company.invoicing.repositoriums.Invoice_itemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -14,6 +15,12 @@ public class Invoice_itemService {
 
     @Autowired
     private Invoice_itemRepository repository;
+
+    @Autowired
+    private Price_list_itemService price_list_item_service;
+
+    @Autowired
+    private Vat_rateService vat_rate_service;
 
     public List<Invoice_item> findAll(){
         return repository.findAll();
@@ -60,6 +67,59 @@ public class Invoice_itemService {
         }
 
         return invoice_items;
+    }
+
+    public void generateInvoiceItems(Invoice invoice, List<Purchase_order_item> purchase_order_items) {
+        for(Purchase_order_item poi : purchase_order_items){
+            Invoice_item invoice_item=new Invoice_item();
+            invoice_item.setInvoice(invoice);
+            invoice_item.setItem(poi.getItem());
+            invoice_item.setTotal_amount(poi.getTotal_amount());
+            invoice_item.setDiscount(0);
+
+            Date invoiceDate=invoice.getDate();
+            double price=0;
+            Price_list_item tempPLI=null;
+            for(Price_list_item pli: poi.getItem().getPrice_list_items()){
+                if(invoiceDate.getTime()-pli.getPrice_list().getValid_from().getTime()>0){
+                    if(tempPLI==null){
+                        tempPLI=pli;
+                    }else if(invoiceDate.getTime()-pli.getPrice_list().getValid_from().getTime()<invoiceDate.getTime()-tempPLI.getPrice_list().getValid_from().getTime()){
+                        tempPLI=pli;
+                    }
+                }
+            }
+
+            if(tempPLI!=null){
+                price=tempPLI.getPrice();
+            }
+
+            double vat_rate=0;
+
+            Vat_rate tempVR=null;
+            for(Vat_rate vr:poi.getItem().getItem_group().getVat_type().getVat_rates()){
+                if(invoiceDate.getTime()-vr.getDate().getTime()>0){
+                    if(tempVR==null){
+                        tempVR=vr;
+                    }else if(invoiceDate.getTime()-vr.getDate().getTime()<invoiceDate.getTime()-tempVR.getDate().getTime()){
+                        tempVR=vr;
+                    }
+                }
+            }
+
+            if(tempVR!=null){
+                vat_rate=tempVR.getPercentage_of_vatr();
+            }
+
+            invoice_item.setPrice(price);
+            invoice_item.setVat_basis(price-invoice_item.getDiscount());
+            invoice_item.setVat_rate(vat_rate);
+            invoice_item.setVat_amount(invoice_item.getVat_basis()*(invoice_item.getVat_rate()/100));
+            invoice_item.setTotal_price((invoice_item.getTotal_amount()*invoice_item.getPrice())+invoice_item.getVat_amount()-invoice_item.getDiscount());
+
+            repository.save(invoice_item);
+
+        }
     }
 
 }

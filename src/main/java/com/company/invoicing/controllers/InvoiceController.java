@@ -43,4 +43,9 @@ public class InvoiceController {
     public List<Invoice> search(@RequestBody Invoice invoice) {
         return service.search(invoice);
     }
+
+    @RequestMapping(value = "/generateInvoice/{id}", method = RequestMethod.POST)
+    public void generateInvoice(@PathVariable long id) {
+        service.generateInvoice(id);
+    }
 }
