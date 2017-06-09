@@ -17,10 +17,7 @@ public class Invoice_itemService {
     private Invoice_itemRepository repository;
 
     @Autowired
-    private Price_list_itemService price_list_item_service;
-
-    @Autowired
-    private Vat_rateService vat_rate_service;
+    private InvoiceService invoiceService;
 
     public List<Invoice_item> findAll(){
         return repository.findAll();
@@ -31,14 +28,22 @@ public class Invoice_itemService {
     }
 
     public void create(Invoice_item invoice_item){
+
+        //invoice_item=repository.save(invoice_item);
+        //invoice_item=generatePrice(invoice_item);
+        updateInvoice(invoice_item,"create");
         repository.save(invoice_item);
     }
 
     public void update(Invoice_item invoice_item){
+        //invoice_item=generatePrice(invoice_item);
+        updateInvoice(invoice_item,"update");
         repository.save(invoice_item);
     }
 
     public void remove(Long id){
+        Invoice_item invoice_item=findOne(id);
+        updateInvoice(invoice_item,"remove");
         repository.delete(id);
     }
 
@@ -117,9 +122,78 @@ public class Invoice_itemService {
             invoice_item.setVat_amount(invoice_item.getVat_basis()*(invoice_item.getVat_rate()/100));
             invoice_item.setTotal_price((invoice_item.getTotal_amount()*invoice_item.getPrice())+invoice_item.getVat_amount()-invoice_item.getDiscount());
 
-            repository.save(invoice_item);
+            //postavljanje u invoice objektu ukupne pare
+            invoice.setTotal_price(invoice.getTotal_price()+invoice_item.getTotal_price());
+            invoice.setTotal_tax_basis(invoice.getTotal_tax_basis()+(invoice_item.getVat_basis()*invoice_item.getTotal_amount()));
+            invoice.setTotal_vat(invoice.getTotal_vat()+(invoice_item.getVat_amount()*invoice_item.getTotal_amount()));
 
+            repository.save(invoice_item);
         }
+        invoiceService.update(invoice);
+    }
+
+
+    public Invoice_item generatePrice(Invoice_item invoice_item){
+        Date invoiceDate=invoice_item.getInvoice().getDate();
+        double price=0;
+        Price_list_item tempPLI=null;
+        for(Price_list_item pli: invoice_item.getItem().getPrice_list_items()){
+            if(invoiceDate.getTime()-pli.getPrice_list().getValid_from().getTime()>0){
+                if(tempPLI==null){
+                    tempPLI=pli;
+                }else if(invoiceDate.getTime()-pli.getPrice_list().getValid_from().getTime()<invoiceDate.getTime()-tempPLI.getPrice_list().getValid_from().getTime()){
+                    tempPLI=pli;
+                }
+            }
+        }
+
+        if(tempPLI!=null){
+            price=tempPLI.getPrice();
+        }
+
+        double vat_rate=0;
+
+        Vat_rate tempVR=null;
+        for(Vat_rate vr:invoice_item.getItem().getItem_group().getVat_type().getVat_rates()){
+            if(invoiceDate.getTime()-vr.getDate().getTime()>0){
+                if(tempVR==null){
+                    tempVR=vr;
+                }else if(invoiceDate.getTime()-vr.getDate().getTime()<invoiceDate.getTime()-tempVR.getDate().getTime()){
+                    tempVR=vr;
+                }
+            }
+        }
+
+        if(tempVR!=null){
+            vat_rate=tempVR.getPercentage_of_vatr();
+        }
+
+        invoice_item.setPrice(price);
+        invoice_item.setVat_basis(price-invoice_item.getDiscount());
+        invoice_item.setVat_rate(vat_rate);
+        invoice_item.setVat_amount(invoice_item.getVat_basis()*(invoice_item.getVat_rate()/100));
+        invoice_item.setTotal_price((invoice_item.getTotal_amount()*invoice_item.getPrice())+invoice_item.getVat_amount()-invoice_item.getDiscount());
+        return invoice_item;
+    }
+
+    public void updateInvoice(Invoice_item invoice_item, String type){
+        if(type=="create"){
+            invoice_item.getInvoice().setTotal_price(invoice_item.getInvoice().getTotal_price()+invoice_item.getTotal_price());
+            invoice_item.getInvoice().setTotal_tax_basis(invoice_item.getInvoice().getTotal_tax_basis()+(invoice_item.getVat_basis()*invoice_item.getTotal_amount()));
+            invoice_item.getInvoice().setTotal_vat(invoice_item.getInvoice().getTotal_vat()+(invoice_item.getVat_amount()*invoice_item.getTotal_amount()));
+        }else if(type=="remove"){
+            invoice_item.getInvoice().setTotal_price(invoice_item.getInvoice().getTotal_price()-invoice_item.getTotal_price());
+            invoice_item.getInvoice().setTotal_tax_basis(invoice_item.getInvoice().getTotal_tax_basis()-(invoice_item.getVat_basis()*invoice_item.getTotal_amount()));
+            invoice_item.getInvoice().setTotal_vat(invoice_item.getInvoice().getTotal_vat()-(invoice_item.getVat_amount()*invoice_item.getTotal_amount()));
+        }else if(type=="update"){
+            Invoice_item oldII=repository.findOne(invoice_item.getInvoice_item_id());
+
+            invoice_item.getInvoice().setTotal_price(invoice_item.getInvoice().getTotal_price()-oldII.getTotal_price()+invoice_item.getTotal_price());
+            invoice_item.getInvoice().setTotal_tax_basis(invoice_item.getInvoice().getTotal_tax_basis()-(oldII.getVat_basis()*oldII.getTotal_amount())+(invoice_item.getVat_basis()*invoice_item.getTotal_amount()));
+            invoice_item.getInvoice().setTotal_vat(invoice_item.getInvoice().getTotal_vat()-(oldII.getVat_amount()*oldII.getTotal_amount())+(invoice_item.getVat_amount()*invoice_item.getTotal_amount()));
+        }
+
+        invoiceService.update(invoice_item.getInvoice());
     }
 
 }
