@@ -57,7 +57,6 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http','
                $cookies.put('state','add');
                $scope.state=$cookies.get('state');
                $(".highlighted").removeClass("highlighted");
-               $scope.countryChoosen=true;
            });
        });
 
@@ -67,7 +66,6 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http','
                $cookies.put('state','search');
                $scope.state=$cookies.get('state');
                $(".highlighted").removeClass("highlighted");
-               $scope.countryChoosen=true;
            });
        });
 
@@ -77,7 +75,6 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http','
                $cookies.put('state','edit');
                $scope.state=$cookies.get('state');
                $(".highlighted").removeClass("highlighted");
-               $scope.countryChoosen=true;
            });
        });
 
@@ -90,7 +87,6 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http','
                 $scope.setObjects();
 
              });
-            $scope.countryChoosen=true;
         });
 
         $("#refresh").off().on('click', function() {
@@ -125,8 +121,6 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http','
                     console.log(error.data);
                 });
             }
-
-            $scope.countryChoosen=true;
         };
 
         $scope.setObjects=function(){
@@ -145,6 +139,7 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http','
          $scope.setSubObjectsTwo=function(){
              $http.get('/'+$cookies.get('subObjectsTwo'))
                    .then(function(response){
+                        console.log("usao");
                        $scope.subObjectsTwo = response.data;
                        $scope.objectsTwo=angular.copy($scope.subObjectsTwo);
                    });

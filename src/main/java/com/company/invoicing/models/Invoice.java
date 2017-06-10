@@ -3,6 +3,8 @@ package com.company.invoicing.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -15,28 +17,43 @@ public class  Invoice{
     private long invoice_id;
 
     @ManyToOne
+    @NotNull
     private Fiscal_year fiscal_year;
 
     @ManyToOne
+    @NotNull
     private Company company;
 
     @ManyToOne
+    @NotNull
     private Business_partner business_partner;
 
+    @NotNull
     private Date date;
 
+    @NotNull
     private int invoice_number;
 
+    @NotNull
     private Date date_of_currency;
 
+    @NotNull
     private double total_tax_basis;
 
+    @NotNull
     private double total_vat;
 
+    @NotNull
     private double total_price;
 
+    @NotNull
+    @Column(length = 10,unique = true)
+    @Size(min=10, max = 10)
     private String billing_account;
 
+    @NotNull
+    @Column(length = 2)
+    @Size(min=2, max = 2)
     private String reference_number;
 
     @JsonIgnore

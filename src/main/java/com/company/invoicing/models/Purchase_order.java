@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
 import java.util.List;
 import java.util.Date;
@@ -20,20 +21,25 @@ public class Purchase_order{
 
     @ManyToOne
     @XmlElement
+    @NotNull
     private Fiscal_year fiscal_year;
 
     @ManyToOne
     @XmlElement
+    @NotNull
     private Business_partner business_partner;
 
     @ManyToOne
     @XmlElement
+    @NotNull
     private Company company;
 
     @XmlElement
+    @NotNull
     private Date date;
 
     @XmlElement
+    @NotNull
     private int purchase_order_number;
 
     @JsonIgnore

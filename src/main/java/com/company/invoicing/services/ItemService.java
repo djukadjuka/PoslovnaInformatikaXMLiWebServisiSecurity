@@ -1,11 +1,14 @@
 package com.company.invoicing.services;
 
 import com.company.invoicing.models.Item;
+import com.company.invoicing.models.Price_list_item;
+import com.company.invoicing.models.Vat_rate;
 import com.company.invoicing.repositoriums.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,6 +19,31 @@ public class ItemService {
 
     public List<Item> findAll(){
         return repository.findAll();
+    }
+
+    public List<Item> findAllValid(){
+        List<Item> items=new ArrayList<>();
+        for(Item item: repository.findAll()){
+            boolean prosloPrvo=false;
+            boolean prosloDrugo=false;
+            for(Price_list_item pli : item.getPrice_list_items()){
+                if(pli.getPrice_list().getValid_from().getTime()<=new Date().getTime()){
+                    prosloPrvo=true;
+                    break;
+                }
+            }
+            for(Vat_rate vr:item.getItem_group().getVat_type().getVat_rates()){
+                if(vr.getDate().getTime()<=new Date().getTime()){
+                    prosloDrugo=true;
+                    break;
+                }
+            }
+            if(prosloDrugo && prosloPrvo) {
+                items.add(item);
+            }
+
+        }
+        return items;
     }
 
     public Item findOne(long id){

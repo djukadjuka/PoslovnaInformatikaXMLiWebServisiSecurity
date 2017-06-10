@@ -2,36 +2,16 @@ app.controller("invoice_controller", function($scope,$http,$cookies,$location,$w
 
     angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
-    if($cookies.get('repositorium')==null || $cookies.get('repositorium')=="" || $cookies.get('repositorium')!='invoice'){
-       $cookies.put('repositorium','invoice');
-    }
-    if($cookies.get('subObjectsOne')==null || $cookies.get('subObjectsOne')=="" || $cookies.get('subObjectsOne')!='company'){
-       $cookies.put('subObjectsOne','company');
-    }
-    if($cookies.get('subObjectsTwo')==null || $cookies.get('subObjectsTwo')=="" || $cookies.get('subObjectsTwo')!='business_partner'){
-       $cookies.put('subObjectsTwo','business_partner');
-    }
-    if($cookies.get('subObjectsThree')==null || $cookies.get('subObjectsThree')=="" || $cookies.get('subObjectsThree')!='fiscal_year'){
-       $cookies.put('subObjectsThree','fiscal_year');
-    }
-
-    if($cookies.get('subObjectsFour')==null || $cookies.get('subObjectsFour')=="" || $cookies.get('subObjectsFour')!='purchase_order'){
-       $cookies.put('subObjectsFour','purchase_order');
-    }
+    $cookies.put('repositorium','invoice');
+    $cookies.put('subObjectsOne','company');
+    $cookies.put('subObjectsTwo','business_partner');
+    $cookies.put('subObjectsThree','fiscal_year');
+    $cookies.put('subObjectsFour','purchase_order');
 
     if($cookies.get('state')==null || $cookies.get('state')==""){
        $cookies.put('state','edit');
     }
 
-    /*if(myService.get()==null){
-        $scope.setObjects();
-     }else{
-        $http.get('/settlements/searchByCountry/'+myService.get())
-         .success(function(response){
-             $scope.objects = response;
-             myService.set(null);
-         });
-     }*/
       $scope.setObjects();
       $scope.setSubObjects();
       $scope.setSubObjectsTwo();
@@ -40,10 +20,9 @@ app.controller("invoice_controller", function($scope,$http,$cookies,$location,$w
 
 
       $scope.obj={};
-      //$scope.$apply(function() {
-        //$scope.countryChoosen=false;
-        //});
-      $scope.countryChoosen=true;
+      var myDate=new Date();
+      myDate.setDate(myDate.getDate()+1);
+      $scope.myDate=myDate;
       $scope.state=$cookies.get('state');
 
 
@@ -125,25 +104,28 @@ app.controller("invoice_controller", function($scope,$http,$cookies,$location,$w
           });
        };
 
-       $scope.changed=function(objekat){
-            if(objekat!=="undefined"){
-            console.log($scope.objectsTwo);
-                id=objekat.company_id;
-                var result=$scope.objectsTwo.filter(function (el) {
-                  return el.company.company_id==id;
-                });
-                $scope.subObjectsTwo=result;
-                var resultt=$scope.objectsThree.filter(function (el) {
-                  return el.company.company_id==id && el.active===true;
-                });
-                $scope.subObjectsThree=resultt;
-                $scope.countryChoosen=false;
-
-            }
-            else{
-                $scope.countryChoosen=true;
-            }
-       }
+       $scope.$watch('obj.company', function (newValue, oldValue) {
+           if(newValue!=oldValue){
+               $scope.findBPandFY();
+           }
+       });
+       $scope.findBPandFY=function(){
+          if($scope.obj.company!=null){
+               id=$scope.obj.company.company_id;
+               var result=$scope.objectsTwo.filter(function (el) {
+                 return el.company.company_id==id && el.type_of_bp!="supplier";
+               });
+               $scope.subObjectsTwo=result;
+               var resultt=$scope.objectsThree.filter(function (el) {
+                 return el.company.company_id==id && el.active==true;
+               });
+               $scope.subObjectsThree=resultt;
+          }
+          else{
+               $scope.subObjectsTwo={};
+               $scope.subObjectsThree={};
+          }
+      }
 
         $scope.fook = function(event, obj) {
              $("#highlightedOne").removeClass("highlighted");

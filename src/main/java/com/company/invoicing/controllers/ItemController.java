@@ -43,4 +43,9 @@ public class ItemController {
     public List<Item> search(@RequestBody Item item) {
         return service.search(item);
     }
+
+    @RequestMapping(value="/findAllValid", method = RequestMethod.GET)
+    public List<Item> findAllValid(){
+        return service.findAllValid();
+    }
 }

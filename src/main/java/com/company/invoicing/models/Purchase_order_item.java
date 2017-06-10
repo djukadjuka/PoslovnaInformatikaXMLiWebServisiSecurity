@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -22,16 +23,20 @@ public class Purchase_order_item{
     private int price_list_item_id;
 
     @XmlElement
+    @NotNull
     private int total_amount;
 
     @XmlElement
+    @NotNull
     private double total_price;
 
     @ManyToOne
+    @NotNull
     private Purchase_order purchase_order;
 
     @ManyToOne
     @XmlElement
+    @NotNull
     private Item item;
 
     public Purchase_order_item(int price_list_item_id, int total_amount, double total_price, Purchase_order purchase_order, Item item){

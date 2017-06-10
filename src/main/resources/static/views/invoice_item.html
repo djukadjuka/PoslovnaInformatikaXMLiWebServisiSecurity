@@ -37,59 +37,89 @@
     </table>
 
     <div class = "panel">
-        <p>
-            <input type = "hidden" ng-model="obj.invoice_item_id"/>
-        </p>
-        <p>
-            <label>Total amount</label>
-            <input type = "number" ng-model="obj.total_amount"/>
-        </p>
+        <form name="userForm">
+            <p>
+                <input type = "hidden" ng-model="obj.invoice_item_id"/>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.date.$invalid && !userForm.date.$pristine }">
+                    <label>Total amount</label>
+                    <input type = "number" name="total_amount" ng-model="obj.total_amount" ng-min="1" required/>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.total_amount.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
 
-        <p>
-            <label>Price</label>
-            <input type = "number" ng-model="obj.price" readonly/>
-        </p>
-        <p>
-            <label>Discount</label>
-            <input type = "number" ng-model="obj.discount"/>
-        </p>
-        <p>
-            <label>VAT basis</label>
-            <input type = "number" ng-model="obj.vat_basis" readonly/>
-        </p>
-        <p>
-            <label>VAT rate</label>
-            <input type = "number" ng-model="obj.vat_rate" readonly/>
-        </p>
-        <p>
-            <label>VAT amount</label>
-            <input type = "number" ng-model="obj.vat_amount" readonly/>
-        </p>
+            <p>
+                <label>Price</label>
+                <input type = "number" ng-model="obj.price" readonly/>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.date.$invalid && !userForm.date.$pristine }">
+                    <label>Discount</label>
+                    <input type = "number" name="discount" ng-model="obj.discount" required ng-min="0" ng-max="obj.price"/>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.discount.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+            <p>
+                <label>VAT basis</label>
+                <input type = "number" ng-model="obj.vat_basis" readonly/>
+            </p>
+            <p>
+                <label>VAT rate</label>
+                <input type = "number" ng-model="obj.vat_rate" readonly/>
+            </p>
+            <p>
+                <label>VAT amount</label>
+                <input type = "number" ng-model="obj.vat_amount" readonly/>
+            </p>
 
-        <p>
-            <label>Total price</label>
-            <input type="number" ng-model="obj.total_price" readonly/>
-        </p>
+            <p>
+                <label>Total price</label>
+                <input type="number" ng-model="obj.total_price" readonly/>
+            </p>
 
-        <p>
-            <label>Invoice</label>
-            <select ng-model="obj.invoice" ng-options="soo.invoice_number for soo in subObjectsOne track by soo.invoice_id">
-            </select>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
-        </p>
-        <p>
-            <label>Item</label>
-            <select ng-model="obj.item" ng-options="sot.name for sot in subObjectsTwo track by sot.item_id" ng-disabled="invoiceChoosen">
-            </select>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTwo" ng-disabled="invoiceChoosen">...</button>
-        </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.date.$invalid && !userForm.date.$pristine }">
+                    <label>Invoice</label>
+                    <select ng-model="obj.invoice" name="invoice" ng-options="soo.invoice_number for soo in subObjectsOne track by soo.invoice_id" required>
+                    </select>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.invoice.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.date.$invalid && !userForm.date.$pristine }">
+                    <label>Item</label>
+                    <select ng-model="obj.item" name="item" ng-options="sot.name for sot in subObjectsTwo track by sot.item_id" ng-disabled="obj.invoice==null" required>
+                    </select>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTwo" ng-disabled="obj.invoice==null">...</button>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.item.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
 
-        <p>
-        <div id = "formActions">
-            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
-            <a id="rollback" style="margin-left:1em">Rollback</a>
-        </div>
-        </p>
+            <p>
+            <div id = "formActions">
+                <button ng-click="accept(obj)" class="btn btn-primary" ng-disabled="userForm.$invalid && (state!='search')" style="margin-left:6em">Accept</button>
+                <a id="rollback" style="margin-left:1em">Rollback</a>
+            </div>
+            </p>
+        </form>
     </div>
 
     <p><h1>STANJE:{{state}}</h1></p>

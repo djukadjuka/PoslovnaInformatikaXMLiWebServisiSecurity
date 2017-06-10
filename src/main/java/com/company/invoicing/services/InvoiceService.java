@@ -37,11 +37,26 @@ public class InvoiceService {
     }
 
     public void create(Invoice invoice){
-        repository.save(invoice);
+        if(invoice.getFiscal_year().getActive() && !invoice.getBusiness_partner().getType_of_bp().equals("supplier")){
+            if(invoice.getDate().getTime()>new Date().getTime())
+                invoice.setDate(new Date());
+            if(invoice.getDate_of_currency().getTime()<invoice.getDate().getTime())
+                invoice.setDate(new Date());
+            invoice.setInvoice_number(invoice.getFiscal_year().getInvoices().size() + 1);
+            repository.save(invoice);
+        }
     }
 
     public void update(Invoice invoice){
-        repository.save(invoice);
+        if(invoice.getFiscal_year().getActive() && !invoice.getBusiness_partner().getType_of_bp().equals("supplier")){
+            if(invoice.getDate().getTime()>new Date().getTime())
+                invoice.setDate(new Date());
+            if(invoice.getDate_of_currency().getTime()<invoice.getDate().getTime())
+                invoice.setDate(new Date());
+            invoice.setInvoice_number(invoice.getFiscal_year().getInvoices().size() + 1);
+            repository.save(invoice);
+        }
+
     }
 
     public void remove(Long id){

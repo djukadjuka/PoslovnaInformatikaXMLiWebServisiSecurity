@@ -29,44 +29,74 @@
     </table>
 
     <div class = "panel">
-        <p>
-            <input type = "hidden" ng-model="obj.purchase_order_id"/>
-        </p>
-        <p>
-            <label>Date</label>
-            <input type = "datetime-local" name="bday" ng-model="obj.date"/>
-        </p>
-        <p>
-            <label>Purchase order number</label>
-            <input type="number" name="bday" ng-model="obj.purchase_order_number"/>
-        </p>
+        <form name="userForm">
+            <p>
+                <input type = "hidden" ng-model="obj.purchase_order_id"/>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.date.$invalid && !userForm.date.$pristine }">
+                    <label>Date</label>
+                    <input type = "datetime-local" name="bday" ng-model="obj.date" required ng-max="myDate"/>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.bday.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+            <p>
+                <label>Purchase order number</label>
+                <input type="number" ng-model="obj.purchase_order_number" readonly/>
+            </p>
 
-        <p>
-            <label>Company</label>
-            <select ng-model="obj.company" ng-options="soo.name for soo in subObjectsOne track by soo.company_id" id="selectOne" ng-change="changed(obj.company)">
-            </select>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
-        </p>
-        <p>
-            <label>Business partner</label>
-            <select ng-model="obj.business_partner" ng-options="sot.name for sot in subObjectsTwo track by sot.business_partner_id" id="selectTwo" ng-disabled="countryChoosen">
-            </select>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTwo" ng-disabled="countryChoosen">...</button>
-        </p>
-        <p>
-            <label>Fiscal year</label>
-            <select ng-model="obj.fiscal_year" ng-options="soth.number_of_fy for soth in subObjectsThree track by soth.fiscal_year_id" id="selectThree" ng-disabled="countryChoosen">
-            </select>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThree" ng-disabled="countryChoosen">...</button>
-        </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>Company</label>
+                    <select ng-model="obj.company" name="company" ng-options="soo.name for soo in subObjectsOne track by soo.company_id" id="selectOne" required>
+                    </select>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.company.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>Business partner</label>
+                    <select ng-model="obj.business_partner" name="business_partner" ng-options="sot.name for sot in subObjectsTwo track by sot.business_partner_id" id="selectTwo" ng-disabled="obj.company==null" required>
+                    </select>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTwo" ng-disabled="obj.company==null">...</button>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.business_partner.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>Fiscal year</label>
+                    <select ng-model="obj.fiscal_year" name="fiscal_year" ng-options="soth.number_of_fy for soth in subObjectsThree track by soth.fiscal_year_id" id="selectThree" ng-disabled="obj.company==null"required>
+                    </select>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThree" ng-disabled="obj.company==null">...</button>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.fiscal_year.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
 
-        <p>
-        <div id = "formActions">
-            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
-            <a id="rollback" style="margin-left:1em">Rollback</a>
-            <button ng-click="exportToXML(obj.purchase_order_id)" ng-disabled="obj.purchase_order_id==null">Export to XML</button>
-        </div>
-        </p>
+            <p>
+            <div id = "formActions">
+                <button ng-click="accept(obj)" class="btn btn-primary" ng-disabled="userForm.$invalid && (state!='search')" style="margin-left:6em">Accept</button>
+                <a id="rollback" style="margin-left:1em">Rollback</a>
+                <button ng-click="exportToXML(obj.purchase_order_id)" class="btn btn-danger" ng-disabled="obj.purchase_order_id==null" >Export to XML</button>
+            </div>
+            </p>
+        </form>
     </div>
 
     <p><h1>STANJE:{{state}}</h1></p>

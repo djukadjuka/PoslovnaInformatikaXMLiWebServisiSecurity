@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
@@ -109,6 +110,8 @@ public class Fiscal_year{
     }
 
     public List<Purchase_order> getPurchase_orders(){
+        if(purchase_orders==null)
+            purchase_orders=new ArrayList<>();
         return purchase_orders;
     }
 

@@ -2,36 +2,26 @@ app.controller("purchase_order_item_controller", function($scope,$http,$cookies,
 
     angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
-    if($cookies.get('repositorium')==null || $cookies.get('repositorium')=="" || $cookies.get('repositorium')!='purchase_order_item'){
-       $cookies.put('repositorium','purchase_order_item');
-    }
-    if($cookies.get('subObjectsOne')==null || $cookies.get('subObjectsOne')=="" || $cookies.get('subObjectsOne')!='purchase_order'){
-       $cookies.put('subObjectsOne','purchase_order');
-    }
-    if($cookies.get('subObjectsTwo')==null || $cookies.get('subObjectsTwo')=="" || $cookies.get('subObjectsTwo')!='item'){
-       $cookies.put('subObjectsTwo','item');
-    }
+    $cookies.put('repositorium','purchase_order_item');
+    $cookies.put('subObjectsOne','purchase_order');
+    $cookies.put('subObjectsTwo',null);
+    $http.get('/item/findAllValid')
+       .then(function(response){
+           console.log(response);
+           $scope.subObjectsTwo = response.data;
+           $scope.objectsTwo=angular.copy($scope.subObjectsTwo);
+       });
 
-    if($cookies.get('subObjectsThree')==null || $cookies.get('subObjectsThree')=="" || $cookies.get('subObjectsThree')!='price_list_item'){
-       $cookies.put('subObjectsThree','price_list_item');
-    }
+    $cookies.put('subObjectsThree','price_list_item');
+    $cookies.put('subObjectsFour',null);
 
     if($cookies.get('state')==null || $cookies.get('state')==""){
        $cookies.put('state','edit');
     }
 
-    /*if(myService.get()==null){
-        $scope.setObjects();
-     }else{
-        $http.get('/settlements/searchByCountry/'+myService.get())
-         .success(function(response){
-             $scope.objects = response;
-             myService.set(null);
-         });
-     }*/
       $scope.setObjects();
       $scope.setSubObjects();
-      $scope.setSubObjectsTwo();
+      //$scope.setSubObjectsTwo();
 
       $scope.setSubObjectsThree();
       $scope.purchaseOrderChoosen=true;
@@ -98,8 +88,6 @@ app.controller("purchase_order_item_controller", function($scope,$http,$cookies,
 
                 var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.purchase_order_id === +i; })[ 0 ];
                 $scope.obj.purchase_order=result;
-                //$scope.$digest();
-                //$("#selectOne").changed($scope.obj.purchase_order);
             });
 
         });
@@ -127,15 +115,8 @@ app.controller("purchase_order_item_controller", function($scope,$http,$cookies,
 
       $scope.$watch('obj.purchase_order', function (newValue, oldValue) {
           if(newValue!=oldValue){
-              if(newValue!=null){
-                  $scope.purchaseOrderChoosen=false;
-              }
-              else{
-                  $scope.obj.item={};
-                  $scope.obj.total_price=0;
-                  $scope.purchaseOrderChoosen=true;
-              }
-              $scope.findPrice();
+              $scope.obj.item={};
+              $scope.obj.total_price=0;
           }
       });
 
@@ -174,6 +155,5 @@ app.controller("purchase_order_item_controller", function($scope,$http,$cookies,
             }else{
                 $scope.obj.total_price=0;
             }
-
        }
 });

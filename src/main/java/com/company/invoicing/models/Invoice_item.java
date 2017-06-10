@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Invoice_item{
@@ -14,23 +15,32 @@ public class Invoice_item{
     private long invoice_item_id;
 
     @ManyToOne
+    @NotNull
     private Invoice invoice;
 
     @ManyToOne
+    @NotNull
     private Item item;
 
+    @NotNull
     private int total_amount;
 
+    @NotNull
     private double price;
 
+    @NotNull
     private double discount;
 
+    @NotNull
     private double vat_basis;
 
+    @NotNull
     private double vat_rate;
 
+    @NotNull
     private double vat_amount;
 
+    @NotNull
     private double total_price;
 
     public Invoice_item(Invoice invoice, Item item, int total_amount, double price, double discount, double vat_basis, double vat_rate, double vat_amount, double total_price){

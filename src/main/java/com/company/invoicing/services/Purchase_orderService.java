@@ -10,6 +10,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,11 +28,21 @@ public class Purchase_orderService {
     }
 
     public void create(Purchase_order purchase_order){
-        repository.save(purchase_order);
+        if(purchase_order.getFiscal_year().getActive() && !purchase_order.getBusiness_partner().getType_of_bp().equals("supplier")){
+            if(purchase_order.getDate().getTime()>new Date().getTime())
+                purchase_order.setDate(new Date());
+            purchase_order.setPurchase_order_number(purchase_order.getFiscal_year().getPurchase_orders().size() + 1);
+            repository.save(purchase_order);
+        }
     }
 
     public void update(Purchase_order purchase_order){
-        repository.save(purchase_order);
+        if(purchase_order.getFiscal_year().getActive() && !purchase_order.getBusiness_partner().getType_of_bp().equals("supplier")){
+            if(purchase_order.getDate().getTime()>new Date().getTime())
+                purchase_order.setDate(new Date());
+            purchase_order.setPurchase_order_number(purchase_order.getFiscal_year().getPurchase_orders().size() + 1);
+            repository.save(purchase_order);
+        }
     }
 
     public void remove(Long id){

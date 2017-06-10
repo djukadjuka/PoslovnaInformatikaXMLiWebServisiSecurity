@@ -2,45 +2,29 @@ app.controller("invoice_item_controller", function($scope,$http,$cookies,$locati
 
     angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
-    if($cookies.get('repositorium')==null || $cookies.get('repositorium')=="" || $cookies.get('repositorium')!='invoice_item'){
-       $cookies.put('repositorium','invoice_item');
-    }
-    if($cookies.get('subObjectsOne')==null || $cookies.get('subObjectsOne')=="" || $cookies.get('subObjectsOne')!='invoice'){
-       $cookies.put('subObjectsOne','invoice');
-    }
-    if($cookies.get('subObjectsTwo')==null || $cookies.get('subObjectsTwo')=="" || $cookies.get('subObjectsTwo')!='item'){
-       $cookies.put('subObjectsTwo','item');
-    }
+    $cookies.put('repositorium','invoice_item');
+    $cookies.put('subObjectsOne','invoice');
+    $cookies.put('subObjectsTwo',null);
+    $http.get('/item/findAllValid')
+       .then(function(response){
+           console.log(response);
+           $scope.subObjectsTwo = response.data;
+           $scope.objectsTwo=angular.copy($scope.subObjectsTwo);
+       });
 
-    if($cookies.get('subObjectsThree')==null || $cookies.get('subObjectsThree')=="" || $cookies.get('subObjectsThree')!='price_list_item'){
-       $cookies.put('subObjectsThree','price_list_item');
-    }
-
-    if($cookies.get('subObjectsFour')==null || $cookies.get('subObjectsFour')=="" || $cookies.get('subObjectsFour')!='vat_rate'){
-       $cookies.put('subObjectsFour','vat_rate');
-    }
+    $cookies.put('subObjectsThree','price_list_item');
+    $cookies.put('subObjectsFour','vat_rate');
 
 
     if($cookies.get('state')==null || $cookies.get('state')==""){
        $cookies.put('state','edit');
     }
 
-    /*if(myService.get()==null){
-        $scope.setObjects();
-     }else{
-        $http.get('/settlements/searchByCountry/'+myService.get())
-         .success(function(response){
-             $scope.objects = response;
-             myService.set(null);
-         });
-     }*/
       $scope.setObjects();
       $scope.setSubObjects();
-      $scope.setSubObjectsTwo();
+      //$scope.setSubObjectsTwo();
       $scope.setSubObjectsThree();
       $scope.setSubObjectsFour();
-
-      $scope.invoiceChoosen=true;
 
       $scope.obj={};
       $scope.state=$cookies.get('state');
@@ -134,19 +118,12 @@ app.controller("invoice_item_controller", function($scope,$http,$cookies,$locati
 
         $scope.$watch('obj.invoice', function (newValue, oldValue) {
               if(newValue!=oldValue){
-                  if(newValue!=null){
-                      $scope.invoiceChoosen=false;
-                  }
-                  else{
-                      $scope.obj.item={};
-                      $scope.obj.price=0;
-                      $scope.obj.vat_basis=0;
-                      $scope.obj.vat_rate=0;
-                      $scope.obj.vat_amount=0;
-                      $scope.obj.total_price=0;
-                      $scope.invoiceChoosen=true;
-                  }
-                  $scope.findPrice();
+                  $scope.obj.item={};
+                  $scope.obj.price=0;
+                  $scope.obj.vat_basis=0;
+                  $scope.obj.vat_rate=0;
+                  $scope.obj.vat_amount=0;
+                  $scope.obj.total_price=0;
               }
           });
 
