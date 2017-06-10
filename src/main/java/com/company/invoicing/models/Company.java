@@ -3,12 +3,10 @@ package com.company.invoicing.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
-import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -24,24 +22,40 @@ public class Company{
     private long company_id;
 
     @XmlElement
+    @Column(length = 50)
+    @NotNull
+    @Size(min = 3, max = 50)
     private String name;
 
     @XmlElement
+    @NotNull
+    @Column(length = 10,unique = true)
     private int tin;
 
     @XmlElement
+    @Column(length = 50)
+    @Size(max = 50)
     private String city;
 
     @XmlElement
+    @Column(length = 50)
+    @Size(max = 50)
     private String adress;
 
     @XmlElement
+    @Column(length = 50)
+    @Size(max = 50)
     private String telephone;
 
     @XmlElement
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int company_number;
 
     @XmlElement
+    @NotNull
+    @Column(length = 10,unique = true)
+    @Size(min=10, max = 10)
     private String current_account;
 
     @JsonIgnore

@@ -2,9 +2,11 @@ app.controller("units_of_measurement_controller", function($scope,$http,$cookies
 
      angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
-     if($cookies.get('repositorium')==null || $cookies.get('repositorium')=="" || $cookies.get('repositorium')!='units_of_measurement'){
-        $cookies.put('repositorium','units_of_measurement');
-     }
+     $cookies.put('repositorium','units_of_measurement');
+     $cookies.put('subObjectsOne',null);
+     $cookies.put('subObjectsTwo',null);
+     $cookies.put('subObjectsThree',null);
+     $cookies.put('subObjectsFour',null);
 
      if($cookies.get('state')==null || $cookies.get('state')==""){
         $cookies.put('state','edit');

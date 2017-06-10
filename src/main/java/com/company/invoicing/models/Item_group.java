@@ -2,13 +2,10 @@ package com.company.invoicing.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Item_group{
@@ -22,8 +19,12 @@ public class Item_group{
     private List<Item> items;
 
     @ManyToOne
+    @NotNull
     private Vat_type vat_type;
 
+    @Column(length = 50)
+    @NotNull
+    @Size(min = 3, max = 50)
     private String name;
 
     public Item_group(List<Item> items, Vat_type vat_type, String name){

@@ -21,33 +21,53 @@
     </table>
 
     <div class = "panel">
-        <p>
-            <input type = "hidden" ng-model="obj.vat_rate_id"/>
-        </p>
-        <p>
-            <label>Percentage of VAT rate</label>
-            <input type = "text" ng-model="obj.percentage_of_vatr"/>
-        </p>
-        <p>
-            <label>Date</label>
-            <input type="datetime-local" name="bday" ng-model="obj.date"/>
-        </p>
+        <form name="userForm">
+            <p>
+                <input type = "hidden" ng-model="obj.vat_rate_id"/>
+            </p>
+            <p>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <label>Percentage of VAT rate</label>
+                <input type = "number" name="percentage_of_vatr" ng-model="obj.percentage_of_vatr" required value="1.0" ng-min="1" ng-max="99" ng-maxlength="2"/>
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.percentage_of_vatr.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            </p>
+            <p>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <label>Date</label>
+                <input type="datetime-local" name="bday" ng-model="obj.date" required/>
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.bday.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            </p>
 
-        <p>
-        <p>
-            <label>Vat type</label>
-            <select ng-model="obj.vat_type" ng-options="soo.name for soo in subObjectsOne track by soo.vat_type_id" id="selectionOne">
-            </select>
-           <!-- <select ng-model="vtID" id="selectionOne">
-                <option ng-repeat="soo in subObjectsOne" value="{{soo.vat_type_id}}">{{soo.name}}</option>
-            </select>-->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
-        </p>
-        <div id = "formActions">
-            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
-            <a id="rollback" style="margin-left:1em">Rollback</a>
-        </div>
-        </p>
+            <p>
+            <p>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <label>Vat type</label>
+                <select ng-model="obj.vat_type" name="vat_type" ng-options="soo.name for soo in subObjectsOne track by soo.vat_type_id" id="selectionOne" required>
+                </select>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.vat_type.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            </p>
+            <div id = "formActions">
+                <button ng-click="accept(obj)" class="btn btn-primary" ng-disabled="userForm.$invalid && (state!='search')" style="margin-left:6em">Accept</button>
+                <a id="rollback" style="margin-left:1em">Rollback</a>
+            </div>
+            </p>
+        </form>
     </div>
 
     <p><h1>STANJE:{{state}}</h1></p>

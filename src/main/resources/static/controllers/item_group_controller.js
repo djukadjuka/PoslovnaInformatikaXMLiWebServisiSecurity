@@ -2,16 +2,24 @@ app.controller("item_group_controller", function($scope,$http,$cookies,$location
 
     angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
-    if($cookies.get('repositorium')==null || $cookies.get('repositorium')=="" || $cookies.get('repositorium')!='item_group'){
+    /*if($cookies.get('repositorium')==null || $cookies.get('repositorium')=="" || $cookies.get('repositorium')!='item_group'){
        $cookies.put('repositorium','item_group');
     }
     if($cookies.get('subObjectsOne')==null || $cookies.get('subObjectsOne')=="" || $cookies.get('subObjectsOne')!='vat_type'){
        $cookies.put('subObjectsOne','vat_type');
-    }
+    }*/
+
+    $cookies.put('repositorium','item_group');
+    $cookies.put('subObjectsOne','vat_type');
+    $cookies.put('subObjectsTwo',null);
+    $cookies.put('subObjectsThree',null);
+    $cookies.put('subObjectsFour',null);
 
     if($cookies.get('state')==null || $cookies.get('state')==""){
        $cookies.put('state','edit');
     }
+
+
 
     /*if(myService.get()==null){
         $scope.setObjects();

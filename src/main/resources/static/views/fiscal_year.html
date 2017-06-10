@@ -21,30 +21,39 @@
     </table>
 
     <div class = "panel">
-        <p>
-            <input type = "hidden" ng-model="obj.fiscal_year_id"/>
-        </p>
-        <p>
-            <label>Number of FY</label>
-            <input type = "number" ng-model="obj.number_of_fy"/>
-        </p>
-        <p>
-            <label>Active</label>
-            <input type="checkbox" ng-model="obj.active" ng-checked="obj.active"/>
-        </p>
-        <p>
-            <label>Company</label>
-            <select ng-model="obj.company" ng-options="soo.name for soo in subObjectsOne track by soo.company_id" id="selectOne">
-            </select>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
-        </p>
+        <form name="userForm">
+            <p>
+                <input type = "hidden" ng-model="obj.fiscal_year_id"/>
+            </p>
+            <p>
+                <label>Number of FY</label>
+                <input type = "number" ng-model="obj.number_of_fy" readonly/>
+            </p>
+            <p>
+                <label>Active</label>
+                <input type="checkbox" ng-model="obj.active" ng-checked="obj.active"/>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>Company</label>
+                    <select ng-model="obj.company" name="company" ng-options="soo.name for soo in subObjectsOne track by soo.company_id" id="selectOne" required>
+                    </select>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.company.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
 
-        <p>
-        <div id = "formActions">
-            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
-            <a id="rollback" style="margin-left:1em">Rollback</a>
-        </div>
-        </p>
+            <p>
+            <div id = "formActions">
+                <button ng-click="accept(obj)" class="btn btn-primary" ng-disabled="userForm.$invalid && (state!='search')" style="margin-left:6em">Accept</button>
+                <a id="rollback" style="margin-left:1em">Rollback</a>
+            </div>
+            </p>
+        </form>
     </div>
 
     <p><h1>STANJE:{{state}}</h1></p>

@@ -2,12 +2,11 @@ app.controller("fiscal_year_controller", function($scope,$http,$cookies,$locatio
 
      angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
-     if($cookies.get('repositorium')==null || $cookies.get('repositorium')=="" || $cookies.get('repositorium')!='fiscal_year'){
-        $cookies.put('repositorium','fiscal_year');
-     }
-     if($cookies.get('subObjectsOne')==null || $cookies.get('subObjectsOne')=="" || $cookies.get('subObjectsOne')!='company'){
-        $cookies.put('subObjectsOne','company');
-     }
+     $cookies.put('repositorium','fiscal_year');
+     $cookies.put('subObjectsOne','company');
+     $cookies.put('subObjectsTwo',null);
+     $cookies.put('subObjectsThree',null);
+     $cookies.put('subObjectsFour',null);
 
      if($cookies.get('state')==null || $cookies.get('state')==""){
         $cookies.put('state','edit');

@@ -16,23 +16,39 @@
     </table>
 
     <div class = "panel">
-        <p>
-            <input type = "hidden" ng-model="obj.currency_id"/>
-        </p>
-        <p>
-            <label>Name</label>
-            <input type = "text" ng-model="obj.name"/>
-        </p>
-        <p>
-            <label>Abbreviation</label>
-            <input type = "text" ng-model="obj.abbreviation"/>
-        </p>
-        <p>
-        <div id = "formActions">
-            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
-            <a id="rollback" style="margin-left:1em">Rollback</a>
-        </div>
-        </p>
+        <form name="userForm">
+            <p>
+                <input type = "hidden" ng-model="obj.currency_id"/>
+            </p>
+            <p>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <label>Name</label>
+                <input type="text" name="name" ng-model="obj.name" ng-minlength="3" ng-maxlength="50" required>
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.name.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            </p>
+            <p>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <label>Abbreviation</label>
+                <input type = "text" name="abbreviation" ng-model="obj.abbreviation" ng-minlength="3" ng-maxlength="3" required/>
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.abbreviation.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            </p>
+            <p>
+            <div id = "formActions">
+                <button ng-click="accept(obj)" class="btn btn-primary" ng-disabled="userForm.$invalid && (state!='search')" style="margin-left:6em">Accept</button>
+                <a id="rollback" style="margin-left:1em">Rollback</a>
+            </div>
+            </p>
+        </form>
     </div>
 
     <p><h1>STANJE:{{state}}</h1></p>

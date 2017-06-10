@@ -2,12 +2,11 @@ app.controller("business_partner_controller", function($scope,$http,$cookies,$lo
 
      angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
-     if($cookies.get('repositorium')==null || $cookies.get('repositorium')=="" || $cookies.get('repositorium')!='business_partner'){
-        $cookies.put('repositorium','business_partner');
-     }
-     if($cookies.get('subObjectsOne')==null || $cookies.get('subObjectsOne')=="" || $cookies.get('subObjectsOne')!='company'){
-        $cookies.put('subObjectsOne','company');
-     }
+     $cookies.put('repositorium','business_partner');
+     $cookies.put('subObjectsOne','company');
+     $cookies.put('subObjectsTwo',null);
+     $cookies.put('subObjectsThree',null);
+     $cookies.put('subObjectsFour',null);
 
      if($cookies.get('state')==null || $cookies.get('state')==""){
         $cookies.put('state','edit');

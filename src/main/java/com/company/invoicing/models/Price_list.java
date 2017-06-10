@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.List;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -17,6 +18,7 @@ public class Price_list{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long price_list_id;
 
+    @NotNull
     private Date valid_from;
 
     @JsonIgnore

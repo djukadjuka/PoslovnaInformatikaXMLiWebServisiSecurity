@@ -26,43 +26,87 @@
     </table>
 
     <div class = "panel">
-        <p>
-            <input type = "hidden" ng-model="obj.company_id"/>
-        </p>
-        <p>
-            <label>Name</label>
-            <input type = "text" ng-model="obj.name"/>
-        </p>
-        <p>
-            <label>TIN</label>
-            <input type = "number" ng-model="obj.tin"/>
-        </p>
-        <p>
-            <label>City</label>
-            <input type = "text" ng-model="obj.city"/>
-        </p>
-        <p>
-            <label>Adress</label>
-            <input type = "text" ng-model="obj.adress"/>
-        </p>
-        <p>
-            <label>Telephone</label>
-            <input type = "text" ng-model="obj.telephone"/>
-        </p>
-        <p>
-            <label>Company number</label>
-            <input type = "number" ng-model="obj.company_number"/>
-        </p>
-        <p>
-            <label>Current account</label>
-            <input type = "text" ng-model="obj.current_account"/>
-        </p>
-        <p>
-        <div id = "formActions">
-            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
-            <a id="rollback" style="margin-left:1em">Rollback</a>
-        </div>
-        </p>
+        <form name="userForm">
+            <p>
+                <input type = "hidden" ng-model="obj.company_id"/>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>Name</label>
+                    <input type = "text" name="name" ng-model="obj.name" ng-minlength="3" ng-maxlength="50" required/>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.name.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>TIN</label>
+                    <input type = "number" name="tin" ng-model="obj.tin" ng-minlength="10" ng-maxlength="10" required/>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.tin.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>City</label>
+                    <input type = "text" name="city" ng-model="obj.city" ng-maxlength="50"/>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.city.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>Adress</label>
+                    <input type = "text" name="adress" ng-model="obj.adress" ng-maxlength="50"/>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.adress.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>Telephone</label>
+                    <input type = "text" name="telephone" ng-model="obj.telephone" ng-maxlength="50"/>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.telephone.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+            <p>
+                <label>Company number</label>
+                <input type = "number" ng-model="obj.company_number" readonly/>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>Current account</label>
+                    <input type = "text" name="current_account" ng-model="obj.current_account" ng-minlength="10" ng-maxlength="10" required/>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.current_account.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+            <p>
+            <div id = "formActions">
+                <button ng-click="accept(obj)" class="btn btn-primary" ng-disabled="userForm.$invalid && (state!='search')" style="margin-left:6em">Accept</button>
+                <a id="rollback" style="margin-left:1em">Rollback</a>
+            </div>
+            </p>
+        </form>
     </div>
 
     <p><h1>STANJE:{{state}}</h1></p>

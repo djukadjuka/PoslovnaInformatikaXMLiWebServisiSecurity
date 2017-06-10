@@ -14,21 +14,30 @@
     </table>
 
     <div class = "panel">
-        <p>
-            <input type = "hidden" ng-model="obj.price_list_id"/>
-        </p>
-        <p>
-            <label>Valid from</label>
-            <input type="datetime-local" name="bday" ng-model="obj.valid_from"/>
-        </p>
+        <form name="userForm">
+            <p>
+                <input type = "hidden" ng-model="obj.price_list_id"/>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>Valid from</label>
+                    <input type="datetime-local" name="bday" ng-model="obj.valid_from" required/>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.bday.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
 
-        <p>
-        <div id = "formActions">
-            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
-            <a id="rollback" style="margin-left:1em">Rollback</a>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne" ng-disabled="obj.price_list_id==null">Copy price list</button>
-        </div>
-        </p>
+            <p>
+            <div id = "formActions">
+                <button ng-click="accept(obj)" class="btn btn-primary" ng-disabled="userForm.$invalid && (state!='search')" style="margin-left:6em">Accept</button>
+                <a id="rollback" style="margin-left:1em">Rollback</a>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalOne" ng-disabled="obj.price_list_id==null">Copy price list</button>
+            </div>
+            </p>
+        </form>
     </div>
 
     <p><h1>STANJE:{{state}}</h1></p>
@@ -41,23 +50,34 @@
                     Copy price list
                 </div>
                 <div class="modal-body">
-                    <p>
-                        <label>Valid from for new price list</label>
-                        <input type="datetime-local" name="bday" ng-model="valid_from"/>
-                    </p>
-                    <p>
-                        <label>Increase</label>
-                        <input type="checkbox" ng-model="increase"/>
-                        <!--<input type = "text" ng-model="obj.is_service"/>-->
-                    </p>
-                    <p>
-                        <label>Percent of price</label>
-                        <input type="number" ng-model="percent"/>
-                    </p>
+                    <form name="userForma">
+                        <p>
+                        <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                            <label>Valid from for new price list</label>
+                            <input type="datetime-local" name="bdaya" ng-model="valid_from" required/>
+                                <div ng-messages="userForma.bdaya.$error" >
+                                    <div ng-messages-include="views/messages.html"></div>
+                                </div>
+                        </div>
+                        </p>
+                        <p>
+                            <label>Increase</label>
+                            <input type="checkbox" ng-model="increase"/>
+                        </p>
+                        <p>
+                        <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                            <label>Percent of price</label>
+                            <input type="number" name="percent" ng-model="percent" required value="0.0" ng-min="0" ng-max="99" ng-maxlength="2"/>
+                                <div ng-messages="userForma.percent.$error" >
+                                    <div ng-messages-include="views/messages.html"></div>
+                                </div>
+                        </div>
+                        </p>
 
-                    <div class="modal-footer">
-                        <input id = "moPickup" type = "button" value = "Accept"/>
-                    </div>
+                        <div class="modal-footer">
+                            <input id = "moPickup" type = "button" value = "Accept" class="btn btn-primary" ng-disabled="userForma.$invalid"/>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

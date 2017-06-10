@@ -55,9 +55,7 @@ public class Price_listService {
         Date data=new Date(date);
         Price_list price_list=new Price_list();
         price_list.setValid_from(data);
-        repository.save(price_list);
-        price_list=repository.findAll().get(repository.findAll().size()-1);
-        System.out.println(price_list.getPrice_list_id());
+        price_list=repository.save(price_list);
         service.copyPriceListItems(id,price_list,percent);
     }
 

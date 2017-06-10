@@ -1,11 +1,10 @@
-app.controller('defaultController', ['$scope','$controller','$cookies','$http', function ($scope,$controller,$cookies,$http) {
+app.controller('defaultController', ['$scope','$controller','$cookies','$http','$location', function ($scope,$controller,$cookies,$http,$location) {
 
   $("#first").off().on('click', function() {
            item = $("table tr:nth-child(2)");
            $(".highlighted").removeClass("highlighted");
            item.addClass("highlighted");
            $scope.sync(item);
-           //$scope.sinhronizuj(item);
        });
 
    $("#last").off().on('click', function() {
@@ -13,7 +12,6 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http', 
         $(".highlighted").removeClass("highlighted");
         item.addClass("highlighted");
         $scope.sync(item);
-        //$scope.sinhronizuj(item);
     });
 
     $("#next").off().on('click', function() {
@@ -31,7 +29,6 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http', 
           $(".highlighted").removeClass("highlighted");
           item.addClass("highlighted");
           $scope.sync(item);
-          //$scope.sinhronizuj(item);
       });
 
      $("#prev").off().on('click', function() {
@@ -52,7 +49,6 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http', 
           $(".highlighted").removeClass("highlighted");
           item.addClass("highlighted");
           $scope.sync(item);
-          //$scope.sinhronizuj(item);
       });
 
       $("#add").off().on('click', function() {
@@ -62,8 +58,6 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http', 
                $scope.state=$cookies.get('state');
                $(".highlighted").removeClass("highlighted");
                $scope.countryChoosen=true;
-               //$("#selekcija option:selected").prop("selected", false);
-               //$("#selekcija option:first").prop("selected", true);
            });
        });
 
@@ -74,8 +68,6 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http', 
                $scope.state=$cookies.get('state');
                $(".highlighted").removeClass("highlighted");
                $scope.countryChoosen=true;
-               //$("#selekcija option:selected").prop("selected", false);
-               //$("#selekcija option:first").prop("selected", true);
            });
        });
 
@@ -86,8 +78,6 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http', 
                $scope.state=$cookies.get('state');
                $(".highlighted").removeClass("highlighted");
                $scope.countryChoosen=true;
-               //$("#selekcija option:selected").prop("selected", false);
-               //$("#selekcija option:first").prop("selected", true);
            });
        });
 
@@ -103,18 +93,26 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http', 
             $scope.countryChoosen=true;
         });
 
+        $("#refresh").off().on('click', function() {
+            location.reload();
+        });
+
         $scope.accept = function(object){
            if($scope.state=="add"){
               $http.post('/'+$cookies.get('repositorium')+'/create',object)
                .then(function(response){
                    $scope.obj = {};
                    $scope.setObjects();
+               }).catch(function(error){
+                    console.log(error.data);
                });
            }else if ($scope.state=="edit"){
               $http.put('/'+$cookies.get('repositorium')+'/update',object)
                .then(function(response){
                    $scope.obj = {};
                    $scope.setObjects();
+               }).catch(function(error){
+                    console.log(error.data);
                });
            }
            else if ($scope.state=="search"){
@@ -122,9 +120,9 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http', 
                 .then(function(response){
                     $scope.obj={};
                     $(".highlighted").removeClass("highlighted");
-                    //$("#selekcija option:selected").prop("selected", false);
-                    //$("#selekcija option:first").prop("selected", "selected");
                     $scope.objects=response.data;
+                }).catch(function(error){
+                    console.log(error.data);
                 });
             }
 

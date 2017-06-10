@@ -2,9 +2,11 @@ app.controller("vat_type_controller", function($scope,$http,$cookies,$location,$
 
      angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
-     if($cookies.get('repositorium')==null || $cookies.get('repositorium')=="" || $cookies.get('repositorium')!='vat_type'){
-        $cookies.put('repositorium','vat_type');
-     }
+     $cookies.put('repositorium','vat_type');
+     $cookies.put('subObjectsOne',null);
+     $cookies.put('subObjectsTwo',null);
+     $cookies.put('subObjectsThree',null);
+     $cookies.put('subObjectsFour',null);
 
      if($cookies.get('state')==null || $cookies.get('state')==""){
         $cookies.put('state','edit');

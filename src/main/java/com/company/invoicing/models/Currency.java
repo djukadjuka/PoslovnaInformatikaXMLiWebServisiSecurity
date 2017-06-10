@@ -3,6 +3,9 @@ package com.company.invoicing.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
 
 @Entity
@@ -15,8 +18,16 @@ public class Currency{
     /*@ManyToOne
     private Price_list_item price_list_item;*/
 
+    @XmlElement
+    @Column(length = 50)
+    @NotNull
+    @Size(min = 3, max = 50)
     private String name;
 
+    @XmlElement
+    @Column(length = 3)
+    @NotNull
+    @Size(min = 3, max = 3)
     private String abbreviation;
 
     @JsonIgnore

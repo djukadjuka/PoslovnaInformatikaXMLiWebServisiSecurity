@@ -2,23 +2,16 @@ app.controller("price_list_controller", function($scope,$http,$cookies,$location
 
     angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
-    if($cookies.get('repositorium')==null || $cookies.get('repositorium')=="" || $cookies.get('repositorium')!='price_list'){
-       $cookies.put('repositorium','price_list');
-    }
+    $cookies.put('repositorium','price_list');
+    $cookies.put('subObjectsOne',null);
+    $cookies.put('subObjectsTwo',null);
+    $cookies.put('subObjectsThree',null);
+    $cookies.put('subObjectsFour',null);
 
     if($cookies.get('state')==null || $cookies.get('state')==""){
        $cookies.put('state','edit');
     }
 
-    /*if(myService.get()==null){
-        $scope.setObjects();
-     }else{
-        $http.get('/settlements/searchByCountry/'+myService.get())
-         .success(function(response){
-             $scope.objects = response;
-             myService.set(null);
-         });
-     }*/
       $scope.setObjects();
 
       $scope.obj={};

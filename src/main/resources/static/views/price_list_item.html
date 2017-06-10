@@ -28,38 +28,68 @@
     </table>
 
     <div class = "panel">
-        <p>
-            <input type = "hidden" ng-model="obj.price_item_id"/>
-        </p>
-        <p>
-            <label>Price</label>
-            <input type = "text" ng-model="obj.price"/>
-        </p>
-        <p>
-            <label>Item</label>
-            <select ng-model="obj.item" ng-options="soo.name for soo in subObjectsOne track by soo.item_id" id="selectionOne">
-            </select>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
-        </p>
-        <p>
-            <label>Price_list</label>
-            <select ng-model="obj.price_list" ng-options="sot.valid_from for sot in subObjectsTwo track by sot.price_list_id" id="selectTwo">
-            </select>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTwo">...</button>
-        </p>
-        <p>
-            <label>Currency</label>
-            <select ng-model="obj.currency" ng-options="soth.name for soth in subObjectsThree track by soth.currency_id" id="selectThree">
-            </select>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThree">...</button>
-        </p>
+        <form name="userForm">
+            <p>
+                <input type = "hidden" ng-model="obj.price_item_id"/>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>Price</label>
+                    <input type = "number" name="price" ng-model="obj.price" required value="0.0" ng-min="1"/>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.price.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>Item</label>
+                    <select ng-model="obj.item" name="item" ng-options="soo.name for soo in subObjectsOne track by soo.item_id" id="selectionOne" required>
+                    </select>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.item.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>Price_list</label>
+                    <select ng-model="obj.price_list" name="price_list" ng-options="sot.valid_from for sot in subObjectsTwo track by sot.price_list_id" id="selectTwo" required>
+                    </select>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTwo">...</button>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.price_list.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>Currency</label>
+                    <select ng-model="obj.currency" name="currency" ng-options="soth.name for soth in subObjectsThree track by soth.currency_id" id="selectThree" required>
+                    </select>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThree">...</button>
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.currency.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
 
-        <p>
-        <div id = "formActions">
-            <button ng-click="accept(obj)" style="margin-left:6em">Accept</button>
-            <a id="rollback" style="margin-left:1em">Rollback</a>
-        </div>
-        </p>
+            <p>
+            <div id = "formActions">
+                <button ng-click="accept(obj)" class="btn btn-primary" ng-disabled="userForm.$invalid && (state!='search')" style="margin-left:6em">Accept</button>
+                <a id="rollback" style="margin-left:1em">Rollback</a>
+            </div>
+            </p>
+        </form>
     </div>
 
     <p><h1>STANJE:{{state}}</h1></p>

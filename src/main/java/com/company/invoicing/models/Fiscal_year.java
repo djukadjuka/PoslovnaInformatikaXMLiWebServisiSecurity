@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import java.util.List;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -29,12 +30,16 @@ public class Fiscal_year{
     private List<Invoice> invoices;
 
     @ManyToOne
+    @NotNull
     private Company company;
 
     @XmlElement
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int number_of_fy;
 
     @XmlElement
+    @NotNull
     private boolean active;
 
     @JsonIgnore

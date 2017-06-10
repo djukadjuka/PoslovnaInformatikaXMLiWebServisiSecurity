@@ -2,32 +2,16 @@ app.controller("price_list_item_controller", function($scope,$http,$cookies,$loc
 
     angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
-    if($cookies.get('repositorium')==null || $cookies.get('repositorium')=="" || $cookies.get('repositorium')!='price_list_item'){
-       $cookies.put('repositorium','price_list_item');
-    }
-    if($cookies.get('subObjectsOne')==null || $cookies.get('subObjectsOne')=="" || $cookies.get('subObjectsOne')!='item'){
-       $cookies.put('subObjectsOne','item');
-    }
-    if($cookies.get('subObjectsTwo')==null || $cookies.get('subObjectsTwo')=="" || $cookies.get('subObjectsTwo')!='price_list'){
-       $cookies.put('subObjectsTwo','price_list');
-    }
-    if($cookies.get('subObjectsThree')==null || $cookies.get('subObjectsThree')=="" || $cookies.get('subObjectsThree')!='currency'){
-       $cookies.put('subObjectsThree','currency');
-    }
+    $cookies.put('repositorium','price_list_item');
+    $cookies.put('subObjectsOne','item');
+    $cookies.put('subObjectsTwo','price_list');
+    $cookies.put('subObjectsThree','currency');
+    $cookies.put('subObjectsFour',null);
 
     if($cookies.get('state')==null || $cookies.get('state')==""){
        $cookies.put('state','edit');
     }
 
-    /*if(myService.get()==null){
-        $scope.setObjects();
-     }else{
-        $http.get('/settlements/searchByCountry/'+myService.get())
-         .success(function(response){
-             $scope.objects = response;
-             myService.set(null);
-         });
-     }*/
       $scope.setObjects();
       $scope.setSubObjects();
       $scope.setSubObjectsTwo();
@@ -43,7 +27,7 @@ app.controller("price_list_item_controller", function($scope,$http,$cookies,$loc
          if($scope.state=="edit"){
              $scope.obj={};
              $scope.obj.price_list_item_id=$(event.currentTarget).find(".id").html();
-             $scope.obj.price=$(event.currentTarget).find(".price").html();
+             $scope.obj.price=parseFloat($(event.currentTarget).find(".price").html());
 
              i=$(event.currentTarget).find(".item_id").html();
              var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.item_id === +i; })[ 0 ];
@@ -66,7 +50,7 @@ app.controller("price_list_item_controller", function($scope,$http,$cookies,$loc
               if($scope.state=="edit"){
                   $scope.obj={};
                   $scope.obj.price_list_item_id=item.find(".id").html();
-                  $scope.obj.price=item.find(".price").html();
+                  $scope.obj.price=parseFloat(item.find(".price").html());
 
                    i=item.find(".item_id").html();
                    var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.item_id === +i; })[ 0 ];

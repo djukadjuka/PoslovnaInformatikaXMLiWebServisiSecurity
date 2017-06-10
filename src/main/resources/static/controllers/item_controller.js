@@ -2,7 +2,7 @@ app.controller("item_controller", function($scope,$http,$cookies,$location,$wind
 
     angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
-    if($cookies.get('repositorium')==null || $cookies.get('repositorium')=="" || $cookies.get('repositorium')!='item'){
+    /*if($cookies.get('repositorium')==null || $cookies.get('repositorium')=="" || $cookies.get('repositorium')!='item'){
        $cookies.put('repositorium','item');
     }
     if($cookies.get('subObjectsOne')==null || $cookies.get('subObjectsOne')=="" || $cookies.get('subObjectsOne')!='item_group'){
@@ -10,7 +10,13 @@ app.controller("item_controller", function($scope,$http,$cookies,$location,$wind
     }
     if($cookies.get('subObjectsTwo')==null || $cookies.get('subObjectsTwo')=="" || $cookies.get('subObjectsTwo')!='units_of_measurement'){
        $cookies.put('subObjectsTwo','units_of_measurement');
-    }
+    }*/
+
+    $cookies.put('repositorium','item');
+    $cookies.put('subObjectsOne','item_group');
+    $cookies.put('subObjectsTwo','units_of_measurement');
+    $cookies.put('subObjectsThree',null);
+    $cookies.put('subObjectsFour',null);
 
     if($cookies.get('state')==null || $cookies.get('state')==""){
        $cookies.put('state','edit');

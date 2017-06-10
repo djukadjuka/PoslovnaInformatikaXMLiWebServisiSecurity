@@ -48,7 +48,6 @@ public class Price_listController {
 
     @RequestMapping(value = "/copyPriceList/{id}/{date}/{percent}", method = RequestMethod.POST)
     public void copyPriceList(@PathVariable Long id, @PathVariable Long date, @PathVariable double percent) {
-        System.out.println("usao");
         service.copyPriceList(id,date,percent);
     }
 }
