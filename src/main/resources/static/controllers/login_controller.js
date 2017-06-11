@@ -1,16 +1,15 @@
-app.controller('login_controller', function($rootScope, $scope, $http, $location,$q,$window) {
+app.controller('login_controller', function($rootScope, $scope, $http, $location,$q,$window,$cookies) {
 
   $scope.credentials = {};
 
   $scope.login = function() {
-    alert("klik na login");
     console.log($scope.credentials);
     var payload = {
-                    username: $scope.credentials.username,
-                    password: $scope.credentials.password
-                };
+        username: $scope.credentials.username,
+        password: $scope.credentials.password
+    };
 
-    /*$.ajax({
+    $.ajax({
         url: "/auth",
         type: "POST",
         data: JSON.stringify(payload),
@@ -18,16 +17,16 @@ app.controller('login_controller', function($rootScope, $scope, $http, $location
         dataType: "json",
         success: function (data, textStatus, jqXHR) {
             console.log("proslo");
-            console.log(data);
-            sessionService.setAuthToken(data.token);
+            $cookies.put("token",data.token);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            console.log("greska");
+            console.log("nije proslo");
         }
-    });*/
+    });
     };
 
   $scope.logout = function() {
     alert("klik na logout");
+    $cookies.put("token",null);
   }
 });

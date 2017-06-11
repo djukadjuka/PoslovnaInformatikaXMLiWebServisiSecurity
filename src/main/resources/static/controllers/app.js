@@ -84,6 +84,6 @@ app.config(function($routeProvider,$locationProvider){
             controller: 'login_controller'
         })
         .otherwise(
-            { redirectTo: '/'}
+            { redirectTo: '/login'}
         );
 });
