@@ -1,5 +1,8 @@
-package com.company.invoicing.security;
+package com.company.invoicing.services;
 
+import com.company.invoicing.models.User;
+import com.company.invoicing.repositoriums.UserRepository;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,8 @@ public class UserService {
     private UserRepository userRepository;
 
     public void save(User user) {
+        String password = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        user.setPassword(password);
         userRepository.saveAndFlush(user);
     }
 
@@ -31,6 +36,8 @@ public class UserService {
     }
 
     public void update(User user) {
+        String password = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        user.setPassword(password);
         userRepository.saveAndFlush(user);
     }
 
@@ -49,7 +56,7 @@ public class UserService {
         return null;
     }
 
-    /*public User findByUsername(String username){
+    public User findByUsername(String username){
         return userRepository.findByUsername(username);
-    }*/
+    }
 }

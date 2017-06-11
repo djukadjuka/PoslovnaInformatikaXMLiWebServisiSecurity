@@ -1,4 +1,4 @@
-package com.company.invoicing.security;
+package com.company.invoicing.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -1,8 +1,6 @@
 package com.company.invoicing.models;
 
-import com.company.invoicing.security.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 import javax.persistence.*;
 import java.util.List;

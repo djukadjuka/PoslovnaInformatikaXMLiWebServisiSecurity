@@ -1,5 +1,7 @@
-package com.company.invoicing.security;
+package com.company.invoicing.controllers;
 
+import com.company.invoicing.models.User;
+import com.company.invoicing.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +37,7 @@ public class UserController {
     }
 
     //@CustomAnnotation("users-delete")
-    @RequestMapping(value = "/delete/{user_id}" , method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}" , method = RequestMethod.DELETE)
     public void delete(@PathVariable Long id){
         service.delete(id);
     }

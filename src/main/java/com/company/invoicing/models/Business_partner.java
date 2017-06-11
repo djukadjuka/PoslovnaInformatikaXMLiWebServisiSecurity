@@ -1,6 +1,5 @@
 package com.company.invoicing.models;
 
-import com.company.invoicing.security.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

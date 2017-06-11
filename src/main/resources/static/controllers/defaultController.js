@@ -139,7 +139,6 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http','
          $scope.setSubObjectsTwo=function(){
              $http.get('/'+$cookies.get('subObjectsTwo'))
                    .then(function(response){
-                        console.log("usao");
                        $scope.subObjectsTwo = response.data;
                        $scope.objectsTwo=angular.copy($scope.subObjectsTwo);
                    });

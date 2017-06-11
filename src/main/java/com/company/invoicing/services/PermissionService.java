@@ -1,5 +1,7 @@
-package com.company.invoicing.security;
+package com.company.invoicing.services;
 
+import com.company.invoicing.models.Permission;
+import com.company.invoicing.repositoriums.PermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,4 @@
-package com.company.invoicing.security;
-
-import com.company.invoicing.models.Business_partner;
-import com.company.invoicing.models.Company;
+package com.company.invoicing.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

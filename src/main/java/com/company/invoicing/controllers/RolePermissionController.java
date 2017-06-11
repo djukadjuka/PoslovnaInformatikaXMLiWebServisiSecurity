@@ -1,5 +1,7 @@
-package com.company.invoicing.security;
+package com.company.invoicing.controllers;
 
+import com.company.invoicing.models.RolePermission;
+import com.company.invoicing.services.RolePermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,5 +1,6 @@
-package com.company.invoicing.security;
+package com.company.invoicing.repositoriums;
 
+import com.company.invoicing.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

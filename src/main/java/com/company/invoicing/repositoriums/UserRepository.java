@@ -1,5 +1,6 @@
-package com.company.invoicing.security;
+package com.company.invoicing.repositoriums;
 
+import com.company.invoicing.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

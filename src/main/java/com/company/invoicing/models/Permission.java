@@ -1,4 +1,4 @@
-package com.company.invoicing.security;
+package com.company.invoicing.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -10,37 +10,31 @@ import java.util.List;
  * Created by User on 6/1/2017.
  */
 @Entity
-public class Role {
+public class Permission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long role_id;
+    private long permission_id;
 
     @NotNull
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy="role")
-    private List<User> users;
-
-    @JsonIgnore
-    @OneToMany(mappedBy="role")
+    @OneToMany(mappedBy="permission")
     private List<RolePermission> roles_permissions;
 
-
-    public Role(long role_id, String name,List<User> users,List<RolePermission> roles_permissions) {
-        this.role_id = role_id;
+    public Permission(long permission_id, String name, List<RolePermission> roles_permissions) {
+        this.permission_id = permission_id;
         this.name = name;
-        this.users=users;
         this.roles_permissions=roles_permissions;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public Permission(String name, List<RolePermission> roles_permissions) {
+        this.name = name;
+        this.roles_permissions=roles_permissions;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public Permission() {
     }
 
     public List<RolePermission> getRoles_permissions() {
@@ -51,22 +45,12 @@ public class Role {
         this.roles_permissions = roles_permissions;
     }
 
-    public Role(String name, List<User> users, List<RolePermission> roles_permissions) {
-        this.name = name;
-        this.users=users;
-        this.roles_permissions=roles_permissions;
-
+    public long getPermission_id() {
+        return permission_id;
     }
 
-    public Role() {
-    }
-
-    public long getRole_id() {
-        return role_id;
-    }
-
-    public void setRole_id(long role_id) {
-        this.role_id = role_id;
+    public void setPermission_id(long permission_id) {
+        this.permission_id = permission_id;
     }
 
     public String getName() {
