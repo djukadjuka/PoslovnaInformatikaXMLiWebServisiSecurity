@@ -59,4 +59,11 @@ public class UserService {
     public User findByUsername(String username){
         return userRepository.findByUsername(username);
     }
+
+    public void change_password(String username, String password){
+        User user=userRepository.findByUsername(username);
+        password = BCrypt.hashpw(password, BCrypt.gensalt());
+        user.setPassword(password);
+        userRepository.save(user);
+    }
 }

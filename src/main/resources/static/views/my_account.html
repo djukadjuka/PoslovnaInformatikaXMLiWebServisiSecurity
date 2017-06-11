@@ -1,0 +1,61 @@
+<div ng-controller="my_account_controller">
+
+    <h1>My account</h1>
+
+    <div class = "panel">
+        <form name="userForm">
+            <p>
+                <input type = "hidden" ng-model="obj.user_id"/>
+            </p>
+            <p>
+                <label>Username</label>
+                <input type = "text" name="username" ng-model="obj.username" readonly />
+            </p>
+            <p>
+                <label>Password</label>
+                <input type = "text" name="password" ng-model="obj.password" readonly />
+            </p>
+
+            <p>
+                <label>Company</label>
+                <!--<select ng-model="obj.company" name="company" ng-options="soo.name for soo in subObjectsOne track by soo.company_id" id="selectOne" readonly>
+                </select>-->
+                <input type = "text" name="company" ng-model="obj.company.name" readonly />
+            </p>
+            <p>
+                <label>Business partner</label>
+                <!--<select ng-model="obj.business_partner" name="business_partner" ng-options="sot.name for sot in subObjectsTwo track by sot.business_partner_id" id="selectTwo" readonly >
+                </select>-->
+                <input type = "text" name="business_partner" ng-model="obj.business_partner.name" readonly />
+            </p>
+
+            <p>
+                <label>Role</label>
+                <!--<select ng-model="obj.role" name="business_partner" ng-options="soth.name for soth in subObjectsThree track by soth.role_id" id="selectThree" readonly >
+                </select>-->
+                <input type = "text" name="role" ng-model="obj.role.name" readonly />
+            </p>
+
+            <p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.date.$invalid && !userForm.date.$pristine }">
+                    <label>New password</label>
+                    <input type = "text" name="newPassword" ng-model="newPassword" required />
+                    <div ng-if="state!='search'">
+                        <div ng-messages="userForm.newPassword.$error" >
+                            <div ng-messages-include="views/messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+
+            <p>
+            <div id = "formActions">
+                <button ng-click="changePassword(newPassword)" class="btn btn-danger" ng-disabled="userForm.$invalid" style="margin-left:6em">Change Password</button>
+            </div>
+            </p>
+        </form>
+    </div>
+
+    <p><h1>STANJE:{{state}}</h1></p>
+
+</div>

@@ -54,5 +54,10 @@ public class UserController {
         return service.authenticate(user);
     }
 
+    @RequestMapping(value="/change_password/{username}/{password}", method = RequestMethod.POST)
+    public void change_password(@PathVariable String username, @PathVariable String password){
+        service.change_password(username,password);
+    }
+
 
 }

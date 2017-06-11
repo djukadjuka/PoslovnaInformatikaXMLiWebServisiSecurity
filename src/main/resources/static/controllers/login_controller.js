@@ -1,5 +1,12 @@
 app.controller('login_controller', function($rootScope, $scope, $http, $location,$q,$window,$cookies) {
 
+  if($cookies.get("token")!=null)
+    $scope.logged=true;
+  else{
+    $scope.logged=false;
+    window.location.href="#/login";
+  }
+
   $scope.credentials = {};
 
   $scope.login = function() {
@@ -18,6 +25,8 @@ app.controller('login_controller', function($rootScope, $scope, $http, $location
         success: function (data, textStatus, jqXHR) {
             console.log("proslo");
             $cookies.put("token",data.token);
+            window.location.href="#/my_account";
+            location.reload();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("nije proslo");
@@ -28,5 +37,7 @@ app.controller('login_controller', function($rootScope, $scope, $http, $location
   $scope.logout = function() {
     alert("klik na logout");
     $cookies.put("token",null);
+    $scope.logged=false;
+    window.location.href="#/login";
   }
 });
