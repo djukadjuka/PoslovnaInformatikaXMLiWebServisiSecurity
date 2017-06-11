@@ -1,7 +1,7 @@
 package com.company.invoicing.models;
 
+import com.company.invoicing.security.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 import javax.persistence.*;
 import java.util.List;
@@ -74,7 +74,19 @@ public class Business_partner{
     @OneToMany(mappedBy="business_partner")
     private List<Purchase_order> purchase_orders;
 
-    public Business_partner(List<Invoice> invoices, Company company, String name, int tin, String current_account, String city, String adress, String telephone, int personal_number, String type_of_bp, List<Purchase_order> purchase_orders){
+    @JsonIgnore
+    @OneToMany(mappedBy="business_partner")
+    private List<User> users;
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public Business_partner(List<Invoice> invoices, Company company, String name, int tin, String current_account, String city, String adress, String telephone, int personal_number, String type_of_bp, List<Purchase_order> purchase_orders, List<User> users){
         super();
         this.invoices = invoices;
         this.company = company;
@@ -87,10 +99,11 @@ public class Business_partner{
         this.personal_number = personal_number;
         this.type_of_bp = type_of_bp;
         this.purchase_orders = purchase_orders;
+        this.users=users;
 
     }
 
-    public Business_partner(long business_partner_id, List<Invoice> invoices, Company company, String name, int tin, String current_account, String city, String adress, String telephone, int personal_number, String type_of_bp, List<Purchase_order> purchase_orders){
+    public Business_partner(long business_partner_id, List<Invoice> invoices, Company company, String name, int tin, String current_account, String city, String adress, String telephone, int personal_number, String type_of_bp, List<Purchase_order> purchase_orders, List<User> users){
         super();
         this.business_partner_id = business_partner_id;
         this.invoices = invoices;
@@ -104,6 +117,7 @@ public class Business_partner{
         this.personal_number = personal_number;
         this.type_of_bp = type_of_bp;
         this.purchase_orders = purchase_orders;
+        this.users=users;
     }
 
     public Business_partner(){}

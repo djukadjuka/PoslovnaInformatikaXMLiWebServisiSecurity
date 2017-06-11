@@ -1,0 +1,219 @@
+<div ng-controller="user_controller">
+
+    <h1>Users</h1>
+
+    <table id="table">
+        <tr class = "header">
+            <th>ID</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Company ID</th>
+            <th>Company name</th>
+            <th>Business partner ID</th>
+            <th>Business partner name</th>
+            <th>Role ID</th>
+            <th>Role name</th>
+        </tr>
+        <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
+            <td class="id">{{o.user_id}}</td>
+            <td class="username">{{o.username}}</td>
+            <td class="password">{{o.password}}</td>
+
+            <td class="company_id">{{o.company.company_id}}</td>
+            <td class="company_name">{{o.company.name}}</td>
+            <td class="business_partner_id">{{o.business_partner.business_partner_id}}</td>
+            <td class="business_partner_name">{{o.business_partner.name}}</td>
+            <td class="role_id">{{o.role.role_id}}</td>
+            <td class="role_name">{{o.role.name}}</td>
+        </tr>
+    </table>
+
+    <div class = "panel">
+        <form name="userForm">
+            <p>
+                <input type = "hidden" ng-model="obj.user_id"/>
+            </p>
+            <p>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.date.$invalid && !userForm.date.$pristine }">
+                <label>Username</label>
+                <input type = "text" name="username" ng-model="obj.username" required />
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.username.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            </p>
+            <p>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.date.$invalid && !userForm.date.$pristine }">
+                <label>Password</label>
+                <input type = "text" name="password" ng-model="obj.password" required />
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.password.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            </p>
+
+            <p>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <label>Company</label>
+                <select ng-model="obj.company" name="company" ng-options="soo.name for soo in subObjectsOne track by soo.company_id" id="selectOne" required>
+                </select>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.company.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            </p>
+            <p>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <label>Business partner</label>
+                <select ng-model="obj.business_partner" name="business_partner" ng-options="sot.name for sot in subObjectsTwo track by sot.business_partner_id" id="selectTwo" ng-disabled="obj.company==null" >
+                </select>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTwo" ng-disabled="obj.company==null">...</button>
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.business_partner.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            </p>
+            <p>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <label>Fiscal year</label>
+                <select ng-model="obj.role" name="role" ng-options="soth.name for soth in subObjectsThree track by soth.role_id" id="selectThree" ng-disabled="obj.business_partner!=null" required>
+                </select>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThree" ng-disabled="obj.business_partner!=null" >...</button>
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.role.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            </p>
+
+            <p>
+            <div id = "formActions">
+                <button ng-click="accept(obj)" class="btn btn-primary" ng-disabled="userForm.$invalid && (state!='search')" style="margin-left:6em">Accept</button>
+                <a id="rollback" style="margin-left:1em">Rollback</a>
+            </div>
+            </p>
+        </form>
+    </div>
+
+    <p><h1>STANJE:{{state}}</h1></p>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalOne" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Companies
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>TIN</th>
+                            <th>City</th>
+                            <th>Adress</th>
+                            <th>Telephone</th>
+                            <th>Company number</th>
+                            <th>Current account</th>
+                        </tr>
+                        <tr ng-repeat="soo in subObjectsOne" ng-click="fook($event, soo)" >
+                            <td class="sooid">{{soo.company_id}}</td>
+                            <td class="sooname">{{soo.name}}</td>
+                            <td class="sootin">{{soo.tin}}</td>
+                            <td class="soocity">{{soo.city}}</td>
+                            <td class="sooadress">{{soo.adress}}</td>
+                            <td class="sootelephone">{{soo.telephone}}</td>
+                            <td class="soocompany_number">{{soo.company_number}}</td>
+                            <td class="soocurrent_account">{{soo.current_account}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "moPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalTwo" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Business partners
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>TIN</th>
+                            <th>City</th>
+                            <th>Adress</th>
+                            <th>Telephone</th>
+                            <th>Personal number</th>
+                            <th>Current account</th>
+                            <th>Type of BP</th>
+                            <th>Company ID</th>
+                            <th>Company name</th>
+                        </tr>
+                        <tr ng-repeat="sot in subObjectsTwo" ng-click="fookk($event, sot)" >
+                            <td class="sotid">{{sot.business_partner_id}}</td>
+                            <td class="sotname">{{sot.name}}</td>
+                            <td class="sottin">{{sot.tin}}</td>
+                            <td class="sotcity">{{sot.city}}</td>
+                            <td class="sotadress">{{sot.adress}}</td>
+                            <td class="sottelephone">{{sot.telephone}}</td>
+                            <td class="sotpersonal_number">{{sot.personal_number}}</td>
+                            <td class="sotcurrent_account">{{sot.current_account}}</td>
+                            <td class="sottype_of_bp">{{sot.type_of_bp}}</td>
+                            <td class="sotcompany_id">{{sot.company.company_id}}</td>
+                            <td class="sotcompany_name">{{sot.company.name}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "mtPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalThree" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Fiscal years
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                        </tr>
+                        <tr ng-repeat="soth in subObjectsThree" ng-click="fookkk($event, soth)" >
+                            <td class="sothid">{{soth.role_id}}</td>
+                            <td class="sothname">{{soth.name}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "mthPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

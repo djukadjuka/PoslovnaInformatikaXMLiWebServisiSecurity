@@ -1,0 +1,117 @@
+<div ng-controller="role_permission_controller">
+
+    <h1>RolePermissions</h1>
+
+    <table id="table">
+        <tr class = "header">
+            <th>ID</th>
+            <th>Role ID</th>
+            <th>Role name</th>
+            <th>Permission ID</th>
+            <th>Permission name</th>
+        </tr>
+        <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
+            <td class="id">{{o.rolepermission_id}}</td>
+            <td class="role_id">{{o.role.role_id}}</td>
+            <td class="role_name">{{o.role.name}}</td>
+            <td class="permission_id">{{o.permission.permission_id}}</td>
+            <td class="permission_name">{{o.permission.name}}</td>
+        </tr>
+    </table>
+
+    <div class = "panel">
+        <form name="userForm">
+            <p>
+                <input type = "hidden" ng-model="obj.rolepermission_id"/>
+            </p>
+            <p>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <label>Item group</label>
+                <select ng-model="obj.role" name="role" ng-options="soo.name for soo in subObjectsOne track by soo.role_id" id="selectionOne" required>
+                </select>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.role.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            </p>
+            <p>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <label>Units of measurement</label>
+                <select ng-model="obj.permission" name="permission" ng-options="sot.name for sot in subObjectsTwo track by sot.permission_id" id="selectTwo" required>
+                </select>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTwo">...</button>
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.permission.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            </p>
+
+            <p>
+            <div id = "formActions">
+                <button ng-click="accept(obj)" class="btn btn-primary" ng-disabled="userForm.$invalid && (state!='search')" style="margin-left:6em">Accept</button>
+                <a id="rollback" style="margin-left:1em">Rollback</a>
+            </div>
+            </p>
+        </form>
+    </div>
+
+    <p><h1>STANJE:{{state}}</h1></p>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalOne" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Roles
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                        </tr>
+                        <tr ng-repeat="soo in subObjectsOne" ng-click="fook($event, soo)" >
+                            <td class="sooid">{{soo.role_id}}</td>
+                            <td class="sooname">{{soo.name}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "moPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalTwo" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Permissions
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                        </tr>
+                        <tr ng-repeat="sot in subObjectsTwo" ng-click="fookk($event, sot)" >
+                            <td class="sotid">{{sot.permission_id}}</td>
+                            <td class="sotname">{{sot.name}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "mtPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

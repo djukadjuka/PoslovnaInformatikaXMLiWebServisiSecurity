@@ -1,5 +1,6 @@
 package com.company.invoicing.models;
 
+import com.company.invoicing.security.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
@@ -74,7 +75,19 @@ public class Company{
     @OneToMany(mappedBy="company")
     private List<Purchase_order> purchase_orders;
 
-    public Company(String name, int tin, String city, String adress, String telephone, int company_number, String current_account, List<Invoice> invoices, List<Business_partner> business_partners, List<Fiscal_year> fiscal_years, List<Purchase_order> purchase_orders){
+    @JsonIgnore
+    @OneToMany(mappedBy="company")
+    private List<User> users;
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public Company(String name, int tin, String city, String adress, String telephone, int company_number, String current_account, List<Invoice> invoices, List<Business_partner> business_partners, List<Fiscal_year> fiscal_years, List<Purchase_order> purchase_orders, List<User> users){
         super();
         this.name = name;
         this.tin = tin;
@@ -87,10 +100,10 @@ public class Company{
         this.business_partners = business_partners;
         this.fiscal_years = fiscal_years;
         this.purchase_orders = purchase_orders;
-
+        this.users=users;
     }
 
-    public Company(long company_id, String name, int tin, String city, String adress, String telephone, int company_number, String current_account, List<Invoice> invoices, List<Business_partner> business_partners, List<Fiscal_year> fiscal_years, List<Purchase_order> purchase_orders){
+    public Company(long company_id, String name, int tin, String city, String adress, String telephone, int company_number, String current_account, List<Invoice> invoices, List<Business_partner> business_partners, List<Fiscal_year> fiscal_years, List<Purchase_order> purchase_orders, List<User> users){
         super();
         this.company_id = company_id;
         this.name = name;
@@ -104,6 +117,7 @@ public class Company{
         this.business_partners = business_partners;
         this.fiscal_years = fiscal_years;
         this.purchase_orders = purchase_orders;
+        this.users=users;
     }
 
     public Company(){}

@@ -62,6 +62,27 @@ app.config(function($routeProvider,$locationProvider){
             templateUrl:'/views/invoice_item.html',
             controller: 'invoice_item_controller'
         })
+
+        .when('/role',{
+            templateUrl:'/views/role.html',
+            controller: 'role_controller'
+        })
+        .when('/permission',{
+            templateUrl:'/views/permission.html',
+            controller: 'permission_controller'
+        })
+        .when('/role_permission',{
+            templateUrl:'/views/role_permission.html',
+            controller: 'role_permission_controller'
+        })
+        .when('/user',{
+            templateUrl:'/views/user.html',
+            controller: 'user_controller'
+        })
+        .when('/login',{
+            templateUrl:'/views/login.html',
+            controller: 'login_controller'
+        })
         .otherwise(
             { redirectTo: '/'}
         );

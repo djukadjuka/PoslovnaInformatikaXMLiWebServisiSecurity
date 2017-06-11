@@ -1,0 +1,42 @@
+<div ng-controller="permission_controller">
+
+    <h1>Permissions</h1>
+
+    <table id="table">
+        <tr class = "header">
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+        <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
+            <td class="id">{{o.permission_id}}</td>
+            <td class="name">{{o.name}}</td>
+        </tr>
+    </table>
+
+    <div class = "panel">
+        <form name="userForm">
+            <p>
+                <input type = "hidden" ng-model="obj.permission_id"/>
+            </p>
+            <p>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <label>Name</label>
+                <input type="text" name="name" ng-model="obj.name" ng-minlength="3" ng-maxlength="50" required>
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.name.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            </p>
+            <p>
+            <div id = "formActions">
+                <button ng-click="accept(obj)" class="btn btn-primary" ng-disabled="userForm.$invalid && (state!='search')" style="margin-left:6em">Accept</button>
+                <a id="rollback" style="margin-left:1em">Rollback</a>
+            </div>
+            </p>
+        </form>
+    </div>
+
+    <p><h1>STANJE:{{state}}</h1></p>
+</div>

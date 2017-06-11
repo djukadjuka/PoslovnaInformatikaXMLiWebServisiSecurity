@@ -33,9 +33,15 @@
     <script src="/controllers/purchase_order_item_controller.js"></script>
     <script src="/controllers/invoice_controller.js"></script>
     <script src="/controllers/invoice_item_controller.js"></script>
+
+    <script src="/controllers/role_controller.js"></script>
+    <script src="/controllers/permission_controller.js"></script>
+    <script src="/controllers/role_permission_controller.js"></script>
+    <script src="/controllers/user_controller.js"></script>
+    <script src="/controllers/login_controller.js"></script>
 </head>
 <body ng-app="app">
-    <nav class="navbar navbar-dark red">
+    <nav class="navbar navbar-dark red" ng-controller="login_controller">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
@@ -54,10 +60,15 @@
                     <li><a href="#/purchase_order_item">Purchase order item</a></li>
                     <li><a href="#/invoice">Invoice</a></li>
                     <li><a href="#/invoice_item">Invoice item</a></li>
+
+                    <li><a href="#/role">Role</a></li>
+                    <li><a href="#/permission">Permission</a></li>
+                    <li><a href="#/role_permission">Role Permission</a></li>
+                    <li><a href="#/user">User</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a>Uloguj se</a></li>
-                    <li><a>Izloguj se</a></li>
+                    <li><a href="#/login">Log in</a></li>
+                    <li><a ng-click="logout()">Log out</a></li>
                 </ul>
             </div>
         </div>

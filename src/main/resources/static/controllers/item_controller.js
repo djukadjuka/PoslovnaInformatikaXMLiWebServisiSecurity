@@ -2,16 +2,6 @@ app.controller("item_controller", function($scope,$http,$cookies,$location,$wind
 
     angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
-    /*if($cookies.get('repositorium')==null || $cookies.get('repositorium')=="" || $cookies.get('repositorium')!='item'){
-       $cookies.put('repositorium','item');
-    }
-    if($cookies.get('subObjectsOne')==null || $cookies.get('subObjectsOne')=="" || $cookies.get('subObjectsOne')!='item_group'){
-       $cookies.put('subObjectsOne','item_group');
-    }
-    if($cookies.get('subObjectsTwo')==null || $cookies.get('subObjectsTwo')=="" || $cookies.get('subObjectsTwo')!='units_of_measurement'){
-       $cookies.put('subObjectsTwo','units_of_measurement');
-    }*/
-
     $cookies.put('repositorium','item');
     $cookies.put('subObjectsOne','item_group');
     $cookies.put('subObjectsTwo','units_of_measurement');
@@ -22,15 +12,6 @@ app.controller("item_controller", function($scope,$http,$cookies,$location,$wind
        $cookies.put('state','edit');
     }
 
-    /*if(myService.get()==null){
-        $scope.setObjects();
-     }else{
-        $http.get('/settlements/searchByCountry/'+myService.get())
-         .success(function(response){
-             $scope.objects = response;
-             myService.set(null);
-         });
-     }*/
       $scope.setObjects();
       $scope.setSubObjects();
       $scope.setSubObjectsTwo();
