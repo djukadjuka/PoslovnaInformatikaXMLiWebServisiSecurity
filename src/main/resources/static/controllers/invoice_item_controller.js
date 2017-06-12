@@ -5,12 +5,29 @@ app.controller("invoice_item_controller", function($scope,$http,$cookies,$locati
     $cookies.put('repositorium','invoice_item');
     $cookies.put('subObjectsOne','invoice');
     $cookies.put('subObjectsTwo',null);
-    $http.get('/item/findAllValid')
+    /*$http.get('/item/findAllValid')
        .then(function(response){
            console.log(response);
            $scope.subObjectsTwo = response.data;
            $scope.objectsTwo=angular.copy($scope.subObjectsTwo);
-       });
+       });*/
+    $.ajax({
+        url: '/item/findAllValid',
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        headers: $scope.createAuthorizationTokenHeader(),
+        success: function (data, textStatus, jqXHR) {
+            console.log("proslo");
+            $scope.$apply(function() {
+                $scope.subObjectsTwo = data;
+                $scope.objectsTwo=angular.copy($scope.subObjectsTwo);
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("nije proslo");
+        }
+    });
 
     $cookies.put('subObjectsThree','price_list_item');
     $cookies.put('subObjectsFour','vat_rate');

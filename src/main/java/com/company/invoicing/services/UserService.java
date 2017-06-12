@@ -36,8 +36,11 @@ public class UserService {
     }
 
     public void update(User user) {
-        String password = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-        user.setPassword(password);
+        User oldUser=userRepository.findOne(user.getUser_id());
+        if(!oldUser.getPassword().equals(user.getPassword())) {
+            String password = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+            user.setPassword(password);
+        }
         userRepository.saveAndFlush(user);
     }
 

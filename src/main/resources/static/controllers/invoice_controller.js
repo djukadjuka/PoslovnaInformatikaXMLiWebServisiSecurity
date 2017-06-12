@@ -190,10 +190,28 @@ app.controller("invoice_controller", function($scope,$http,$cookies,$location,$w
                 i=$("#highlightedFour").find(".sofid").html();
                 $('#modalFour').modal('toggle');
 
-                $http.post('/'+$cookies.get('repositorium')+'/generateInvoice/'+i)
+                /*$http.post('/'+$cookies.get('repositorium')+'/generateInvoice/'+i)
                    .then(function(response){
                         alert("zavrsio");
-                   });
+                   });*/
+                $.ajax({
+                    url: '/'+$cookies.get('repositorium')+'/generateInvoice/'+i,
+                    type: "POST",
+                    //data: object,
+                    contentType: "application/json; charset=utf-8",
+                    //dataType: "json",
+                    headers: $scope.createAuthorizationTokenHeader(),
+                    success: function (data, textStatus, jqXHR) {
+                        console.log("proslo");
+                        $scope.$apply(function() {
+                            $scope.obj={};
+                            $scope.setObjects();
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log("nije proslo");
+                    }
+                });
                 //var result=$scope.subObjectsThree.filter(function( obj ) { return +obj.fiscal_year_id === +i; })[ 0 ];
                 //$scope.obj.fiscal_year=result;
             });

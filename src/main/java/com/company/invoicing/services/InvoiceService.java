@@ -97,7 +97,8 @@ public class InvoiceService {
         invoice.setBusiness_partner(purchase_order.getBusiness_partner());
         invoice.setFiscal_year(purchase_order.getFiscal_year());
         invoice.setBilling_account(purchase_order.getCompany().getCurrent_account());
-        invoice.setInvoice_number(111);
+        invoice.setInvoice_number(invoice.getFiscal_year().getInvoices().size() + 1);
+        //invoice.setInvoice_number(111);
         invoice.setReference_number("97");
         invoice.setDate(new Date());
         invoice.setDate_of_currency(new Date());

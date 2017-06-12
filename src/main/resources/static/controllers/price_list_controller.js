@@ -50,10 +50,28 @@ app.controller("price_list_controller", function($scope,$http,$cookies,$location
                }else
                     $scope.percent=100-$scope.percent;
                console.log($scope.percent);
-               $http.post('/'+$cookies.get('repositorium')+'/copyPriceList/'+$scope.obj.price_list_id+'/'+(new Date($scope.valid_from)).getTime()+'/'+$scope.percent)
+               /*$http.post('/'+$cookies.get('repositorium')+'/copyPriceList/'+$scope.obj.price_list_id+'/'+(new Date($scope.valid_from)).getTime()+'/'+$scope.percent)
                   .then(function(response){
                       alert("proslo");
-                  });
+                  });*/
+               $.ajax({
+                   url: '/'+$cookies.get('repositorium')+'/copyPriceList/'+$scope.obj.price_list_id+'/'+(new Date($scope.valid_from)).getTime()+'/'+$scope.percent,
+                   type: "POST",
+                   //data: object,
+                   contentType: "application/json; charset=utf-8",
+                   //dataType: "json",
+                   headers: $scope.createAuthorizationTokenHeader(),
+                   success: function (data, textStatus, jqXHR) {
+                       console.log("proslo");
+                       $scope.$apply(function() {
+                           $scope.obj={};
+                           $scope.setObjects();
+                       });
+                   },
+                   error: function (jqXHR, textStatus, errorThrown) {
+                       console.log("nije proslo");
+                   }
+               });
                $('#modalOne').modal('toggle');
            });
        });

@@ -5,12 +5,29 @@ app.controller("purchase_order_item_controller", function($scope,$http,$cookies,
     $cookies.put('repositorium','purchase_order_item');
     $cookies.put('subObjectsOne','purchase_order');
     $cookies.put('subObjectsTwo',null);
-    $http.get('/item/findAllValid')
+    /*$http.get('/item/findAllValid')
        .then(function(response){
            console.log(response);
            $scope.subObjectsTwo = response.data;
            $scope.objectsTwo=angular.copy($scope.subObjectsTwo);
-       });
+       });*/
+    $.ajax({
+        url: '/item/findAllValid',
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        headers: $scope.createAuthorizationTokenHeader(),
+        success: function (data, textStatus, jqXHR) {
+            console.log("proslo");
+            $scope.$apply(function() {
+                $scope.subObjectsTwo = data;
+                $scope.objectsTwo=angular.copy($scope.subObjectsTwo);
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("nije proslo");
+        }
+    });
 
     $cookies.put('subObjectsThree','price_list_item');
     $cookies.put('subObjectsFour',null);

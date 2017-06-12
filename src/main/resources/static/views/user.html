@@ -1,5 +1,21 @@
 <div ng-controller="user_controller">
 
+    <p>
+    <ul>
+        <li><a id = "search"><img src="images/search.gif"/></a></li>
+        <li><a id = "refresh"><img src="images/refresh.gif"/></a></li>
+        <li><a href="#" id = "pickup"><img src="images/zoom-pickup.gif"/></a></li>
+        <li><a href="#" id = "help"><img src="images/help.gif"/></a></li>
+        <li><a id = "first"><img src="images/first.gif"/></a></li>
+        <li><a id = "prev"><img src="images/prev.gif"/></a></li>
+        <li><a id = "next"><img src="images/next.gif"/></a></li>
+        <li><a id = "last"><img src="images/last.gif"/></a></li>
+        <li><a id = "add"><img src="images/add.gif"/></a></li>
+        <li><a id = "remove"><img src="images/remove.gif"/></a></li>
+        <li><a id = "nextform"><img src="images/nextform.gif"/></a></li>
+    </ul>
+    </p>
+
     <h1>Users</h1>
 
     <table id="table">
@@ -84,7 +100,7 @@
             </p>
             <p>
             <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-                <label>Fiscal year</label>
+                <label>Role</label>
                 <select ng-model="obj.role" name="role" ng-options="soth.name for soth in subObjectsThree track by soth.role_id" id="selectThree" ng-disabled="obj.business_partner!=null" required>
                 </select>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThree" ng-disabled="obj.business_partner!=null" >...</button>

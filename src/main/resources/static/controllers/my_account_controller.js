@@ -1,5 +1,7 @@
 app.controller("my_account_controller", function($scope,$http,$cookies,$location,$window,$controller){
 
+    //$('#toolbar').load("/views/toolbar.html");
+
     $scope.obj={};
 
     $.ajax({

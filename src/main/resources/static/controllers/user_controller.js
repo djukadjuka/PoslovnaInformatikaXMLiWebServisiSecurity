@@ -65,10 +65,10 @@ app.controller("user_controller", function($scope,$http,$cookies,$location,$wind
                    $scope.obj.company=result;
 
 
-                  var res=$scope.objectsTwo.filter(function (el) {
+                  /*var res=$scope.objectsTwo.filter(function (el) {
                         return el.company.company_id==i && el.type_of_bp!="supplier";
                       });
-                   $scope.subObjectsTwo=res;
+                   $scope.subObjectsTwo=res;*/
                    ii=item.find(".business_partner_id").html();
                    var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.business_partner_id === +ii; })[ 0 ];
                    $scope.obj.business_partner=resultt;

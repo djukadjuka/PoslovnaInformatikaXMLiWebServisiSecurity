@@ -169,9 +169,24 @@ app.controller("purchase_order_controller", function($scope,$http,$cookies,$loca
         });
 
         $scope.exportToXML=function(id){
-            $http.post('/'+$cookies.get('repositorium')+'/exportToXML/'+id)
+            /*$http.post('/'+$cookies.get('repositorium')+'/exportToXML/'+id)
                .then(function(response){
                     alert("zavrsio");
-               });
+               });*/
+
+            $.ajax({
+                url: '/'+$cookies.get('repositorium')+'/exportToXML/'+id,
+                type: "POST",
+                //data: object,
+                contentType: "application/json; charset=utf-8",
+                //dataType: "json",
+                headers: $scope.createAuthorizationTokenHeader(),
+                success: function (data, textStatus, jqXHR) {
+                    console.log("proslo");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("nije proslo");
+                }
+            });
         };
 });

@@ -44,7 +44,7 @@
             <total_price>4000.0</total_price>
             <item itemId="210">
                 <units_of_measurement unitsOfMeasurementId="201">
-                    <abbreviation>kg</abbreviation>
+                    <abbreviation>kgm</abbreviation>
                     <name>kilogram</name>
                 </units_of_measurement>
                 <name>sto</name>

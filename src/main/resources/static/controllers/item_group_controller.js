@@ -2,13 +2,6 @@ app.controller("item_group_controller", function($scope,$http,$cookies,$location
 
     angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
-    /*if($cookies.get('repositorium')==null || $cookies.get('repositorium')=="" || $cookies.get('repositorium')!='item_group'){
-       $cookies.put('repositorium','item_group');
-    }
-    if($cookies.get('subObjectsOne')==null || $cookies.get('subObjectsOne')=="" || $cookies.get('subObjectsOne')!='vat_type'){
-       $cookies.put('subObjectsOne','vat_type');
-    }*/
-
     $cookies.put('repositorium','item_group');
     $cookies.put('subObjectsOne','vat_type');
     $cookies.put('subObjectsTwo',null);
@@ -19,17 +12,6 @@ app.controller("item_group_controller", function($scope,$http,$cookies,$location
        $cookies.put('state','edit');
     }
 
-
-
-    /*if(myService.get()==null){
-        $scope.setObjects();
-     }else{
-        $http.get('/settlements/searchByCountry/'+myService.get())
-         .success(function(response){
-             $scope.objects = response;
-             myService.set(null);
-         });
-     }*/
       $scope.setObjects();
       $scope.setSubObjects();
 
