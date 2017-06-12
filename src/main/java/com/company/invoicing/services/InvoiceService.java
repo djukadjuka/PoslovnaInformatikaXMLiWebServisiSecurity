@@ -111,4 +111,8 @@ public class InvoiceService {
 
     }
 
+    public List<Invoice_item> allIIs(Long id) {
+        Invoice invoice=repository.findOne(id);
+        return invoice.getInvoice_items();
+    }
 }

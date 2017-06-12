@@ -1,6 +1,7 @@
 package com.company.invoicing.controllers;
 
 import com.company.invoicing.models.Purchase_order;
+import com.company.invoicing.models.Purchase_order_item;
 import com.company.invoicing.services.Purchase_orderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,11 @@ public class Purchase_orderController {
     @RequestMapping(value = "/{id}" , method = RequestMethod.GET)
     public Purchase_order find(@PathVariable long id){
         return service.findOne(id);
+    }
+
+    @RequestMapping(value="/allPOIs/{id}", method = RequestMethod.POST)
+    public List<Purchase_order_item> allPOIs(@PathVariable long id){
+        return service.allPOIs(id);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)

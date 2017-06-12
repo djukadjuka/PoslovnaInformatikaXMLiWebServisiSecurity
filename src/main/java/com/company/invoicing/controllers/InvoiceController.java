@@ -1,6 +1,7 @@
 package com.company.invoicing.controllers;
 
 import com.company.invoicing.models.Invoice;
+import com.company.invoicing.models.Invoice_item;
 import com.company.invoicing.services.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,11 @@ public class InvoiceController {
     @RequestMapping(value = "/{id}" , method = RequestMethod.GET)
     public Invoice find(@PathVariable long id){
         return service.findOne(id);
+    }
+
+    @RequestMapping(value="/allIIs/{id}", method = RequestMethod.POST)
+    public List<Invoice_item> allPOIs(@PathVariable long id){
+        return service.allIIs(id);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)

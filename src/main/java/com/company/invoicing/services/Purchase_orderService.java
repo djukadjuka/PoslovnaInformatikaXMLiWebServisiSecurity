@@ -1,6 +1,7 @@
 package com.company.invoicing.services;
 
 import com.company.invoicing.models.Purchase_order;
+import com.company.invoicing.models.Purchase_order_item;
 import com.company.invoicing.repositoriums.Purchase_orderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,4 +90,8 @@ public class Purchase_orderService {
     }
 
 
+    public List<Purchase_order_item> allPOIs(long id) {
+        Purchase_order purchase_order=repository.findOne(id);
+        return purchase_order.getPurchase_order_items();
+    }
 }

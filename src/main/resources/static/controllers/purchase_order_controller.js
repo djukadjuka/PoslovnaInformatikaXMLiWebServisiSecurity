@@ -189,4 +189,13 @@ app.controller("purchase_order_controller", function($scope,$http,$cookies,$loca
                 }
             });
         };
+
+        $("#nextform").off().on('click', function() {
+            highlighted = $(".highlighted");
+            id = highlighted.find(".id").html();
+            if(id!=null){
+                $cookies.put("nextform_id",id);
+                window.location.href = '/#/purchase_order_item';
+            }
+        });
 });

@@ -217,4 +217,13 @@ app.controller("invoice_controller", function($scope,$http,$cookies,$location,$w
             });
         });
 
+        $("#nextform").off().on('click', function() {
+            highlighted = $(".highlighted");
+            id = highlighted.find(".id").html();
+            if(id!=null){
+                $cookies.put('nextform_id',id);
+                window.location.href="#/invoice_item";
+            }
+        });
+
 });

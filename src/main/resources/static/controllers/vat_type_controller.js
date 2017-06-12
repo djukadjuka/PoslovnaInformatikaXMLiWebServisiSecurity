@@ -36,7 +36,7 @@ app.controller("vat_type_controller", function($scope,$http,$cookies,$location,$
         });
      }
 
-    $("#nextform").click(function(){
+    $("#nextform").off().on('click', function() {
         alert("kliknuto na next form");
         /*highlighted = $(".highlighted");
         id = highlighted.find(".id").html();

@@ -37,7 +37,28 @@ app.controller("invoice_item_controller", function($scope,$http,$cookies,$locati
        $cookies.put('state','edit');
     }
 
-      $scope.setObjects();
+      if($cookies.get('nextform_id')==null || $cookies.get('nextform_id')=='undefined'){
+        $scope.setObjects();
+      }else{
+        $.ajax({
+            url: '/'+$cookies.get('subObjectsOne')+'/allIIs/'+$cookies.get('nextform_id'),
+            type: "POST",
+            //data: object,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            headers: $scope.createAuthorizationTokenHeader(),
+            success: function (data, textStatus, jqXHR) {
+                console.log("proslo");
+                $scope.$apply(function() {
+                    $scope.objects = data;
+                    $cookies.put("nextform_id",'undefined');
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("nije proslo");
+            }
+        });
+      }
       $scope.setSubObjects();
       //$scope.setSubObjectsTwo();
       $scope.setSubObjectsThree();
