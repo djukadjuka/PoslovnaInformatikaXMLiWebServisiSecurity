@@ -37,18 +37,16 @@ app.controller("vat_rate_controller", function($scope,$http,$cookies,$location,$
 
 
       $scope.sync = function(item){
-          $scope.$apply(function() {
-              if($scope.state=="edit"){
-                  $scope.obj={};
-                  $scope.obj.vat_rate_id=item.find(".id").html();
-                  $scope.obj.date=new Date(item.find(".date").html());
-                  $scope.obj.percentage_of_vatr=parseFloat(item.find(".percentage").html());
+          if($scope.state=="edit"){
+              $scope.obj={};
+              $scope.obj.vat_rate_id=item.find(".id").html();
+              $scope.obj.date=new Date(item.find(".date").html());
+              $scope.obj.percentage_of_vatr=parseFloat(item.find(".percentage").html());
 
-                  i=item.find(".vat_type_id").html();
-                  var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.vat_type_id === +i; })[ 0 ];
-                  $scope.obj.vat_type=result;
-              }
-          });
+              i=item.find(".vat_type_id").html();
+              var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.vat_type_id === +i; })[ 0 ];
+              $scope.obj.vat_type=result;
+          }
        };
 
         $scope.fook = function(event, obj) {

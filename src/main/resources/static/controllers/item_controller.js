@@ -43,23 +43,21 @@ app.controller("item_controller", function($scope,$http,$cookies,$location,$wind
 
 
       $scope.sync = function(item){
-          $scope.$apply(function() {
-              if($scope.state=="edit"){
-                  $scope.obj={};
-                  $scope.obj.item_id=item.find(".id").html();
-                  $scope.obj.name=item.find(".name").html();
-                  $scope.obj.description=item.find(".description").html();
-                  $scope.obj.is_service=(item.find(".is_service").html()=="true");
+          if($scope.state=="edit"){
+              $scope.obj={};
+              $scope.obj.item_id=item.find(".id").html();
+              $scope.obj.name=item.find(".name").html();
+              $scope.obj.description=item.find(".description").html();
+              $scope.obj.is_service=(item.find(".is_service").html()=="true");
 
-                  i=item.find(".item_group_id").html();
-                  var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.item_group_id === +i; })[ 0 ];
-                  $scope.obj.item_group=result;
+              i=item.find(".item_group_id").html();
+              var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.item_group_id === +i; })[ 0 ];
+              $scope.obj.item_group=result;
 
-                  ii=item.find(".units_of_measurement_id").html();
-                  var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.units_of_measurement_id === +ii; })[ 0 ];
-                  $scope.obj.units_of_measurement=resultt;
-              }
-          });
+              ii=item.find(".units_of_measurement_id").html();
+              var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.units_of_measurement_id === +ii; })[ 0 ];
+              $scope.obj.units_of_measurement=resultt;
+          }
        };
 
         $scope.fook = function(event, obj) {

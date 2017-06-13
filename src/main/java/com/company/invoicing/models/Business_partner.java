@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 @Entity
 @XmlAccessorType(XmlAccessType.NONE)
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "company", "company_partner" }) })
 public class Business_partner{
 
     @Id
@@ -20,50 +21,15 @@ public class Business_partner{
     @XmlAttribute
     private long business_partner_id;
 
-    @JsonIgnore
-    @OneToMany(mappedBy="business_partner")
-    private List<Invoice> invoices;
+    @ManyToOne
+    @NotNull
+    @JoinColumn(name="company")
+    private Company company;
 
     @ManyToOne
     @NotNull
-    private Company company;
-
-    @XmlElement
-    @Column(length = 50)
-    @NotNull
-    @Size(min = 3, max = 50)
-    private String name;
-
-    @XmlElement
-    @NotNull
-    @Column(length = 10,unique = true)
-    private int tin;
-
-    @XmlElement
-    @NotNull
-    @Column(length = 10,unique = true)
-    @Size(min=10, max = 10)
-    private String current_account;
-
-    @XmlElement
-    @Column(length = 50)
-    @Size(max = 50)
-    private String city;
-
-    @XmlElement
-    @Column(length = 50)
-    @Size(max = 50)
-    private String adress;
-
-    @XmlElement
-    @Column(length = 50)
-    @Size(max = 50)
-    private String telephone;
-
-    @XmlElement
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int personal_number;
+    @JoinColumn(name="company_partner")
+    private Company company_partner;
 
     @XmlElement
     @NotNull
@@ -75,51 +41,27 @@ public class Business_partner{
 
     @JsonIgnore
     @OneToMany(mappedBy="business_partner")
-    private List<User> users;
+    private List<Invoice> invoices;
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public Business_partner(List<Invoice> invoices, Company company, String name, int tin, String current_account, String city, String adress, String telephone, int personal_number, String type_of_bp, List<Purchase_order> purchase_orders, List<User> users){
-        super();
-        this.invoices = invoices;
-        this.company = company;
-        this.name = name;
-        this.tin = tin;
-        this.current_account = current_account;
-        this.city = city;
-        this.adress = adress;
-        this.telephone = telephone;
-        this.personal_number = personal_number;
-        this.type_of_bp = type_of_bp;
-        this.purchase_orders = purchase_orders;
-        this.users=users;
-
-    }
-
-    public Business_partner(long business_partner_id, List<Invoice> invoices, Company company, String name, int tin, String current_account, String city, String adress, String telephone, int personal_number, String type_of_bp, List<Purchase_order> purchase_orders, List<User> users){
-        super();
+    public Business_partner(long business_partner_id, Company company, Company company_partner, String type_of_bp, List<Purchase_order> purchase_orders, List<Invoice> invoices) {
         this.business_partner_id = business_partner_id;
-        this.invoices = invoices;
         this.company = company;
-        this.name = name;
-        this.tin = tin;
-        this.current_account = current_account;
-        this.city = city;
-        this.adress = adress;
-        this.telephone = telephone;
-        this.personal_number = personal_number;
+        this.company_partner = company_partner;
         this.type_of_bp = type_of_bp;
         this.purchase_orders = purchase_orders;
-        this.users=users;
+        this.invoices = invoices;
     }
 
-    public Business_partner(){}
+    public Business_partner(Company company, Company company_partner, String type_of_bp, List<Purchase_order> purchase_orders, List<Invoice> invoices) {
+        this.company = company;
+        this.company_partner = company_partner;
+        this.type_of_bp = type_of_bp;
+        this.purchase_orders = purchase_orders;
+        this.invoices = invoices;
+    }
+
+    public Business_partner() {
+    }
 
     public long getBusiness_partner_id() {
         return business_partner_id;
@@ -129,92 +71,43 @@ public class Business_partner{
         this.business_partner_id = business_partner_id;
     }
 
-    public List<Invoice> getInvoices(){
-        return invoices;
-    }
-
-    public void setInvoices(List<Invoice> invoices){
-        this.invoices = invoices;
-    }
-
-    public Company getCompany(){
+    public Company getCompany() {
         return company;
     }
 
-    public void setCompany(Company company){
+    public void setCompany(Company company) {
         this.company = company;
     }
 
-    public String getName(){
-        return name;
+    public Company getCompany_partner() {
+        return company_partner;
     }
 
-    public void setName(String name){
-        this.name = name;
+    public void setCompany_partner(Company company_partner) {
+        this.company_partner = company_partner;
     }
 
-    public int getTin(){
-        return tin;
-    }
-
-    public void setTin(int tin){
-        this.tin = tin;
-    }
-
-    public String getCurrent_account(){
-        return current_account;
-    }
-
-    public void setCurrent_account(String current_account){
-        this.current_account = current_account;
-    }
-
-    public String getCity(){
-        return city;
-    }
-
-    public void setCity(String city){
-        this.city = city;
-    }
-
-    public String getAdress(){
-        return adress;
-    }
-
-    public void setAdress(String adress){
-        this.adress = adress;
-    }
-
-    public String getTelephone(){
-        return telephone;
-    }
-
-    public void setTelephone(String telephone){
-        this.telephone = telephone;
-    }
-
-    public int getPersonal_number(){
-        return personal_number;
-    }
-
-    public void setPersonal_number(int personal_number){
-        this.personal_number = personal_number;
-    }
-
-    public String getType_of_bp(){
+    public String getType_of_bp() {
         return type_of_bp;
     }
 
-    public void setType_of_bp(String type_of_bp){
+    public void setType_of_bp(String type_of_bp) {
         this.type_of_bp = type_of_bp;
     }
 
-    public List<Purchase_order> getPurchase_orders(){
+    public List<Purchase_order> getPurchase_orders() {
         return purchase_orders;
     }
 
-    public void setPurchase_orders(List<Purchase_order> purchase_orders){
+    public void setPurchase_orders(List<Purchase_order> purchase_orders) {
         this.purchase_orders = purchase_orders;
     }
 
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
 }

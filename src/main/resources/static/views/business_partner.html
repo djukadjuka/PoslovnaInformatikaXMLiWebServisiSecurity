@@ -1,49 +1,25 @@
 <div ng-controller="business_partner_controller">
 
-    <p>
-    <ul>
-        <li><a id = "search"><img src="images/search.gif"/></a></li>
-        <li><a id = "refresh"><img src="images/refresh.gif"/></a></li>
-        <li><a href="#" id = "pickup"><img src="images/zoom-pickup.gif"/></a></li>
-        <li><a href="#" id = "help"><img src="images/help.gif"/></a></li>
-        <li><a id = "first"><img src="images/first.gif"/></a></li>
-        <li><a id = "prev"><img src="images/prev.gif"/></a></li>
-        <li><a id = "next"><img src="images/next.gif"/></a></li>
-        <li><a id = "last"><img src="images/last.gif"/></a></li>
-        <li><a id = "add"><img src="images/add.gif"/></a></li>
-        <li><a id = "remove"><img src="images/remove.gif"/></a></li>
-        <li><a id = "nextform"><img src="images/nextform.gif"/></a></li>
-    </ul>
-    </p>
+    <div ng-include="'views/toolbar.html'"></div>
 
     <h1>Business partner</h1>
 
     <table id="table">
         <tr class = "header">
             <th>ID</th>
-            <th>Name</th>
-            <th>TIN</th>
-            <th>City</th>
-            <th>Adress</th>
-            <th>Telephone</th>
-            <th>Personal number</th>
-            <th>Current account</th>
             <th>Type of BP</th>
             <th>Company ID</th>
             <th>Company name</th>
+            <th>Company partner ID</th>
+            <th>Company partner name</th>
         </tr>
         <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
             <td class="id">{{o.business_partner_id}}</td>
-            <td class="name">{{o.name}}</td>
-            <td class="tin">{{o.tin}}</td>
-            <td class="city">{{o.city}}</td>
-            <td class="adress">{{o.adress}}</td>
-            <td class="telephone">{{o.telephone}}</td>
-            <td class="personal_number">{{o.personal_number}}</td>
-            <td class="current_account">{{o.current_account}}</td>
             <td class="type_of_bp">{{o.type_of_bp}}</td>
             <td class="company_id">{{o.company.company_id}}</td>
             <td class="company_name">{{o.company.name}}</td>
+            <td class="company_partner_id">{{o.company_partner.company_id}}</td>
+            <td class="company_partner_name">{{o.company_partner.name}}</td>
         </tr>
     </table>
 
@@ -53,102 +29,46 @@
                 <input type = "hidden" ng-model="obj.business_partner_id"/>
             </p>
             <p>
-                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-                    <label>Name</label>
-                    <input type = "text" name="name" ng-model="obj.name" ng-minlength="3" ng-maxlength="50" required/>
-                    <div ng-if="state!='search'">
-                        <div ng-messages="userForm.name.$error" >
-                            <div ng-messages-include="views/messages.html"></div>
-                        </div>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <label>Type of BP</label>
+                <select ng-model="obj.type_of_bp" name="type_of_bp" required>
+                    <option value="customer">Customer</option>
+                    <option value="supplier">Supplier</option>
+                    <option value="customer_and_supplier">Customer and Supplier</option>
+                </select>
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.type_of_bp.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
                     </div>
                 </div>
+            </div>
             </p>
             <p>
-                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-                    <label>TIN</label>
-                    <input type = "number" name="tin" ng-model="obj.tin" ng-minlength="10" ng-maxlength="10" required/>
-                    <div ng-if="state!='search'">
-                        <div ng-messages="userForm.tin.$error" >
-                            <div ng-messages-include="views/messages.html"></div>
-                        </div>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <label>Company</label>
+                <select ng-model="obj.company" name="company" ng-options="soo.name for soo in subObjectsOne track by soo.company_id" id="selectOne" required>
+                </select>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.company.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
                     </div>
                 </div>
+            </div>
             </p>
+
             <p>
-                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-                    <label>City</label>
-                    <input type = "text" name="city" ng-model="obj.city" ng-maxlength="50"/>
-                    <div ng-if="state!='search'">
-                        <div ng-messages="userForm.city.$error" >
-                            <div ng-messages-include="views/messages.html"></div>
-                        </div>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <label>Company</label>
+                <select ng-model="obj.company_partner" name="company_partner" ng-options="sot.name for sot in subObjectsTwo track by sot.company_id" id="selectTwo" required>
+                </select>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTwo">...</button>
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.company_partner.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
                     </div>
                 </div>
-            </p>
-            <p>
-                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-                    <label>Adress</label>
-                    <input type = "text" name="adress" ng-model="obj.adress" ng-maxlength="50"/>
-                    <div ng-if="state!='search'">
-                        <div ng-messages="userForm.adress.$error" >
-                            <div ng-messages-include="views/messages.html"></div>
-                        </div>
-                    </div>
-                </div>
-            </p>
-            <p>
-                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-                    <label>Telephone</label>
-                    <input type = "text" name="telephone" ng-model="obj.telephone" ng-maxlength="50"/>
-                    <div ng-if="state!='search'">
-                        <div ng-messages="userForm.telephone.$error" >
-                            <div ng-messages-include="views/messages.html"></div>
-                        </div>
-                    </div>
-                </div>
-            </p>
-            <p>
-                <label>Personal number</label>
-                <input type = "number" ng-model="obj.personal_number" readonly/>
-            </p>
-            <p>
-                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-                    <label>Current account</label>
-                    <input type = "text" name="current_account" ng-model="obj.current_account" ng-minlength="10" ng-maxlength="10" required/>
-                    <div ng-if="state!='search'">
-                        <div ng-messages="userForm.current_account.$error" >
-                            <div ng-messages-include="views/messages.html"></div>
-                        </div>
-                    </div>
-                </div>
-            </p>
-            <p>
-                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-                    <label>Type of BP</label>
-                    <select ng-model="obj.type_of_bp" name="type_of_bp" required>
-                        <option value="customer">Customer</option>
-                        <option value="supplier">Supplier</option>
-                        <option value="customer_and_supplier">Customer and Supplier</option>
-                    </select>
-                    <div ng-if="state!='search'">
-                        <div ng-messages="userForm.type_of_bp.$error" >
-                            <div ng-messages-include="views/messages.html"></div>
-                        </div>
-                    </div>
-                </div>
-            </p>
-            <p>
-                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-                    <label>Company</label>
-                    <select ng-model="obj.company" name="company" ng-options="soo.name for soo in subObjectsOne track by soo.company_id" id="selectOne" required>
-                    </select>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOne">...</button>
-                    <div ng-if="state!='search'">
-                        <div ng-messages="userForm.company.$error" >
-                            <div ng-messages-include="views/messages.html"></div>
-                        </div>
-                    </div>
-                </div>
+            </div>
             </p>
             <p>
             <div id = "formActions">
@@ -193,6 +113,44 @@
                     </table>
                     <div class="modal-footer">
                         <input id = "moPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalTwo" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Company partners
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>TIN</th>
+                            <th>City</th>
+                            <th>Adress</th>
+                            <th>Telephone</th>
+                            <th>Company number</th>
+                            <th>Current account</th>
+                        </tr>
+                        <tr ng-repeat="sot in subObjectsTwo" ng-click="fookk($event, sot)" >
+                            <td class="sotid">{{sot.company_id}}</td>
+                            <td class="sotname">{{sot.name}}</td>
+                            <td class="sottin">{{sot.tin}}</td>
+                            <td class="sotcity">{{sot.city}}</td>
+                            <td class="sotadress">{{sot.adress}}</td>
+                            <td class="sottelephone">{{sot.telephone}}</td>
+                            <td class="sotcompany_number">{{sot.company_number}}</td>
+                            <td class="sotcurrent_account">{{sot.current_account}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "mtPickup" type = "button" value = "Accept"/>
                     </div>
                 </div>
             </div>

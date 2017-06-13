@@ -33,31 +33,16 @@ app.controller("company_controller", function($scope,$http,$cookies,$location,$w
      }
 
      $scope.sync = function(item){
-        $scope.$apply(function() {
-            if($scope.state=="edit"){
-                $scope.obj={};
-                $scope.obj.company_id=item.find(".id").html();
-                $scope.obj.name=item.find(".name").html();
-                $scope.obj.tin=parseInt(item.find(".tin").html());
-                $scope.obj.city=item.find(".city").html();
-                $scope.obj.adress=item.find(".adress").html();
-                $scope.obj.telephone=item.find(".telephone").html();
-                $scope.obj.company_number=parseInt(item.find(".company_number").html());
-                $scope.obj.current_account=item.find(".current_account").html();
-            }
-        });
+        if($scope.state=="edit"){
+            $scope.obj={};
+            $scope.obj.company_id=item.find(".id").html();
+            $scope.obj.name=item.find(".name").html();
+            $scope.obj.tin=parseInt(item.find(".tin").html());
+            $scope.obj.city=item.find(".city").html();
+            $scope.obj.adress=item.find(".adress").html();
+            $scope.obj.telephone=item.find(".telephone").html();
+            $scope.obj.company_number=parseInt(item.find(".company_number").html());
+            $scope.obj.current_account=item.find(".current_account").html();
+        }
      }
-
-    $("#nextform").click(function(){
-        alert("kliknuto na next form");
-        /*highlighted = $(".highlighted");
-        id = highlighted.find(".id").html();
-        //nextForm(id);
-        myService.set(id);
-        $window.location.href = '/#/settlement';*/
-    });
-
-
-
-
 });

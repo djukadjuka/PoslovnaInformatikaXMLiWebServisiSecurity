@@ -2,12 +2,8 @@ package com.company.invoicing.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -19,6 +15,7 @@ public class Price_list{
     private long price_list_id;
 
     @NotNull
+    @Column(unique=true)
     private Date valid_from;
 
     @JsonIgnore

@@ -1,0 +1,18 @@
+/*C11*/SET SCHEMA PUBLIC
+alter table business_partner drop constraint UKb4sgt1f49ddy6b6x2753tljx4
+alter table business_partner add constraint UKb4sgt1f49ddy6b6x2753tljx4 unique (company, company_partner)
+alter table invoice_item drop constraint UKh6ufo2uw5eb0bjre2njbt4050
+alter table invoice_item add constraint UKh6ufo2uw5eb0bjre2njbt4050 unique (invoice, item)
+alter table price_list_item drop constraint UK7nn6x1wom557feccpxmvgovvj
+alter table price_list_item add constraint UK7nn6x1wom557feccpxmvgovvj unique (price_list, item)
+alter table purchase_order_item drop constraint UKbi6rteunlxncjgoq6vsninqcb
+alter table purchase_order_item add constraint UKbi6rteunlxncjgoq6vsninqcb unique (purchase_order, item)
+alter table role_permission drop constraint UKj1ku6imhb1o343s2j33y4002k
+alter table role_permission add constraint UKj1ku6imhb1o343s2j33y4002k unique (permission, role)
+/*C12*/SET SCHEMA PUBLIC
+DELETE FROM VAT_TYPE WHERE VAT_TYPE_ID=211
+COMMIT
+DELETE FROM VAT_TYPE WHERE VAT_TYPE_ID=200
+COMMIT
+DELETE FROM VAT_TYPE WHERE VAT_TYPE_ID=190
+COMMIT

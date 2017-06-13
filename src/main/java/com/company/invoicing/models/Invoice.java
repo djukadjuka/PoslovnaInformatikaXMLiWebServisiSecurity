@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Date;
 
 @Entity
-public class  Invoice{
+public class Invoice{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -32,6 +32,7 @@ public class  Invoice{
     private Date date;
 
     @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int invoice_number;
 
     @NotNull
@@ -47,7 +48,7 @@ public class  Invoice{
     private double total_price;
 
     @NotNull
-    @Column(length = 10,unique = true)
+    @Column(length = 10)
     @Size(min=10, max = 10)
     private String billing_account;
 

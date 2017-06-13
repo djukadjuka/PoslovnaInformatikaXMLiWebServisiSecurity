@@ -75,6 +75,7 @@ public class Invoice_itemService {
     }
 
     public void generateInvoiceItems(Invoice invoice, List<Purchase_order_item> purchase_order_items) {
+        System.out.println("usao");
         for(Purchase_order_item poi : purchase_order_items){
             Invoice_item invoice_item=new Invoice_item();
             invoice_item.setInvoice(invoice);

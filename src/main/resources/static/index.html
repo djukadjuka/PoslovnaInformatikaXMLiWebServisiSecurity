@@ -47,7 +47,8 @@
     <nav class="navbar navbar-dark red" ng-controller="login_controller">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav" ng-if="logged">
+                <!--<ul class="nav navbar-nav" ng-if="logged">-->
+                    <ul class="nav navbar-nav" >
                     <li><a href="#/vat_type">VAT type</a></li>
                     <li><a href="#/vat_rate">VAT rate</a></li>
                     <li><a href="#/item_group">Item group</a></li>
@@ -70,9 +71,12 @@
                     <li><a href="#/user">User</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-if="!logged"><a href="#/login">Log in</a></li>
+                    <!--<li ng-if="!logged"><a href="#/login">Log in</a></li>
                     <li ng-if="logged"><a href="#/my_account">My account</a></li>
-                    <li ng-if="logged"><a ng-click="logout()">Log out</a></li>
+                    <li ng-if="logged"><a ng-click="logout()">Log out</a></li>-->
+                    <li ><a href="#/login">Log in</a></li>
+                    <li ><a href="#/my_account">My account</a></li>
+                    <li ><a ng-click="logout()">Log out</a></li>
                 </ul>
             </div>
         </div>

@@ -27,24 +27,11 @@ app.controller("vat_type_controller", function($scope,$http,$cookies,$location,$
      }
 
      $scope.sync = function(item){
-        $scope.$apply(function() {
-            if($scope.state=="edit"){
-                $scope.obj={};
-                $scope.obj.vat_type_id=item.find(".id").html();
-                $scope.obj.name=item.find(".name").html();
-            }
-        });
+        if($scope.state=="edit"){
+            $scope.obj={};
+            $scope.obj.vat_type_id=item.find(".id").html();
+            $scope.obj.name=item.find(".name").html();
+        }
      }
-
-    $("#nextform").off().on('click', function() {
-        alert("kliknuto na next form");
-        /*highlighted = $(".highlighted");
-        id = highlighted.find(".id").html();
-        //nextForm(id);
-        myService.set(id);
-        $window.location.href = '/#/settlement';*/
-    });
-
-
 
 });

@@ -78,7 +78,9 @@ public class Fiscal_year{
     }
 
     public List<Invoice> getInvoices(){
-        return invoices;
+        if(this.invoices==null)
+            this.invoices=new ArrayList<>();
+        return this.invoices;
     }
 
     public void setInvoices(List<Invoice> invoices){
@@ -110,9 +112,9 @@ public class Fiscal_year{
     }
 
     public List<Purchase_order> getPurchase_orders(){
-        if(purchase_orders==null)
-            purchase_orders=new ArrayList<>();
-        return purchase_orders;
+        if(this.purchase_orders==null)
+            this.purchase_orders=new ArrayList<>();
+        return this.purchase_orders;
     }
 
     public void setPurchase_orders(List<Purchase_order> purchase_orders){

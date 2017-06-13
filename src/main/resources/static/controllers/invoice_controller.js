@@ -67,41 +67,39 @@ app.controller("invoice_controller", function($scope,$http,$cookies,$location,$w
 
 
       $scope.sync = function(item){
-          $scope.$apply(function() {
-              if($scope.state=="edit"){
-                  $scope.obj={};
-                  $scope.obj.purchase_order_id=item.find(".id").html();
-                  $scope.obj.date=new Date(item.find(".date").html());
-                  $scope.obj.invoice_number=parseInt(item.find(".invoice_number").html());
-                  $scope.obj.date_of_currency=new Date(item.find(".date_of_currency").html());
-                  $scope.obj.total_tax_basis=parseFloat(item.find(".total_tax_basis").html());
-                  $scope.obj.total_vat=parseFloat(item.find(".total_vat").html());
-                  $scope.obj.total_price=parseFloat(item.find(".total_price").html());
-                  $scope.obj.billing_account=item.find(".billing_account").html();
-                  $scope.obj.reference_number=item.find(".reference_number").html();
+          if($scope.state=="edit"){
+              $scope.obj={};
+              $scope.obj.purchase_order_id=item.find(".id").html();
+              $scope.obj.date=new Date(item.find(".date").html());
+              $scope.obj.invoice_number=parseInt(item.find(".invoice_number").html());
+              $scope.obj.date_of_currency=new Date(item.find(".date_of_currency").html());
+              $scope.obj.total_tax_basis=parseFloat(item.find(".total_tax_basis").html());
+              $scope.obj.total_vat=parseFloat(item.find(".total_vat").html());
+              $scope.obj.total_price=parseFloat(item.find(".total_price").html());
+              $scope.obj.billing_account=item.find(".billing_account").html();
+              $scope.obj.reference_number=item.find(".reference_number").html();
 
-                   i=item.find(".company_id").html();
-                   var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.company_id === +i; })[ 0 ];
-                   $scope.obj.company=result;
+               i=item.find(".company_id").html();
+               var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.company_id === +i; })[ 0 ];
+               $scope.obj.company=result;
 
 
-                  var res=$scope.objectsTwo.filter(function (el) {
-                        return el.company.company_id==i;
-                      });
-                   $scope.subObjectsTwo=res;
-                   ii=item.find(".business_partner_id").html();
-                   var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.business_partner_id === +ii; })[ 0 ];
-                   $scope.obj.business_partner=resultt;
+              var res=$scope.objectsTwo.filter(function (el) {
+                    return el.company.company_id==i;
+                  });
+               $scope.subObjectsTwo=res;
+               ii=item.find(".business_partner_id").html();
+               var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.business_partner_id === +ii; })[ 0 ];
+               $scope.obj.business_partner=resultt;
 
-                   var ress=$scope.objectsThree.filter(function (el) {
-                         return el.company.company_id==i && el.active===true;
-                       });
-                    $scope.subObjectsThree=ress;
-                   iii=item.find(".fiscal_year_id").html();
-                   var resulttt=$scope.subObjectsThree.filter(function( obj ) { return +obj.fiscal_year_id === +iii; })[ 0 ];
-                   $scope.obj.fiscal_year=resulttt;
-              }
-          });
+               var ress=$scope.objectsThree.filter(function (el) {
+                     return el.company.company_id==i && el.active===true;
+                   });
+                $scope.subObjectsThree=ress;
+               iii=item.find(".fiscal_year_id").html();
+               var resulttt=$scope.subObjectsThree.filter(function( obj ) { return +obj.fiscal_year_id === +iii; })[ 0 ];
+               $scope.obj.fiscal_year=resulttt;
+          }
        };
 
        $scope.$watch('obj.company', function (newValue, oldValue) {
@@ -217,13 +215,13 @@ app.controller("invoice_controller", function($scope,$http,$cookies,$location,$w
             });
         });
 
-        $("#nextform").off().on('click', function() {
+        $scope.nextform = function() {
             highlighted = $(".highlighted");
             id = highlighted.find(".id").html();
             if(id!=null){
                 $cookies.put('nextform_id',id);
                 window.location.href="#/invoice_item";
             }
-        });
+        };
 
 });

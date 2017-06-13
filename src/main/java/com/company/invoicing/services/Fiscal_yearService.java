@@ -23,6 +23,7 @@ public class Fiscal_yearService {
     }
 
     public void create(Fiscal_year fiscal_year){
+        fiscal_year.setNumber_of_fy(repository.findAll().size()+1);
         repository.save(fiscal_year);
     }
 

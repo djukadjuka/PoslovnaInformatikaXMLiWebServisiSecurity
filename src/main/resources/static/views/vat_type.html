@@ -1,20 +1,6 @@
 <div ng-controller="vat_type_controller">
 
-    <p>
-    <ul>
-        <li><a id = "search"><img src="images/search.gif"/></a></li>
-        <li><a id = "refresh"><img src="images/refresh.gif"/></a></li>
-        <li><a href="#" id = "pickup"><img src="images/zoom-pickup.gif"/></a></li>
-        <li><a href="#" id = "help"><img src="images/help.gif"/></a></li>
-        <li><a id = "first"><img src="images/first.gif"/></a></li>
-        <li><a id = "prev"><img src="images/prev.gif"/></a></li>
-        <li><a id = "next"><img src="images/next.gif"/></a></li>
-        <li><a id = "last"><img src="images/last.gif"/></a></li>
-        <li><a id = "add"><img src="images/add.gif"/></a></li>
-        <li><a id = "remove"><img src="images/remove.gif"/></a></li>
-        <li><a id = "nextform"><img src="images/nextform.gif"/></a></li>
-    </ul>
-    </p>
+    <div ng-include="'views/toolbar.html'"></div>
 
     <h1>Vat type</h1>
 
@@ -35,7 +21,8 @@
                 <input type = "hidden" ng-model="obj.vat_type_id"/>
             </p>
             <p>
-                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <!--<div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">-->
+                <div class="form-group">
                     <label>Name</label>
                     <input type="text" name="name" ng-model="obj.name" ng-minlength="3" ng-maxlength="50" required>
                     <div ng-if="state!='search'">
@@ -47,7 +34,7 @@
             </p>
             <p>
             <div id = "formActions">
-                <button ng-click="accept(obj)" class="btn btn-primary" ng-disabled="userForm.$invalid && (state!='search')" style="margin-left:6em">Accept</button>
+                <button type="button" ng-click="accept(obj)" class="btn btn-primary" ng-disabled="userForm.$invalid && (state!='search')" style="margin-left:6em">Accept</button>
                 <a id="rollback" style="margin-left:1em">Rollback</a>
             </div>
             </p>

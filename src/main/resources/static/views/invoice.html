@@ -1,20 +1,6 @@
 <div ng-controller="invoice_controller">
 
-    <p>
-    <ul>
-        <li><a id = "search"><img src="images/search.gif"/></a></li>
-        <li><a id = "refresh"><img src="images/refresh.gif"/></a></li>
-        <li><a href="#" id = "pickup"><img src="images/zoom-pickup.gif"/></a></li>
-        <li><a href="#" id = "help"><img src="images/help.gif"/></a></li>
-        <li><a id = "first"><img src="images/first.gif"/></a></li>
-        <li><a id = "prev"><img src="images/prev.gif"/></a></li>
-        <li><a id = "next"><img src="images/next.gif"/></a></li>
-        <li><a id = "last"><img src="images/last.gif"/></a></li>
-        <li><a id = "add"><img src="images/add.gif"/></a></li>
-        <li><a id = "remove"><img src="images/remove.gif"/></a></li>
-        <li><a id = "nextform"><img src="images/nextform.gif"/></a></li>
-    </ul>
-    </p>
+    <div ng-include="'views/toolbar.html'"></div>
 
     <h1>Invoice</h1>
 
@@ -54,7 +40,7 @@
             <td class="company_id">{{o.company.company_id}}</td>
             <td class="company_name">{{o.company.name}}</td>
             <td class="business_partner_id">{{o.business_partner.business_partner_id}}</td>
-            <td class="business_partner_name">{{o.business_partner.name}}</td>
+            <td class="business_partner_name">{{o.business_partner.company_partner.name}}</td>
             <td class="fiscal_year_id">{{o.fiscal_year.fiscal_year_id}}</td>
             <td class="fiscal_year_number_of_fy">{{o.fiscal_year.number_of_fy}}</td>
 
@@ -131,7 +117,7 @@
             <p>
                 <div class="form-group" ng-class="{ 'has-error' : userForm.date.$invalid && !userForm.date.$pristine }">
                     <label>Business partner</label>
-                    <select ng-model="obj.business_partner" name="business_partner" ng-options="sot.name for sot in subObjectsTwo track by sot.business_partner_id" id="selectTwo" ng-disabled="obj.company==null" required>
+                    <select ng-model="obj.business_partner" name="business_partner" ng-options="sot.company_partner.name for sot in subObjectsTwo track by sot.business_partner_id" id="selectTwo" ng-disabled="obj.company==null" required>
                     </select>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTwo" ng-disabled="obj.company==null">...</button>
                     <div ng-if="state!='search'">
@@ -229,13 +215,13 @@
                         </tr>
                         <tr ng-repeat="sot in subObjectsTwo" ng-click="fookk($event, sot)" >
                             <td class="sotid">{{sot.business_partner_id}}</td>
-                            <td class="sotname">{{sot.name}}</td>
-                            <td class="sottin">{{sot.tin}}</td>
-                            <td class="sotcity">{{sot.city}}</td>
-                            <td class="sotadress">{{sot.adress}}</td>
-                            <td class="sottelephone">{{sot.telephone}}</td>
-                            <td class="sotpersonal_number">{{sot.personal_number}}</td>
-                            <td class="sotcurrent_account">{{sot.current_account}}</td>
+                            <td class="sotname">{{sot.company_partner.name}}</td>
+                            <td class="sottin">{{sot.company_partner.tin}}</td>
+                            <td class="sotcity">{{sot.company_partner.city}}</td>
+                            <td class="sotadress">{{sot.company_partner.adress}}</td>
+                            <td class="sottelephone">{{sot.company_partner.telephone}}</td>
+                            <td class="sotpersonal_number">{{sot.company_partner.company_number}}</td>
+                            <td class="sotcurrent_account">{{sot.company_partner.current_account}}</td>
                             <td class="sottype_of_bp">{{sot.type_of_bp}}</td>
                             <td class="sotcompany_id">{{sot.company.company_id}}</td>
                             <td class="sotcompany_name">{{sot.company.name}}</td>

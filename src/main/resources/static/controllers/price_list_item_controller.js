@@ -46,25 +46,23 @@ app.controller("price_list_item_controller", function($scope,$http,$cookies,$loc
 
 
       $scope.sync = function(item){
-          $scope.$apply(function() {
-              if($scope.state=="edit"){
-                  $scope.obj={};
-                  $scope.obj.price_list_item_id=item.find(".id").html();
-                  $scope.obj.price=parseFloat(item.find(".price").html());
+          if($scope.state=="edit"){
+              $scope.obj={};
+              $scope.obj.price_list_item_id=item.find(".id").html();
+              $scope.obj.price=parseFloat(item.find(".price").html());
 
-                   i=item.find(".item_id").html();
-                   var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.item_id === +i; })[ 0 ];
-                   $scope.obj.item=result;
+               i=item.find(".item_id").html();
+               var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.item_id === +i; })[ 0 ];
+               $scope.obj.item=result;
 
-                   ii=item.find(".price_list_id").html();
-                   var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.price_list_id === +ii; })[ 0 ];
-                   $scope.obj.price_list=resultt;
+               ii=item.find(".price_list_id").html();
+               var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.price_list_id === +ii; })[ 0 ];
+               $scope.obj.price_list=resultt;
 
-                   iii=item.find(".currency_id").html();
-                   var resulttt=$scope.subObjectsThree.filter(function( obj ) { return +obj.currency_id === +iii; })[ 0 ];
-                   $scope.obj.currency=resulttt;
-              }
-          });
+               iii=item.find(".currency_id").html();
+               var resulttt=$scope.subObjectsThree.filter(function( obj ) { return +obj.currency_id === +iii; })[ 0 ];
+               $scope.obj.currency=resulttt;
+          }
        };
 
         $scope.fook = function(event, obj) {

@@ -34,29 +34,17 @@ app.controller("fiscal_year_controller", function($scope,$http,$cookies,$locatio
      }
 
      $scope.sync = function(item){
-        $scope.$apply(function() {
-            if($scope.state=="edit"){
-                $scope.obj={};
-                $scope.obj.fiscal_year_id=item.find(".id").html();
-                $scope.obj.number_of_fy=parseInt(item.find(".number_of_fy").html());
-                $scope.obj.active=(item.find(".active").html()=="true");
+        if($scope.state=="edit"){
+            $scope.obj={};
+            $scope.obj.fiscal_year_id=item.find(".id").html();
+            $scope.obj.number_of_fy=parseInt(item.find(".number_of_fy").html());
+            $scope.obj.active=(item.find(".active").html()=="true");
 
-                i=item.find(".company_id").html();
-                var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.company_id === +i; })[ 0 ];
-                $scope.obj.company=result;
-            }
-        });
+            i=item.find(".company_id").html();
+            var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.company_id === +i; })[ 0 ];
+            $scope.obj.company=result;
+        }
      }
-
-    $("#nextform").click(function(){
-        alert("kliknuto na next form");
-        /*highlighted = $(".highlighted");
-        id = highlighted.find(".id").html();
-        //nextForm(id);
-        myService.set(id);
-        $window.location.href = '/#/settlement';*/
-    });
-
 
     $scope.fook = function(event, obj) {
          $("#highlightedOne").removeClass("highlighted");

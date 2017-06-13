@@ -21,7 +21,7 @@ public class Company{
     private long company_id;
 
     @XmlElement
-    @Column(length = 50)
+    @Column(length = 50,unique = true)
     @NotNull
     @Size(min = 3, max = 50)
     private String name;
@@ -66,6 +66,10 @@ public class Company{
     private List<Business_partner> business_partners;
 
     @JsonIgnore
+    @OneToMany(mappedBy="company_partner")
+    private List<Business_partner> company_partners;
+
+    @JsonIgnore
     @OneToMany(mappedBy="company")
     private List<Fiscal_year> fiscal_years;
 
@@ -85,7 +89,7 @@ public class Company{
         this.users = users;
     }
 
-    public Company(String name, int tin, String city, String adress, String telephone, int company_number, String current_account, List<Invoice> invoices, List<Business_partner> business_partners, List<Fiscal_year> fiscal_years, List<Purchase_order> purchase_orders, List<User> users){
+    public Company(String name, int tin, String city, String adress, String telephone, int company_number, String current_account, List<Invoice> invoices, List<Business_partner> business_partners, List<Fiscal_year> fiscal_years, List<Purchase_order> purchase_orders, List<User> users, List<Business_partner> company_partners){
         super();
         this.name = name;
         this.tin = tin;
@@ -99,9 +103,10 @@ public class Company{
         this.fiscal_years = fiscal_years;
         this.purchase_orders = purchase_orders;
         this.users=users;
+        this.company_partners=company_partners;
     }
 
-    public Company(long company_id, String name, int tin, String city, String adress, String telephone, int company_number, String current_account, List<Invoice> invoices, List<Business_partner> business_partners, List<Fiscal_year> fiscal_years, List<Purchase_order> purchase_orders, List<User> users){
+    public Company(long company_id, String name, int tin, String city, String adress, String telephone, int company_number, String current_account, List<Invoice> invoices, List<Business_partner> business_partners, List<Fiscal_year> fiscal_years, List<Purchase_order> purchase_orders, List<User> users, List<Business_partner> company_partners){
         super();
         this.company_id = company_id;
         this.name = name;
@@ -116,6 +121,7 @@ public class Company{
         this.fiscal_years = fiscal_years;
         this.purchase_orders = purchase_orders;
         this.users=users;
+        this.company_partners=company_partners;
     }
 
     public Company(){}
@@ -216,4 +222,11 @@ public class Company{
         this.purchase_orders = purchase_orders;
     }
 
+    public List<Business_partner> getCompany_partners() {
+        return company_partners;
+    }
+
+    public void setCompany_partners(List<Business_partner> company_partners) {
+        this.company_partners = company_partners;
+    }
 }

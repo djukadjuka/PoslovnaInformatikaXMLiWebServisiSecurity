@@ -14,22 +14,30 @@ public class JwtUser implements UserDetails {
     private final Long id;
     private final String username;
     private final String password;
+    private final Long company_id;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public JwtUser(
           Long id,
           String username,
-          String password, Collection<? extends GrantedAuthority> authorities
+          String password,
+          Long company_id,
+          Collection<? extends GrantedAuthority> authorities
     ) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.company_id = company_id;
         this.authorities = authorities;
     }
 
     @JsonIgnore
     public Long getId() {
         return id;
+    }
+
+    public Long getCompany_id() {
+        return company_id;
     }
 
     @Override

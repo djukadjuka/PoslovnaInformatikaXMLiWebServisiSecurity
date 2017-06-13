@@ -20,8 +20,10 @@ public class UserRestController {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    /*@Autowired
+    private UserDetailsService userDetailsService;*/
     @Autowired
-    private UserDetailsService userDetailsService;
+    private JwtUserDetailsServiceImpl userDetailsService;
 
     @Autowired
     private UserService userService;

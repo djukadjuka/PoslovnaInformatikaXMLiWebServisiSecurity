@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "price_list", "item" }) })
 public class Price_list_item{
 
     @Id
@@ -13,10 +14,12 @@ public class Price_list_item{
 
     @ManyToOne
     @NotNull
+    @JoinColumn(name="price_list")
     private Price_list price_list;
 
     @ManyToOne
     @NotNull
+    @JoinColumn(name="item")
     private Item item;
 
     @ManyToOne

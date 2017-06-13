@@ -21,13 +21,13 @@ public class Units_of_measurement{
     private long units_of_measurement_id;
 
     @XmlElement
-    @Column(length = 3)
+    @Column(length = 3, unique = true)
     @NotNull
     @Size(min = 3, max = 3)
     private String abbreviation;
 
     @XmlElement
-    @Column(length = 50)
+    @Column(length = 50, unique = true)
     @NotNull
     @Size(min = 3, max = 50)
     private String name;

@@ -4,7 +4,7 @@ app.controller("business_partner_controller", function($scope,$http,$cookies,$lo
 
      $cookies.put('repositorium','business_partner');
      $cookies.put('subObjectsOne','company');
-     $cookies.put('subObjectsTwo',null);
+     $cookies.put('subObjectsTwo','company');
      $cookies.put('subObjectsThree',null);
      $cookies.put('subObjectsFour',null);
 
@@ -14,6 +14,7 @@ app.controller("business_partner_controller", function($scope,$http,$cookies,$lo
 
      $scope.setObjects();
      $scope.setSubObjects();
+     $scope.setSubObjectsTwo();
 
      $scope.obj={};
      $scope.state=$cookies.get('state');
@@ -24,52 +25,34 @@ app.controller("business_partner_controller", function($scope,$http,$cookies,$lo
         if($scope.state=="edit"){
             $scope.obj={};
             $scope.obj.business_partner_id=$(event.currentTarget).find(".id").html();
-            $scope.obj.name=$(event.currentTarget).find(".name").html();
-            $scope.obj.tin=parseInt($(event.currentTarget).find(".tin").html());
-            $scope.obj.city=$(event.currentTarget).find(".city").html();
-            $scope.obj.adress=$(event.currentTarget).find(".adress").html();
-            $scope.obj.telephone=$(event.currentTarget).find(".telephone").html();
-            $scope.obj.personal_number=parseInt($(event.currentTarget).find(".personal_number").html());
-            $scope.obj.current_account=$(event.currentTarget).find(".current_account").html();
             $scope.obj.type_of_bp=$(event.currentTarget).find(".type_of_bp").html();
 
 
             i=$(event.currentTarget).find(".company_id").html();
             var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.company_id === +i; })[ 0 ];
             $scope.obj.company=result;
+
+            i=$(event.currentTarget).find(".company_partner_id").html();
+            var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.company_id === +i; })[ 0 ];
+            $scope.obj.company_partner=resultt;
         }
      }
 
      $scope.sync = function(item){
-        $scope.$apply(function() {
-            if($scope.state=="edit"){
-                $scope.obj={};
-                $scope.obj.business_partner_id_id=item.find(".id").html();
-                $scope.obj.name=item.find(".name").html();
-                $scope.obj.tin=parseInt(item.find(".tin").html());
-                $scope.obj.city=item.find(".city").html();
-                $scope.obj.adress=item.find(".adress").html();
-                $scope.obj.telephone=item.find(".telephone").html();
-                $scope.obj.personal_number=parseInt(item.find(".personal_number").html());
-                $scope.obj.current_account=item.find(".current_account").html();
-                $scope.obj.type_of_bp=item.find(".type_of_bp").html();
+        if($scope.state=="edit"){
+            $scope.obj={};
+            $scope.obj.business_partner_id_id=item.find(".id").html();
+            $scope.obj.type_of_bp=item.find(".type_of_bp").html();
 
-                i=item.find(".company_id").html();
-                var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.company_id === +i; })[ 0 ];
-                $scope.obj.company=result;
-            }
-        });
+            i=item.find(".company_id").html();
+            var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.company_id === +i; })[ 0 ];
+            $scope.obj.company=result;
+
+            i=item.find(".company_partner_id").html();
+            var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.company_id === +i; })[ 0 ];
+            $scope.obj.company_partner=resultt;
+        }
      }
-
-    $("#nextform").click(function(){
-        alert("kliknuto na next form");
-        /*highlighted = $(".highlighted");
-        id = highlighted.find(".id").html();
-        //nextForm(id);
-        myService.set(id);
-        $window.location.href = '/#/settlement';*/
-    });
-
 
     $scope.fook = function(event, obj) {
          $("#highlightedOne").removeClass("highlighted");
@@ -85,6 +68,23 @@ app.controller("business_partner_controller", function($scope,$http,$cookies,$lo
 
             var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.company_id === +i; })[ 0 ];
             $scope.obj.company=result;
+        });
+    });
+
+    $scope.fookk = function(event, obj) {
+         $("#highlightedTwo").removeClass("highlighted");
+         $('#highlightedTwo').removeAttr('id');
+         $(event.currentTarget).attr('id', 'highlightedTwo');
+         $(event.currentTarget).addClass("highlighted");
+      };
+
+      $("#moPickup").off().on('click', function() {
+        $scope.$apply(function() {
+            i=$("#highlightedTwo").find(".sotid").html();
+            $('#modalTwo').modal('toggle');
+
+            var result=$scope.subObjectsTwo.filter(function( obj ) { return +obj.company_id === +i; })[ 0 ];
+            $scope.obj.company_partner=result;
         });
     });
 

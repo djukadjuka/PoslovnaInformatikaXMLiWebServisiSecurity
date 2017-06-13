@@ -17,6 +17,7 @@ public class Permission {
     private long permission_id;
 
     @NotNull
+    @Column(unique = true)
     private String name;
 
     @JsonIgnore

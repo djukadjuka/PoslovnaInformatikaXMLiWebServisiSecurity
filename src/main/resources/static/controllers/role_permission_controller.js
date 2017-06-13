@@ -40,20 +40,18 @@ app.controller("role_permission_controller", function($scope,$http,$cookies,$loc
 
 
       $scope.sync = function(item){
-          $scope.$apply(function() {
-              if($scope.state=="edit"){
-                  $scope.obj={};
-                  $scope.obj.rolepermission_id=item.find(".id").html();
+          if($scope.state=="edit"){
+              $scope.obj={};
+              $scope.obj.rolepermission_id=item.find(".id").html();
 
-                  i=item.find(".role_id").html();
-                  var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.role_id === +i; })[ 0 ];
-                  $scope.obj.role=result;
+              i=item.find(".role_id").html();
+              var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.role_id === +i; })[ 0 ];
+              $scope.obj.role=result;
 
-                  ii=item.find(".permission_id").html();
-                  var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.permission_id === +ii; })[ 0 ];
-                  $scope.obj.permission=resultt;
-              }
-          });
+              ii=item.find(".permission_id").html();
+              var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.permission_id === +ii; })[ 0 ];
+              $scope.obj.permission=resultt;
+          }
        };
 
         $scope.fook = function(event, obj) {

@@ -1,13 +1,10 @@
 package com.company.invoicing.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "invoice", "item" }) })
 public class Invoice_item{
 
     @Id
@@ -16,10 +13,12 @@ public class Invoice_item{
 
     @ManyToOne
     @NotNull
+    @JoinColumn(name="invoice")
     private Invoice invoice;
 
     @ManyToOne
     @NotNull
+    @JoinColumn(name="item")
     private Item item;
 
     @NotNull

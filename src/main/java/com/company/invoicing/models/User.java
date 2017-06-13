@@ -14,6 +14,7 @@ public class User {
     private long user_id;
 
     @NotNull
+    @Column(unique = true)
     private String username;
 
     @NotNull
@@ -27,24 +28,19 @@ public class User {
     @ManyToOne
     private Company company;
 
-    @ManyToOne
-    private Business_partner business_partner;
-
-    public User(long user_id, String username, String password, Role role, Company company, Business_partner business_partner) {
+    public User(long user_id, String username, String password, Role role, Company company) {
         this.user_id = user_id;
         this.username = username;
         this.password = password;
         this.role = role;
         this.company = company;
-        this.business_partner = business_partner;
     }
 
-    public User(String username, String password, Role role, Company company, Business_partner business_partner) {
+    public User(String username, String password, Role role, Company company) {
         this.username = username;
         this.password = password;
         this.role = role;
         this.company = company;
-        this.business_partner = business_partner;
     }
 
     public User() {
@@ -88,13 +84,5 @@ public class User {
 
     public void setCompany(Company company) {
         this.company = company;
-    }
-
-    public Business_partner getBusiness_partner() {
-        return business_partner;
-    }
-
-    public void setBusiness_partner(Business_partner business_partner) {
-        this.business_partner = business_partner;
     }
 }

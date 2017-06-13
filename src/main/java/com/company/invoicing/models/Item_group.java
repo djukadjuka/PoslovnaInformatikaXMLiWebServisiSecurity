@@ -22,7 +22,7 @@ public class Item_group{
     @NotNull
     private Vat_type vat_type;
 
-    @Column(length = 50)
+    @Column(length = 50, unique = true)
     @NotNull
     @Size(min = 3, max = 50)
     private String name;

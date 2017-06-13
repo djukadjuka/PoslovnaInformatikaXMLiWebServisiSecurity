@@ -36,17 +36,15 @@ app.controller("item_group_controller", function($scope,$http,$cookies,$location
 
 
       $scope.sync = function(item){
-          $scope.$apply(function() {
-              if($scope.state=="edit"){
-                  $scope.obj={};
-                  $scope.obj.item_group_id=item.find(".id").html();
-                  $scope.obj.name=item.find(".name").html();
+          if($scope.state=="edit"){
+              $scope.obj={};
+              $scope.obj.item_group_id=item.find(".id").html();
+              $scope.obj.name=item.find(".name").html();
 
-                  i=item.find(".vat_type_id").html();
-                  var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.vat_type_id === +i; })[ 0 ];
-                  $scope.obj.vat_type=result;
-              }
-          });
+              i=item.find(".vat_type_id").html();
+              var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.vat_type_id === +i; })[ 0 ];
+              $scope.obj.vat_type=result;
+          }
        };
 
         $scope.fook = function(event, obj) {

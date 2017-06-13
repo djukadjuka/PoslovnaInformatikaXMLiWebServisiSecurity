@@ -40,6 +40,7 @@ public class Purchase_order{
 
     @XmlElement
     @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int purchase_order_number;
 
     @JsonIgnore

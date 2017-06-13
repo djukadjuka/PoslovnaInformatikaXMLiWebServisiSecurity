@@ -28,22 +28,11 @@ app.controller("currency_controller", function($scope,$http,$cookies,$location,$
      }
 
      $scope.sync = function(item){
-        $scope.$apply(function() {
-            if($scope.state=="edit"){
-                $scope.obj={};
-                $scope.obj.currency_id=item.find(".id").html();
-                $scope.obj.name=item.find(".name").html();
-                $scope.obj.abbreviation=item.find(".abbreviation").html();
-            }
-        });
+        if($scope.state=="edit"){
+            $scope.obj={};
+            $scope.obj.currency_id=item.find(".id").html();
+            $scope.obj.name=item.find(".name").html();
+            $scope.obj.abbreviation=item.find(".abbreviation").html();
+        }
      }
-
-    $("#nextform").click(function(){
-        alert("kliknuto na next form");
-        /*highlighted = $(".highlighted");
-        id = highlighted.find(".id").html();
-        //nextForm(id);
-        myService.set(id);
-        $window.location.href = '/#/settlement';*/
-    });
 });

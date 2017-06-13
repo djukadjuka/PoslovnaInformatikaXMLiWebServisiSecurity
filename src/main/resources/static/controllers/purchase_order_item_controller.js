@@ -95,22 +95,20 @@ app.controller("purchase_order_item_controller", function($scope,$http,$cookies,
 
 
       $scope.sync = function(item){
-          $scope.$apply(function() {
-              if($scope.state=="edit"){
-                  $scope.obj={};
-                  $scope.obj.purchase_order_item_id=item.find(".id").html();
-                  $scope.obj.total_amount=parseInt(item.find(".total_amount").html());
-                  $scope.obj.total_price=parseFloat(item.find(".total_price").html());
+          if($scope.state=="edit"){
+              $scope.obj={};
+              $scope.obj.purchase_order_item_id=item.find(".id").html();
+              $scope.obj.total_amount=parseInt(item.find(".total_amount").html());
+              $scope.obj.total_price=parseFloat(item.find(".total_price").html());
 
-                   i=item.find(".purchase_order_id").html();
-                   var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.purchase_order_id === +i; })[ 0 ];
-                   $scope.obj.purchase_order=result;
+               i=item.find(".purchase_order_id").html();
+               var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.purchase_order_id === +i; })[ 0 ];
+               $scope.obj.purchase_order=result;
 
-                   ii=item.find(".item_id").html();
-                   var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.item_id === +ii; })[ 0 ];
-                   $scope.obj.item=resultt;
-              }
-          });
+               ii=item.find(".item_id").html();
+               var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.item_id === +ii; })[ 0 ];
+               $scope.obj.item=resultt;
+          }
        };
 
         $scope.fook = function(event, obj) {
@@ -173,7 +171,7 @@ app.controller("purchase_order_item_controller", function($scope,$http,$cookies,
 
 
        $scope.findPrice=function(){
-            if($scope.obj.item!=null && $scope.obj.total_amount!=null){
+            if($scope.obj.item!=null && $scope.obj.total_amount!=null && $scope.obj.purchase_order!=null){
                 var datumNarudzbenice=$scope.obj.purchase_order.date;
                 var najbliziPLI=null;
                 for(var i=0 in $scope.subObjectsThree){

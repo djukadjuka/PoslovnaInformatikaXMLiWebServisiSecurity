@@ -30,7 +30,7 @@ public class Item{
     private Units_of_measurement units_of_measurement;
 
     @XmlElement
-    @Column(length = 50)
+    @Column(length = 50,unique = true)
     @NotNull
     @Size(min = 3, max = 50)
     private String name;

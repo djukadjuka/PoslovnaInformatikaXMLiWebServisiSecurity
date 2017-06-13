@@ -15,17 +15,14 @@ public class Currency{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long currency_id;
 
-    /*@ManyToOne
-    private Price_list_item price_list_item;*/
-
     @XmlElement
-    @Column(length = 50)
+    @Column(length = 50,unique = true)
     @NotNull
     @Size(min = 3, max = 50)
     private String name;
 
     @XmlElement
-    @Column(length = 3)
+    @Column(length = 3,unique = true)
     @NotNull
     @Size(min = 3, max = 3)
     private String abbreviation;

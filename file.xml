@@ -1,56 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<purchaseOrder purchaseOrderId="250">
-    <fiscal_year fiscalYearId="20">
-        <number_of_fy>1</number_of_fy>
+<purchaseOrder purchaseOrderId="122">
+    <fiscal_year fiscalYearId="111">
+        <number_of_fy>0</number_of_fy>
         <active>true</active>
     </fiscal_year>
-    <business_partner businessPartnerId="10">
-        <name>partner broj 1</name>
-        <tin>1</tin>
-        <current_account>1</current_account>
-        <city>1</city>
-        <adress>1</adress>
-        <telephone>1</telephone>
-        <personal_number>0</personal_number>
+    <business_partner businessPartnerId="103">
         <type_of_bp>customer</type_of_bp>
     </business_partner>
-    <company companyId="30">
-        <name>kompanija1</name>
-        <tin>123</tin>
-        <city>grad1</city>
-        <adress>adresa1</adress>
-        <telephone>telefon1</telephone>
-        <company_number>123</company_number>
-        <current_account>racun1</current_account>
+    <company companyId="91">
+        <name>kompanija2</name>
+        <tin>987654321</tin>
+        <city>grad2</city>
+        <adress>adresa2</adress>
+        <telephone>telefon2</telephone>
+        <company_number>0</company_number>
+        <current_account>0987654321</current_account>
     </company>
-    <date>2017-06-06T02:00:00+02:00</date>
+    <date>2017-06-13T01:00:00+02:00</date>
     <purchase_order_number>1</purchase_order_number>
-    <purchase_order_items>
-        <purchase_order_item purchaseOrderItemId="340">
-            <total_amount>10</total_amount>
-            <total_price>1000.0</total_price>
-            <item itemId="130">
-                <units_of_measurement unitsOfMeasurementId="200">
-                    <abbreviation>kom</abbreviation>
-                    <name>komad</name>
-                </units_of_measurement>
-                <name>monitor</name>
-                <description>aaa</description>
-                <is_service>true</is_service>
-            </item>
-        </purchase_order_item>
-        <purchase_order_item purchaseOrderItemId="341">
-            <total_amount>20</total_amount>
-            <total_price>4000.0</total_price>
-            <item itemId="210">
-                <units_of_measurement unitsOfMeasurementId="201">
-                    <abbreviation>kgm</abbreviation>
-                    <name>kilogram</name>
-                </units_of_measurement>
-                <name>sto</name>
-                <description>namestaj</description>
-                <is_service>false</is_service>
-            </item>
-        </purchase_order_item>
-    </purchase_order_items>
+    <purchase_order_items/>
 </purchaseOrder>

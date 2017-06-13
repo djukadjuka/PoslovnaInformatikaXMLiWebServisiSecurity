@@ -31,13 +31,11 @@ app.controller("price_list_controller", function($scope,$http,$cookies,$location
 
 
       $scope.sync = function(item){
-          $scope.$apply(function() {
-              if($scope.state=="edit"){
-                  $scope.obj={};
-                  $scope.obj.price_list_id=item.find(".id").html();
-                  $scope.obj.valid_from=new Date(item.find(".valid_from").html());
-              }
-          });
+          if($scope.state=="edit"){
+              $scope.obj={};
+              $scope.obj.price_list_id=item.find(".id").html();
+              $scope.obj.valid_from=new Date(item.find(".valid_from").html());
+          }
        };
 
        $("#moPickup").off().on('click', function() {

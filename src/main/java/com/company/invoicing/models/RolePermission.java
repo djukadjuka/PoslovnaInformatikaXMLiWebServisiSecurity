@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
  * Created by User on 6/1/2017.
  */
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "permission", "role" }) })
 public class RolePermission {
 
     @Id
@@ -15,10 +16,12 @@ public class RolePermission {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name="permission")
     private Permission permission;
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name="role")
     private Role role;
 
     public RolePermission(long rolepermission_id, Permission permission, Role role) {

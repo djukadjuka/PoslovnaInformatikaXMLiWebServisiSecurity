@@ -1,5 +1,6 @@
 package com.company.invoicing.services;
 
+import com.company.invoicing.models.Fiscal_year;
 import com.company.invoicing.models.Purchase_order;
 import com.company.invoicing.models.Purchase_order_item;
 import com.company.invoicing.repositoriums.Purchase_orderRepository;
@@ -19,6 +20,9 @@ public class Purchase_orderService {
 
     @Autowired
     private Purchase_orderRepository repository;
+
+    @Autowired
+    private Fiscal_yearService fiscal_yearService;
 
     public List<Purchase_order> findAll(){
         return repository.findAll();

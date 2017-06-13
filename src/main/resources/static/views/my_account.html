@@ -1,5 +1,7 @@
 <div ng-controller="my_account_controller">
 
+    <div ng-controller="defaultController" ng-include="'views/toolbar.html'"></div>
+
     <h1>My account</h1>
 
     <div class = "panel">
@@ -18,21 +20,11 @@
 
             <p>
                 <label>Company</label>
-                <!--<select ng-model="obj.company" name="company" ng-options="soo.name for soo in subObjectsOne track by soo.company_id" id="selectOne" readonly>
-                </select>-->
                 <input type = "text" name="company" ng-model="obj.company.name" readonly />
-            </p>
-            <p>
-                <label>Business partner</label>
-                <!--<select ng-model="obj.business_partner" name="business_partner" ng-options="sot.name for sot in subObjectsTwo track by sot.business_partner_id" id="selectTwo" readonly >
-                </select>-->
-                <input type = "text" name="business_partner" ng-model="obj.business_partner.name" readonly />
             </p>
 
             <p>
                 <label>Role</label>
-                <!--<select ng-model="obj.role" name="business_partner" ng-options="soth.name for soth in subObjectsThree track by soth.role_id" id="selectThree" readonly >
-                </select>-->
                 <input type = "text" name="role" ng-model="obj.role.name" readonly />
             </p>
 
@@ -55,7 +47,4 @@
             </p>
         </form>
     </div>
-
-    <p><h1>STANJE:{{state}}</h1></p>
-
 </div>

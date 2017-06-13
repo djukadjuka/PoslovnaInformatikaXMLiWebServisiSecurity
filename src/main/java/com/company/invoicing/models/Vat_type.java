@@ -22,7 +22,7 @@ public class Vat_type{
     @OneToMany(mappedBy="vat_type")
     private List<Vat_rate> vat_rates;
 
-    @Column(length = 50)
+    @Column(length = 50,unique=true)
     @NotNull
     @Size(min = 3, max = 50)
     private String name;

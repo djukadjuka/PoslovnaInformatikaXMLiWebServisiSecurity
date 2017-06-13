@@ -1,6 +1,99 @@
 app.controller('defaultController', ['$scope','$controller','$cookies','$http','$location', function ($scope,$controller,$cookies,$http,$location) {
 
-  $("#first").off().on('click', function() {
+    $scope.first = function() {
+           item = $("table tr:nth-child(2)");
+           $(".highlighted").removeClass("highlighted");
+           item.addClass("highlighted");
+           $scope.sync(item);
+       };
+
+    $scope.last = function() {
+            item = $("table tr:nth-last-child(1)");
+            $(".highlighted").removeClass("highlighted");
+            item.addClass("highlighted");
+            $scope.sync(item);
+        };
+
+    $scope.next = function() {
+          highlighted = $(".highlighted");
+          var count = $("tr").length;
+          if (count == 0)
+              return;
+          index =  $("tr").index(highlighted);
+          if (index < 0)
+              return;
+          selectChild = 2;
+          if (index < count - 1)
+              selectChild = index + 2;
+          item = $("tr:nth-child(" + selectChild + ")");
+          $(".highlighted").removeClass("highlighted");
+          item.addClass("highlighted");
+          $scope.sync(item);
+      };
+
+    $scope.prev = function() {
+          highlighted = $(".highlighted");
+          var count = $("tr").length;
+          if (count == 0)
+              return;
+          index =  $("tr").index(highlighted);
+          if (index < 0)
+              return;
+
+          selectChild=index;
+
+          if(index+1 == 2)
+              selectChild=count;
+
+          item = $("tr:nth-child(" + selectChild + ")");
+          $(".highlighted").removeClass("highlighted");
+          item.addClass("highlighted");
+          $scope.sync(item);
+      };
+
+
+     $scope.add = function() {
+         $scope.obj={};
+         $cookies.put('state','add');
+         $scope.state=$cookies.get('state');
+         $(".highlighted").removeClass("highlighted");
+     };
+
+     $scope.search = function() {
+         $scope.obj={};
+         $cookies.put('state','search');
+         $scope.state=$cookies.get('state');
+         $(".highlighted").removeClass("highlighted");
+     };
+
+    $scope.remove = function() {
+        highlighted = $(".highlighted");
+        id = highlighted.find(".id").html();
+         $.ajax({
+             url: '/'+$cookies.get('repositorium')+'/delete/'+id,
+             type: "DELETE",
+             //data: object,
+             contentType: "application/json; charset=utf-8",
+             //dataType: "json",
+             headers: $scope.createAuthorizationTokenHeader(),
+             success: function (data, textStatus, jqXHR) {
+                 console.log("proslo");
+                 $scope.$apply(function() {
+                     $scope.obj={};
+                     $scope.setObjects();
+                 });
+             },
+             error: function (jqXHR, textStatus, errorThrown) {
+                 console.log("nije proslo");
+             }
+         });
+    };
+
+    $scope.refresh = function() {
+        location.reload();
+    };
+
+  /*$("#first").off().on('click', function() {
            item = $("table tr:nth-child(2)");
            $(".highlighted").removeClass("highlighted");
            item.addClass("highlighted");
@@ -67,7 +160,7 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http','
                $scope.state=$cookies.get('state');
                $(".highlighted").removeClass("highlighted");
            });
-       });
+       });*/
 
        $("#rollback").off().on('click', function() {
            $scope.$apply(function() {
@@ -78,15 +171,15 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http','
            });
        });
 
-       $("#remove").off().on('click', function() {
+       /*$("#remove").off().on('click', function() {
             highlighted = $(".highlighted");
             id = highlighted.find(".id").html();
-            /*$http.delete('/'+$cookies.get('repositorium')+'/delete/'+id)
+            $http.delete('/'+$cookies.get('repositorium')+'/delete/'+id)
              .then(function(response){
                  $scope.obj = {};
                 $scope.setObjects();
 
-             });*/
+             });
              $.ajax({
                  url: '/'+$cookies.get('repositorium')+'/delete/'+id,
                  type: "DELETE",
@@ -109,9 +202,11 @@ app.controller('defaultController', ['$scope','$controller','$cookies','$http','
 
         $("#refresh").off().on('click', function() {
             location.reload();
-        });
+        });*/
 
         $scope.accept = function(object){
+           console.log("ovo je objekat:");
+           console.log(object);
            if($scope.state=="add"){
               /*$http.post('/'+$cookies.get('repositorium')+'/create',object)
                .then(function(response){

@@ -1,20 +1,6 @@
 <div ng-controller="user_controller">
 
-    <p>
-    <ul>
-        <li><a id = "search"><img src="images/search.gif"/></a></li>
-        <li><a id = "refresh"><img src="images/refresh.gif"/></a></li>
-        <li><a href="#" id = "pickup"><img src="images/zoom-pickup.gif"/></a></li>
-        <li><a href="#" id = "help"><img src="images/help.gif"/></a></li>
-        <li><a id = "first"><img src="images/first.gif"/></a></li>
-        <li><a id = "prev"><img src="images/prev.gif"/></a></li>
-        <li><a id = "next"><img src="images/next.gif"/></a></li>
-        <li><a id = "last"><img src="images/last.gif"/></a></li>
-        <li><a id = "add"><img src="images/add.gif"/></a></li>
-        <li><a id = "remove"><img src="images/remove.gif"/></a></li>
-        <li><a id = "nextform"><img src="images/nextform.gif"/></a></li>
-    </ul>
-    </p>
+    <div ng-include="'views/toolbar.html'"></div>
 
     <h1>Users</h1>
 
@@ -25,8 +11,6 @@
             <th>Password</th>
             <th>Company ID</th>
             <th>Company name</th>
-            <th>Business partner ID</th>
-            <th>Business partner name</th>
             <th>Role ID</th>
             <th>Role name</th>
         </tr>
@@ -37,8 +21,6 @@
 
             <td class="company_id">{{o.company.company_id}}</td>
             <td class="company_name">{{o.company.name}}</td>
-            <td class="business_partner_id">{{o.business_partner.business_partner_id}}</td>
-            <td class="business_partner_name">{{o.business_partner.name}}</td>
             <td class="role_id">{{o.role.role_id}}</td>
             <td class="role_name">{{o.role.name}}</td>
         </tr>
@@ -87,23 +69,10 @@
             </p>
             <p>
             <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-                <label>Business partner</label>
-                <select ng-model="obj.business_partner" name="business_partner" ng-options="sot.name for sot in subObjectsTwo track by sot.business_partner_id" id="selectTwo" ng-disabled="obj.company==null" >
-                </select>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTwo" ng-disabled="obj.company==null">...</button>
-                <div ng-if="state!='search'">
-                    <div ng-messages="userForm.business_partner.$error" >
-                        <div ng-messages-include="views/messages.html"></div>
-                    </div>
-                </div>
-            </div>
-            </p>
-            <p>
-            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
                 <label>Role</label>
-                <select ng-model="obj.role" name="role" ng-options="soth.name for soth in subObjectsThree track by soth.role_id" id="selectThree" ng-disabled="obj.business_partner!=null" required>
+                <select ng-model="obj.role" name="role" ng-options="soth.name for soth in subObjectsThree track by soth.role_id" id="selectThree" required>
                 </select>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThree" ng-disabled="obj.business_partner!=null" >...</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThree" >...</button>
                 <div ng-if="state!='search'">
                     <div ng-messages="userForm.role.$error" >
                         <div ng-messages-include="views/messages.html"></div>
@@ -160,51 +129,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="modalTwo" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    Business partners
-                </div>
-                <div class="modal-body">
-                    <table style = "padding:2em">
-                        <tr class = "header">
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>TIN</th>
-                            <th>City</th>
-                            <th>Adress</th>
-                            <th>Telephone</th>
-                            <th>Personal number</th>
-                            <th>Current account</th>
-                            <th>Type of BP</th>
-                            <th>Company ID</th>
-                            <th>Company name</th>
-                        </tr>
-                        <tr ng-repeat="sot in subObjectsTwo" ng-click="fookk($event, sot)" >
-                            <td class="sotid">{{sot.business_partner_id}}</td>
-                            <td class="sotname">{{sot.name}}</td>
-                            <td class="sottin">{{sot.tin}}</td>
-                            <td class="sotcity">{{sot.city}}</td>
-                            <td class="sotadress">{{sot.adress}}</td>
-                            <td class="sottelephone">{{sot.telephone}}</td>
-                            <td class="sotpersonal_number">{{sot.personal_number}}</td>
-                            <td class="sotcurrent_account">{{sot.current_account}}</td>
-                            <td class="sottype_of_bp">{{sot.type_of_bp}}</td>
-                            <td class="sotcompany_id">{{sot.company.company_id}}</td>
-                            <td class="sotcompany_name">{{sot.company.name}}</td>
-                        </tr>
-                    </table>
-                    <div class="modal-footer">
-                        <input id = "mtPickup" type = "button" value = "Accept"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <!-- Modal -->
     <div class="modal fade" id="modalThree" role="dialog">

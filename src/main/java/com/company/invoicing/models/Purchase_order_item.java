@@ -1,10 +1,6 @@
 package com.company.invoicing.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -13,6 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 @Entity
 @XmlAccessorType(XmlAccessType.NONE)
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "purchase_order", "item" }) })
 public class Purchase_order_item{
 
     @Id
@@ -32,11 +29,13 @@ public class Purchase_order_item{
 
     @ManyToOne
     @NotNull
+    @JoinColumn(name="purchase_order")
     private Purchase_order purchase_order;
 
     @ManyToOne
     @XmlElement
     @NotNull
+    @JoinColumn(name="item")
     private Item item;
 
     public Purchase_order_item(int price_list_item_id, int total_amount, double total_price, Purchase_order purchase_order, Item item){

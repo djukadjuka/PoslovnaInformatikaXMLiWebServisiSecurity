@@ -60,35 +60,33 @@ app.controller("purchase_order_controller", function($scope,$http,$cookies,$loca
 
 
       $scope.sync = function(item){
-          $scope.$apply(function() {
-              if($scope.state=="edit"){
-                  $scope.obj={};
-                  $scope.obj.purchase_order_id=item.find(".id").html();
-                  $scope.obj.date=new Date(item.find(".date").html());
-                  $scope.obj.purchase_order_number=parseInt(item.find(".purchase_order_number").html());
+          if($scope.state=="edit"){
+              $scope.obj={};
+              $scope.obj.purchase_order_id=item.find(".id").html();
+              $scope.obj.date=new Date(item.find(".date").html());
+              $scope.obj.purchase_order_number=parseInt(item.find(".purchase_order_number").html());
 
-                   i=$item.find(".company_id").html();
-                   var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.company_id === +i; })[ 0 ];
-                   $scope.obj.company=result;
+               i=$item.find(".company_id").html();
+               var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.company_id === +i; })[ 0 ];
+               $scope.obj.company=result;
 
 
-                  var res=$scope.objectsTwo.filter(function (el) {
-                        return el.company.company_id==i;
-                      });
-                   $scope.subObjectsTwo=res;
-                   ii=item.find(".business_partner_id").html();
-                   var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.business_partner_id === +ii; })[ 0 ];
-                   $scope.obj.business_partner=resultt;
+              var res=$scope.objectsTwo.filter(function (el) {
+                    return el.company.company_id==i;
+                  });
+               $scope.subObjectsTwo=res;
+               ii=item.find(".business_partner_id").html();
+               var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.business_partner_id === +ii; })[ 0 ];
+               $scope.obj.business_partner=resultt;
 
-                   var ress=$scope.objectsThree.filter(function (el) {
-                         return el.company.company_id==i && el.active===true;
-                       });
-                    $scope.subObjectsThree=ress;
-                   iii=item.find(".fiscal_year_id").html();
-                   var resulttt=$scope.subObjectsThree.filter(function( obj ) { return +obj.fiscal_year_id === +iii && obj.active==true; })[ 0 ];
-                   $scope.obj.fiscal_year=resulttt;
-              }
-          });
+               var ress=$scope.objectsThree.filter(function (el) {
+                     return el.company.company_id==i && el.active===true;
+                   });
+                $scope.subObjectsThree=ress;
+               iii=item.find(".fiscal_year_id").html();
+               var resulttt=$scope.subObjectsThree.filter(function( obj ) { return +obj.fiscal_year_id === +iii && obj.active==true; })[ 0 ];
+               $scope.obj.fiscal_year=resulttt;
+          }
        };
 
        $scope.$watch('obj.company', function (newValue, oldValue) {
@@ -190,12 +188,12 @@ app.controller("purchase_order_controller", function($scope,$http,$cookies,$loca
             });
         };
 
-        $("#nextform").off().on('click', function() {
+        $scope.nextform = function() {
             highlighted = $(".highlighted");
             id = highlighted.find(".id").html();
             if(id!=null){
                 $cookies.put("nextform_id",id);
                 window.location.href = '/#/purchase_order_item';
             }
-        });
+        };
 });

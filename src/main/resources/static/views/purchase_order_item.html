@@ -1,20 +1,6 @@
 <div ng-controller="purchase_order_item_controller">
 
-    <p>
-    <ul>
-        <li><a id = "search"><img src="images/search.gif"/></a></li>
-        <li><a id = "refresh"><img src="images/refresh.gif"/></a></li>
-        <li><a href="#" id = "pickup"><img src="images/zoom-pickup.gif"/></a></li>
-        <li><a href="#" id = "help"><img src="images/help.gif"/></a></li>
-        <li><a id = "first"><img src="images/first.gif"/></a></li>
-        <li><a id = "prev"><img src="images/prev.gif"/></a></li>
-        <li><a id = "next"><img src="images/next.gif"/></a></li>
-        <li><a id = "last"><img src="images/last.gif"/></a></li>
-        <li><a id = "add"><img src="images/add.gif"/></a></li>
-        <li><a id = "remove"><img src="images/remove.gif"/></a></li>
-        <li><a id = "nextform"><img src="images/nextform.gif"/></a></li>
-    </ul>
-    </p>
+    <div ng-include="'views/toolbar.html'"></div>
 
     <h1>Purchase order item</h1>
 
@@ -48,7 +34,7 @@
                 <input type = "hidden" ng-model="obj.purchase_order_item_id"/>
             </p>
             <p>
-                <div class="form-group" ng-class="{ 'has-error' : userForm.date.$invalid && !userForm.date.$pristine }">
+                <div class="form-group" ng-class="{ 'has-error' : userForm.total_amount.$invalid && !userForm.total_amount.$pristine }">
                     <label>Total amount</label>
                     <input type = "number" name="total_amount" ng-model="obj.total_amount" required ng-min="1"/>
                     <div ng-if="state!='search'">
@@ -64,7 +50,7 @@
             </p>
 
             <p>
-                <div class="form-group" ng-class="{ 'has-error' : userForm.date.$invalid && !userForm.date.$pristine }">
+                <div class="form-group" ng-class="{ 'has-error' : userForm.purchase_order.$invalid && !userForm.purchase_order.$pristine }">
                     <label>Purchase order</label>
                     <select ng-model="obj.purchase_order" name="purchase_order" ng-options="soo.purchase_order_number for soo in subObjectsOne track by soo.purchase_order_id"  id="selectOne" required>
                     </select>
@@ -77,7 +63,7 @@
                 </div>
             </p>
             <p>
-                <div class="form-group" ng-class="{ 'has-error' : userForm.date.$invalid && !userForm.date.$pristine }">
+                <div class="form-group" ng-class="{ 'has-error' : userForm.item.$invalid && !userForm.item.$pristine }">
                     <label>Item</label>
                     <select ng-model="obj.item" name="item" ng-options="sot.name for sot in subObjectsTwo track by sot.item_id" ng-disabled="obj.purchase_order==null" id="selectTwo" required>
                     </select>

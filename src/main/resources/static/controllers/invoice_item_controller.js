@@ -95,27 +95,25 @@ app.controller("invoice_item_controller", function($scope,$http,$cookies,$locati
 
 
       $scope.sync = function(item){
-          $scope.$apply(function() {
-              if($scope.state=="edit"){
-                  $scope.obj={};
-                  $scope.obj.invoice_item_id=item.find(".id").html();
-                  $scope.obj.total_amount=parseInt(item.find(".total_amount").html());
-                  $scope.obj.price=parseFloat(item.find(".price").html());
-                  $scope.obj.discount=parseFloat(item.find(".discount").html());
-                  $scope.obj.vat_basis=parseFloat(item.find(".vat_basis").html());
-                  $scope.obj.vat_rate=parseFloat(item.find(".vat_rate").html());
-                  $scope.obj.vat_amount=parseFloat(item.find(".vat_amount").html());
-                  $scope.obj.total_price=parseFloat(item.find(".total_price").html());
+          if($scope.state=="edit"){
+              $scope.obj={};
+              $scope.obj.invoice_item_id=item.find(".id").html();
+              $scope.obj.total_amount=parseInt(item.find(".total_amount").html());
+              $scope.obj.price=parseFloat(item.find(".price").html());
+              $scope.obj.discount=parseFloat(item.find(".discount").html());
+              $scope.obj.vat_basis=parseFloat(item.find(".vat_basis").html());
+              $scope.obj.vat_rate=parseFloat(item.find(".vat_rate").html());
+              $scope.obj.vat_amount=parseFloat(item.find(".vat_amount").html());
+              $scope.obj.total_price=parseFloat(item.find(".total_price").html());
 
-                   i=item.find(".invoice_id").html();
-                   var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.invoice_id === +i; })[ 0 ];
-                   $scope.obj.invoice=result;
+               i=item.find(".invoice_id").html();
+               var result=$scope.subObjectsOne.filter(function( obj ) { return +obj.invoice_id === +i; })[ 0 ];
+               $scope.obj.invoice=result;
 
-                   ii=item.find(".item_id").html();
-                   var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.item_id === +ii; })[ 0 ];
-                   $scope.obj.item=resultt;
-              }
-          });
+               ii=item.find(".item_id").html();
+               var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.item_id === +ii; })[ 0 ];
+               $scope.obj.item=resultt;
+          }
        };
 
         $scope.fook = function(event, obj) {
