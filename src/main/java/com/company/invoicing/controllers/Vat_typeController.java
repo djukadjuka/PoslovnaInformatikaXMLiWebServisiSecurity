@@ -3,6 +3,7 @@ package com.company.invoicing.controllers;
 import com.company.invoicing.models.Vat_type;
 import com.company.invoicing.services.Vat_typeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 

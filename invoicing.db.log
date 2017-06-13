@@ -9,10 +9,3 @@ alter table purchase_order_item drop constraint UKbi6rteunlxncjgoq6vsninqcb
 alter table purchase_order_item add constraint UKbi6rteunlxncjgoq6vsninqcb unique (purchase_order, item)
 alter table role_permission drop constraint UKj1ku6imhb1o343s2j33y4002k
 alter table role_permission add constraint UKj1ku6imhb1o343s2j33y4002k unique (permission, role)
-/*C12*/SET SCHEMA PUBLIC
-DELETE FROM VAT_TYPE WHERE VAT_TYPE_ID=211
-COMMIT
-DELETE FROM VAT_TYPE WHERE VAT_TYPE_ID=200
-COMMIT
-DELETE FROM VAT_TYPE WHERE VAT_TYPE_ID=190
-COMMIT

@@ -3,6 +3,7 @@ package com.company.invoicing.controllers;
 import com.company.invoicing.models.User;
 import com.company.invoicing.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,6 @@ public class UserController {
     private UserService service;
 
     //@CustomAnnotation("users-all")
-    //@PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public List<User> all(){
         return service.findAll();
