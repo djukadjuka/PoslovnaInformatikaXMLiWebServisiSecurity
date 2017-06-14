@@ -171,7 +171,7 @@ app.controller("purchase_order_item_controller", function($scope,$http,$cookies,
 
 
        $scope.findPrice=function(){
-            if($scope.obj.item!=null && $scope.obj.total_amount!=null && $scope.obj.purchase_order!=null){
+            /*if($scope.obj.item!=null && $scope.obj.total_amount!=null && $scope.obj.purchase_order!=null){
                 var datumNarudzbenice=$scope.obj.purchase_order.date;
                 var najbliziPLI=null;
                 for(var i=0 in $scope.subObjectsThree){
@@ -191,6 +191,6 @@ app.controller("purchase_order_item_controller", function($scope,$http,$cookies,
                 $scope.obj.total_price=parseFloat($scope.obj.total_amount*najbliziPLI.price);
             }else{
                 $scope.obj.total_price=0;
-            }
+            }*/
        }
 });

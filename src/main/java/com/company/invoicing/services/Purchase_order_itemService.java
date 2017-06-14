@@ -1,11 +1,13 @@
 package com.company.invoicing.services;
 
+import com.company.invoicing.models.Price_list_item;
 import com.company.invoicing.models.Purchase_order_item;
 import com.company.invoicing.repositoriums.Purchase_order_itemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,10 +25,14 @@ public class Purchase_order_itemService {
     }
 
     public void create(Purchase_order_item purchase_order_item){
+        //purchase_order_item=repository.save(purchase_order_item);
+        //purchase_order_item=generatePrice(purchase_order_item);
         repository.save(purchase_order_item);
     }
 
     public void update(Purchase_order_item purchase_order_item){
+        //purchase_order_item=repository.save(purchase_order_item);
+        //purchase_order_item=generatePrice(purchase_order_item);
         repository.save(purchase_order_item);
     }
 
@@ -47,5 +53,28 @@ public class Purchase_order_itemService {
         }
 
         return purchase_order_items;
+    }
+
+    public Purchase_order_item generatePrice(Purchase_order_item purchase_order_item){
+        Date purchaseOrderDate=purchase_order_item.getPurchase_order().getDate();
+        double price=0;
+        Price_list_item tempPLI=null;
+        for(Price_list_item pli: purchase_order_item.getItem().getPrice_list_items()){
+            if(purchaseOrderDate.getTime()-pli.getPrice_list().getValid_from().getTime()>0){
+                if(tempPLI==null){
+                    tempPLI=pli;
+                }else if(purchaseOrderDate.getTime()-pli.getPrice_list().getValid_from().getTime()<purchaseOrderDate.getTime()-tempPLI.getPrice_list().getValid_from().getTime()){
+                    tempPLI=pli;
+                }
+            }
+        }
+
+        if(tempPLI!=null){
+            price=tempPLI.getPrice();
+        }
+
+        purchase_order_item.setTotal_price(purchase_order_item.getTotal_amount()*price);
+
+        return purchase_order_item;
     }
 }

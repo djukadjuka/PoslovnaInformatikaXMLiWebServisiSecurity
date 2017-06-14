@@ -1,4 +1,4 @@
-/*C11*/SET SCHEMA PUBLIC
+/*C10*/SET SCHEMA PUBLIC
 alter table business_partner drop constraint UKb4sgt1f49ddy6b6x2753tljx4
 alter table business_partner add constraint UKb4sgt1f49ddy6b6x2753tljx4 unique (company, company_partner)
 alter table invoice_item drop constraint UKh6ufo2uw5eb0bjre2njbt4050

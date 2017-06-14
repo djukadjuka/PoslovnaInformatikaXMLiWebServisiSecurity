@@ -1,5 +1,6 @@
 package com.company.invoicing.controllers;
 
+import com.company.invoicing.intercepters.AuthorityAnnotation;
 import com.company.invoicing.models.RolePermission;
 import com.company.invoicing.services.RolePermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,31 +18,31 @@ public class RolePermissionController {
     @Autowired
     private RolePermissionService service;
 
-    //@CustomAnnotation("rolespermissions-all")
+    @AuthorityAnnotation(method = "getAll",table = "role_permission")
     @RequestMapping(method = RequestMethod.GET)
     public List<RolePermission> all(){
         return service.findAll();
     }
 
-    //@CustomAnnotation("rolespermissions-one")
+    @AuthorityAnnotation(method = "getOne",table = "role_permission")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public RolePermission findOne(@PathVariable Long id) {
         return service.findOne(id);
     }
 
-    //@CustomAnnotation("rolespermissions-create")
+    @AuthorityAnnotation(method = "create",table = "role_permission")
     @RequestMapping(value = "/create" , method = RequestMethod.POST)
     public void create(@RequestBody RolePermission rolepermission){
         service.save(rolepermission);
     }
 
-    //@CustomAnnotation("rolespermissions-delete")
+    @AuthorityAnnotation(method = "delete",table = "role_permission")
     @RequestMapping(value = "/delete/{id}" , method = RequestMethod.DELETE)
     public void delete(@PathVariable Long id){
         service.delete(id);
     }
 
-    //@CustomAnnotation("rolespermissions-update")
+    @AuthorityAnnotation(method = "update",table = "role_permission")
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public void update(@RequestBody RolePermission rolepermission) {
         service.update(rolepermission);
