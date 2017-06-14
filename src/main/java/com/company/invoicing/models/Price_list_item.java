@@ -2,7 +2,6 @@ package com.company.invoicing.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "price_list", "item" }) })

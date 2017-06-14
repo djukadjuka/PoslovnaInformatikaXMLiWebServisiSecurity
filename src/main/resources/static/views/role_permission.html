@@ -11,6 +11,8 @@
             <th>Role name</th>
             <th>Permission ID</th>
             <th>Permission name</th>
+            <th>Tabela ID</th>
+            <th>Tabela name</th>
         </tr>
         <tr ng-repeat="o in objects" ng-click="foo($event, o)" >
             <td class="id">{{o.rolepermission_id}}</td>
@@ -18,6 +20,8 @@
             <td class="role_name">{{o.role.name}}</td>
             <td class="permission_id">{{o.permission.permission_id}}</td>
             <td class="permission_name">{{o.permission.name}}</td>
+            <td class="tabela_id">{{o.tabela.tabela_id}}</td>
+            <td class="tabela_name">{{o.tabela.name}}</td>
         </tr>
     </table>
 
@@ -41,12 +45,26 @@
             </p>
             <p>
             <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-                <label>Units of measurement</label>
+                <label>Permission</label>
                 <select ng-model="obj.permission" name="permission" ng-options="sot.name for sot in subObjectsTwo track by sot.permission_id" id="selectTwo" required>
                 </select>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTwo">...</button>
                 <div ng-if="state!='search'">
                     <div ng-messages="userForm.permission.$error" >
+                        <div ng-messages-include="views/messages.html"></div>
+                    </div>
+                </div>
+            </div>
+            </p>
+
+            <p>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                <label>Tabela</label>
+                <select ng-model="obj.tabela" name="tabela" ng-options="soth.name for soth in subObjectsThree track by soth.tabela_id" id="selectThree" required>
+                </select>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThree">...</button>
+                <div ng-if="state!='search'">
+                    <div ng-messages="userForm.tabela.$error" >
                         <div ng-messages-include="views/messages.html"></div>
                     </div>
                 </div>
@@ -110,6 +128,32 @@
                     </table>
                     <div class="modal-footer">
                         <input id = "mtPickup" type = "button" value = "Accept"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalThree" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Tabele
+                </div>
+                <div class="modal-body">
+                    <table style = "padding:2em">
+                        <tr class = "header">
+                            <th>ID</th>
+                            <th>Name</th>
+                        </tr>
+                        <tr ng-repeat="soth in subObjectsThree" ng-click="fookkk($event, soth)" >
+                            <td class="sohtid">{{soth.tabela_id}}</td>
+                            <td class="sothname">{{soth.name}}</td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <input id = "mthPickup" type = "button" value = "Accept"/>
                     </div>
                 </div>
             </div>

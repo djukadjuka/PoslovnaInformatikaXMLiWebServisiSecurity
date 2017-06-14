@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,6 +46,9 @@ public class Role {
     }
 
     public List<RolePermission> getRoles_permissions() {
+        if(roles_permissions==null){
+            roles_permissions=new ArrayList<>();
+        }
         return roles_permissions;
     }
 

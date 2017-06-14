@@ -5,7 +5,7 @@ app.controller("role_permission_controller", function($scope,$http,$cookies,$loc
     $cookies.put('repositorium','role_permission');
     $cookies.put('subObjectsOne','role');
     $cookies.put('subObjectsTwo','permission');
-    $cookies.put('subObjectsThree',null);
+    $cookies.put('subObjectsThree','tabela');
     $cookies.put('subObjectsFour',null);
 
     if($cookies.get('state')==null || $cookies.get('state')==""){
@@ -15,6 +15,7 @@ app.controller("role_permission_controller", function($scope,$http,$cookies,$loc
       $scope.setObjects();
       $scope.setSubObjects();
       $scope.setSubObjectsTwo();
+      $scope.setSubObjectsThree();
 
       $scope.obj={};
       $scope.state=$cookies.get('state');
@@ -35,6 +36,10 @@ app.controller("role_permission_controller", function($scope,$http,$cookies,$loc
              var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.permission_id === +ii; })[ 0 ];
              $scope.obj.permission=resultt;
 
+             iii=$(event.currentTarget).find(".tabela_id").html();
+             var resulttt=$scope.subObjectsThree.filter(function( obj ) { return +obj.tabela_id === +iii; })[ 0 ];
+             $scope.obj.tabela=resulttt;
+
          }
       };
 
@@ -51,6 +56,10 @@ app.controller("role_permission_controller", function($scope,$http,$cookies,$loc
               ii=item.find(".permission_id").html();
               var resultt=$scope.subObjectsTwo.filter(function( obj ) { return +obj.permission_id === +ii; })[ 0 ];
               $scope.obj.permission=resultt;
+
+              iii=item.find(".tabela_id").html();
+              var resulttt=$scope.subObjectsThree.filter(function( obj ) { return +obj.tabela_id === +iii; })[ 0 ];
+              $scope.obj.tabela=resulttt;
           }
        };
 
@@ -85,6 +94,23 @@ app.controller("role_permission_controller", function($scope,$http,$cookies,$loc
 
                 var result=$scope.subObjectsTwo.filter(function( obj ) { return +obj.permission_id === +i; })[ 0 ];
                 $scope.obj.permission=result;
+            });
+        });
+
+        $scope.fookkk = function(event, obj) {
+             $("#highlightedThree").removeClass("highlighted");
+             $('#highlightedThree').removeAttr('id');
+             $(event.currentTarget).attr('id', 'highlightedThree');
+             $(event.currentTarget).addClass("highlighted");
+          };
+
+          $("#mthPickup").off().on('click', function() {
+            $scope.$apply(function() {
+                i=$("#highlightedThree").find(".sothid").html();
+                $('#modalThree').modal('toggle');
+
+                var result=$scope.subObjectsThree.filter(function( obj ) { return +obj.tabela_id === +i; })[ 0 ];
+                $scope.obj.tabela=result;
             });
         });
 });

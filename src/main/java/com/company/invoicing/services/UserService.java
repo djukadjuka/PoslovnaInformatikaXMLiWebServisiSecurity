@@ -1,5 +1,7 @@
 package com.company.invoicing.services;
 
+import com.company.invoicing.models.Company;
+import com.company.invoicing.models.Role;
 import com.company.invoicing.models.User;
 import com.company.invoicing.repositoriums.UserRepository;
 import org.mindrot.jbcrypt.BCrypt;

@@ -1,8 +1,10 @@
 package com.company.invoicing.intercepters;
 
+import com.company.invoicing.models.RolePermission;
 import com.company.invoicing.security.JwtTokenUtil;
 import com.company.invoicing.security.JwtUser;
 import com.company.invoicing.security.JwtUserDetailsServiceImpl;
+import com.company.invoicing.services.RolePermissionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,40 +37,34 @@ public class AuthorityIntercepter implements HandlerInterceptor {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    @Autowired
+    private RolePermissionService rolePermissionService;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-
+        logger.info("prehandle");
         String token = httpServletRequest.getHeader(tokenHeader);
         String username = jwtTokenUtil.getUsernameFromToken(token);
         JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
         HandlerMethod hm=(HandlerMethod)o;
         Method method=hm.getMethod();
         if(method.getDeclaringClass().isAnnotationPresent(RestController.class)){
-            System.out.println("username: "+user.getUsername()+" password: "+user.getPassword()+" id: "+user.getId()+" company id: "+user.getCompany_id());
-            /*if(method.isAnnotationPresent(CustomAnnotation.class))
-            {
-                //httpServletRequest.getHeader("Authentication")
-                Cookie[] cookies = httpServletRequest.getCookies();
-                if(cookies != null) {
-                    for (int i = 0; i < cookies.length; i++) {
-                        if(cookies[i].getName().equals("id")){
-                            User user=service.findByUser_id(Long.parseLong(cookies[i].getValue()));
-                            for(RolePermission rp : rpservice.findAll()){
-                                if(rp.getRole().getRole_id()==user.getRole().getRole_id()){
-                                    System.out.println("OVO JE STA PROVERAVAM: "+method.getAnnotation(CustomAnnotation.class).value());
-                                    if(rp.getPermission().getName().equals(method.getAnnotation(CustomAnnotation.class).value())){
-                                        System.out.println("MOZE");
-                                        return true;
-                                    }
-                                }
+            if(method.isAnnotationPresent(AuthorityAnnotation.class)){
+                if(user.getRole().getName().equals("superuser")){
+                    return true;
+                }else{
+                    for(RolePermission rp:rolePermissionService.findAll()){
+                        if(rp.getRole().getName().toLowerCase().equals(user.getRole().getName().toLowerCase()) && rp.getTabela().getName().toLowerCase().equals(method.getAnnotation(AuthorityAnnotation.class).table())){
+                            if(rp.getPermission().getName().equals(method.getAnnotation(AuthorityAnnotation.class).method()) || rp.getPermission().getName().equals("all"))
+                            {
+                                return true;
                             }
                         }
                     }
                 }
-            }*/
+            }
         }
-        return true;
+        return false;
     }
 
     @Override

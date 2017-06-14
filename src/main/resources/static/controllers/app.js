@@ -63,6 +63,11 @@ app.config(function($routeProvider,$locationProvider){
             controller: 'invoice_item_controller'
         })
 
+
+        .when('/tabela',{
+            templateUrl:'/views/tabela.html',
+            controller: 'tabela_controller'
+        })
         .when('/role',{
             templateUrl:'/views/role.html',
             controller: 'role_controller'
