@@ -49,8 +49,8 @@
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav" ng-if="logged">
-                    <ul class="nav navbar-nav" >-->
-                    <li><a href="#/vat_type">VAT type</a></li>
+                    <!--<ul class="nav navbar-nav" >-->
+                    <li ng-if="uloga!='worker'"><a href="#/vat_type">VAT type</a></li>
                     <li><a href="#/vat_rate">VAT rate</a></li>
                     <li><a href="#/item_group">Item group</a></li>
                     <li><a href="#/units_of_measurement">Units of measurement</a></li>

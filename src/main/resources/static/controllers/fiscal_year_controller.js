@@ -1,5 +1,9 @@
 app.controller("fiscal_year_controller", function($scope,$http,$cookies,$location,$window,$controller,$filter){
 
+    if($cookies.get('token')==null){
+            window.location.href="#/login";
+         }
+
      angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
      $cookies.put('repositorium','fiscal_year');

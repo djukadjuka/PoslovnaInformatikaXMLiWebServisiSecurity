@@ -1,5 +1,9 @@
 app.controller("user_controller", function($scope,$http,$cookies,$location,$window,$controller){
 
+    if($cookies.get('token')==null){
+            window.location.href="#/login";
+         }
+
     angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
     $cookies.put('repositorium','user');

@@ -1,5 +1,11 @@
 app.controller("vat_type_controller", function($scope,$http,$cookies,$location,$window,$controller,$filter){
 
+    if($cookies.get('token')==null){
+            window.location.href="#/login";
+         }
+
+     console.log('uloga je: '+$scope.uloga);
+
      angular.extend(this, $controller('defaultController', {$scope: $scope}));
 
      $cookies.put('repositorium','vat_type');

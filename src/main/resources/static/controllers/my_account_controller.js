@@ -1,6 +1,12 @@
 app.controller("my_account_controller", function($scope,$http,$cookies,$location,$window,$controller){
 
+    if($cookies.get('token')==null){
+            window.location.href="#/login";
+         }
+
     $scope.obj={};
+
+
 
     $.ajax({
         url: "/logged_user_model",
@@ -11,6 +17,7 @@ app.controller("my_account_controller", function($scope,$http,$cookies,$location
         success: function (data, textStatus, jqXHR) {
             console.log("proslo");
             console.log(data);
+            $cookies.put('uloga',data.role.name);
             $scope.$apply(function() {
                 $scope.obj = data;
             });
