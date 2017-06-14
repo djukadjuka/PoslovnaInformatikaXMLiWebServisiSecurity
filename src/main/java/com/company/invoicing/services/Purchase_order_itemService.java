@@ -1,6 +1,7 @@
 package com.company.invoicing.services;
 
 import com.company.invoicing.models.Price_list_item;
+import com.company.invoicing.models.Purchase_order;
 import com.company.invoicing.models.Purchase_order_item;
 import com.company.invoicing.repositoriums.Purchase_order_itemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,5 +77,15 @@ public class Purchase_order_itemService {
         purchase_order_item.setTotal_price(purchase_order_item.getTotal_amount()*price);
 
         return purchase_order_item;
+    }
+
+    public List<Purchase_order_item> findAllForUser(long company_id) {
+        List<Purchase_order_item> purchase_order_items=new ArrayList<>();
+        for(Purchase_order_item poi: findAll()){
+            if(poi.getPurchase_order().getCompany().getCompany_id()==company_id){
+                purchase_order_items.add(poi);
+            }
+        }
+        return purchase_order_items;
     }
 }

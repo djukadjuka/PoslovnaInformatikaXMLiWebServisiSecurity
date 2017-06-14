@@ -1,5 +1,6 @@
 package com.company.invoicing.services;
 
+import com.company.invoicing.models.Business_partner;
 import com.company.invoicing.models.Fiscal_year;
 import com.company.invoicing.repositoriums.Fiscal_yearRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,4 +49,13 @@ public class Fiscal_yearService {
     }
 
 
+    public List<Fiscal_year> findAllForUser(long company_id) {
+        List<Fiscal_year> fiscal_years=new ArrayList<>();
+        for(Fiscal_year fy: findAll()){
+            if(fy.getCompany().getCompany_id()==company_id){
+                fiscal_years.add(fy);
+            }
+        }
+        return fiscal_years;
+    }
 }

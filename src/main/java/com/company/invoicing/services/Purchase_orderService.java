@@ -98,4 +98,14 @@ public class Purchase_orderService {
         Purchase_order purchase_order=repository.findOne(id);
         return purchase_order.getPurchase_order_items();
     }
+
+    public List<Purchase_order> findAllForUser(long company_id) {
+        List<Purchase_order> purchase_orders=new ArrayList<>();
+        for(Purchase_order po: findAll()){
+            if(po.getCompany().getCompany_id()==company_id){
+                purchase_orders.add(po);
+            }
+        }
+        return purchase_orders;
+    }
 }

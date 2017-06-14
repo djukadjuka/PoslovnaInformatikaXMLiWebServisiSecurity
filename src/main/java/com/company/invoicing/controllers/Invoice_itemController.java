@@ -2,9 +2,15 @@ package com.company.invoicing.controllers;
 
 import com.company.invoicing.intercepters.AuthorityAnnotation;
 import com.company.invoicing.models.Invoice_item;
+import com.company.invoicing.security.JwtTokenUtil;
+import com.company.invoicing.security.JwtUser;
+import com.company.invoicing.security.JwtUserDetailsServiceImpl;
 import com.company.invoicing.services.Invoice_itemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -15,10 +21,25 @@ public class Invoice_itemController {
     @Autowired
     private Invoice_itemService service;
 
+    @Value("${jwt.header}")
+    private String tokenHeader;
+
+    @Autowired
+    private JwtUserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     @AuthorityAnnotation(method = "getAll",table = "invoice_item")
     @RequestMapping(method = RequestMethod.GET)
-    public List<Invoice_item> getAll(){
-        return service.findAll();
+    public List<Invoice_item> getAll(HttpServletRequest httpServletRequest){
+        String token = httpServletRequest.getHeader(tokenHeader);
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
+        if(user.getRole().getName().equals("superuser"))
+            return service.findAll();
+        else
+            return service.findAllForUser(user.getCompany().getCompany_id());
     }
 
     @AuthorityAnnotation(method = "getOne",table = "invoice_item")

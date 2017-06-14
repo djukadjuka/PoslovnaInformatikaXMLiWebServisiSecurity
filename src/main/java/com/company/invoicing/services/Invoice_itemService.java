@@ -197,4 +197,13 @@ public class Invoice_itemService {
         invoiceService.update(invoice_item.getInvoice());
     }
 
+    public List<Invoice_item> findAllForUser(long company_id) {
+        List<Invoice_item> invoice_items=new ArrayList<>();
+        for(Invoice_item ii: findAll()){
+            if(ii.getInvoice().getCompany().getCompany_id()==company_id){
+                invoice_items.add(ii);
+            }
+        }
+        return invoice_items;
+    }
 }

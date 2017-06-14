@@ -123,4 +123,14 @@ public class InvoiceService {
         Invoice invoice=repository.findOne(id);
         return invoice.getInvoice_items();
     }
+
+    public List<Invoice> findAllForUser(long company_id) {
+        List<Invoice> invoices=new ArrayList<>();
+        for(Invoice i: findAll()){
+            if(i.getCompany().getCompany_id()==company_id){
+                invoices.add(i);
+            }
+        }
+        return invoices;
+    }
 }

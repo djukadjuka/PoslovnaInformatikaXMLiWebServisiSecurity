@@ -72,4 +72,13 @@ public class Business_partnerService {
         return business_partners;
     }
 
+    public List<Business_partner> findAllForUser(long company_id) {
+        List<Business_partner> business_partners=new ArrayList<>();
+        for(Business_partner bp: findAll()){
+            if(bp.getCompany().getCompany_id()==company_id){
+                business_partners.add(bp);
+            }
+        }
+        return business_partners;
+    }
 }

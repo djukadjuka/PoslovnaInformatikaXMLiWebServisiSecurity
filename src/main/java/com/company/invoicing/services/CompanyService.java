@@ -56,4 +56,9 @@ public class CompanyService {
         return companies;
     }
 
+    public List<Company> findAllForUser(long company_id) {
+        List<Company> companies=new ArrayList<>();
+        companies.add(findOne(company_id));
+        return companies;
+    }
 }

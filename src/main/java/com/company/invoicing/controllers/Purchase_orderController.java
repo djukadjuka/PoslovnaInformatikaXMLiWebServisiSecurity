@@ -3,9 +3,15 @@ package com.company.invoicing.controllers;
 import com.company.invoicing.intercepters.AuthorityAnnotation;
 import com.company.invoicing.models.Purchase_order;
 import com.company.invoicing.models.Purchase_order_item;
+import com.company.invoicing.security.JwtTokenUtil;
+import com.company.invoicing.security.JwtUser;
+import com.company.invoicing.security.JwtUserDetailsServiceImpl;
 import com.company.invoicing.services.Purchase_orderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -16,10 +22,25 @@ public class Purchase_orderController {
     @Autowired
     private Purchase_orderService service;
 
+    @Value("${jwt.header}")
+    private String tokenHeader;
+
+    @Autowired
+    private JwtUserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     @AuthorityAnnotation(method = "getAll",table = "purchase_order")
     @RequestMapping(method = RequestMethod.GET)
-    public List<Purchase_order> getAll(){
-        return service.findAll();
+    public List<Purchase_order> getAll(HttpServletRequest httpServletRequest){
+        String token = httpServletRequest.getHeader(tokenHeader);
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
+        if(user.getRole().getName().equals("superuser"))
+            return service.findAll();
+        else
+            return service.findAllForUser(user.getCompany().getCompany_id());
     }
 
     @AuthorityAnnotation(method = "getOne",table = "purchase_order")
