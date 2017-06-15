@@ -4,6 +4,8 @@ import com.company.invoicing.models.Fiscal_year;
 import com.company.invoicing.models.Purchase_order;
 import com.company.invoicing.models.Purchase_order_item;
 import com.company.invoicing.repositoriums.Purchase_orderRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ import java.util.List;
 
 @Service
 public class Purchase_orderService {
+
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private Purchase_orderRepository repository;
@@ -107,5 +111,32 @@ public class Purchase_orderService {
             }
         }
         return purchase_orders;
+    }
+
+    public void create(Purchase_order purchase_order, String username) {
+        if(purchase_order.getFiscal_year().getActive() && !purchase_order.getBusiness_partner().getType_of_bp().equals("supplier")){
+            if(purchase_order.getDate().getTime()>new Date().getTime())
+                purchase_order.setDate(new Date());
+            purchase_order.setPurchase_order_number(purchase_order.getFiscal_year().getPurchase_orders().size() + 1);
+            purchase_order=repository.save(purchase_order);
+            logger.info("Korisnik sa username: "+username+" je uradio operaciju: create u tabeli: purchase_order a objekat je: "+purchase_order.toString());
+        }
+    }
+
+    public void update(Purchase_order purchase_order, String username) {
+        if(purchase_order.getFiscal_year().getActive() && !purchase_order.getBusiness_partner().getType_of_bp().equals("supplier")){
+            if(purchase_order.getDate().getTime()>new Date().getTime())
+                purchase_order.setDate(new Date());
+            purchase_order.setPurchase_order_number(purchase_order.getFiscal_year().getPurchase_orders().size() + 1);
+            purchase_order=repository.save(purchase_order);
+            logger.info("Korisnik sa username: "+username+" je uradio operaciju: update u tabeli: purchase_order a objekat je: "+purchase_order.toString());
+        }
+    }
+
+    public void remove(long id, String username) {
+        Purchase_order po=findOne(id);
+        repository.delete(id);
+        logger.info("Korisnik sa username: "+username+" je uradio operaciju: delete u tabeli: purchase_order a objekat je: "+po.toString());
+
     }
 }

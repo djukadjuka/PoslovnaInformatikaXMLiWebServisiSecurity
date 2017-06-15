@@ -57,20 +57,29 @@ public class InvoiceController {
 
     @AuthorityAnnotation(method = "create",table = "invoice")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public void create(@RequestBody Invoice invoice){
-        service.create(invoice);
+    public void create(@RequestBody Invoice invoice,HttpServletRequest httpServletRequest){
+        String token = httpServletRequest.getHeader(tokenHeader);
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        //service.create(invoice);
+        service.create(invoice,username);
     }
 
     @AuthorityAnnotation(method = "update",table = "invoice")
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public void update(@RequestBody Invoice invoice) {
-    service.update(invoice);
+    public void update(@RequestBody Invoice invoice,HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader(tokenHeader);
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        //service.update(invoice);
+        service.update(invoice,username);
     }
 
     @AuthorityAnnotation(method = "delete",table = "invoice")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public void remove(@PathVariable long id) {
-        service.remove(id);
+    public void remove(@PathVariable long id,HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader(tokenHeader);
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        //service.remove(id);
+        service.remove(id,username);
     }
 
     @AuthorityAnnotation(method = "search",table = "invoice")
@@ -81,7 +90,10 @@ public class InvoiceController {
 
     @AuthorityAnnotation(method = "generateInvoice",table = "invoice")
     @RequestMapping(value = "/generateInvoice/{id}", method = RequestMethod.POST)
-    public void generateInvoice(@PathVariable long id) {
-        service.generateInvoice(id);
+    public void generateInvoice(@PathVariable long id,HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader(tokenHeader);
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        //service.generateInvoice(id);
+        service.generateInvoice(id,username);
     }
 }

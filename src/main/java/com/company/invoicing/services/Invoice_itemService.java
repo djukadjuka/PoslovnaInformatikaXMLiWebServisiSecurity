@@ -3,6 +3,8 @@ package com.company.invoicing.services;
 import com.company.invoicing.models.*;
 import com.company.invoicing.repositoriums.InvoiceRepository;
 import com.company.invoicing.repositoriums.Invoice_itemRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.List;
 
 @Service
 public class Invoice_itemService {
+
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private Invoice_itemRepository repository;
@@ -74,7 +78,7 @@ public class Invoice_itemService {
         return invoice_items;
     }
 
-    public void generateInvoiceItems(Invoice invoice, List<Purchase_order_item> purchase_order_items) {
+    public void generateInvoiceItems(Invoice invoice, List<Purchase_order_item> purchase_order_items, String username) {
         System.out.println("usao");
         for(Purchase_order_item poi : purchase_order_items){
             Invoice_item invoice_item=new Invoice_item();
@@ -128,9 +132,11 @@ public class Invoice_itemService {
             invoice.setTotal_tax_basis(invoice.getTotal_tax_basis()+(invoice_item.getVat_basis()*invoice_item.getTotal_amount()));
             invoice.setTotal_vat(invoice.getTotal_vat()+(invoice_item.getVat_amount()*invoice_item.getTotal_amount()));
 
-            repository.save(invoice_item);
+            invoice_item=repository.save(invoice_item);
+            logger.info("Korisnik sa username: "+username+" je uradio operaciju: create u tabeli: invoice_item a objekat je: "+invoice_item.toString());
+
         }
-        invoiceService.update(invoice);
+        invoiceService.update(invoice,username);
     }
 
 
@@ -205,5 +211,48 @@ public class Invoice_itemService {
             }
         }
         return invoice_items;
+    }
+
+    public void create(Invoice_item invoice_item,String username){
+
+        //invoice_item=repository.save(invoice_item);
+        //invoice_item=generatePrice(invoice_item);
+        updateInvoice(invoice_item,"create",username);
+        invoice_item=repository.save(invoice_item);
+        logger.info("Korisnik sa username: "+username+" je uradio operaciju: create u tabeli: invoice_item a objekat je: "+invoice_item.toString());
+    }
+
+    public void update(Invoice_item invoice_item, String username){
+        //invoice_item=generatePrice(invoice_item);
+        updateInvoice(invoice_item,"update",username);
+        invoice_item=repository.save(invoice_item);
+        logger.info("Korisnik sa username: "+username+" je uradio operaciju: update u tabeli: invoice_item a objekat je: "+invoice_item.toString());
+    }
+
+    public void remove(Long id, String username){
+        Invoice_item invoice_item=findOne(id);
+        updateInvoice(invoice_item,"remove",username);
+        repository.delete(id);
+        logger.info("Korisnik sa username: "+username+" je uradio operaciju: delete u tabeli: invoice_item a objekat je: "+invoice_item.toString());
+    }
+
+    public void updateInvoice(Invoice_item invoice_item, String type, String username){
+        if(type=="create"){
+            invoice_item.getInvoice().setTotal_price(invoice_item.getInvoice().getTotal_price()+invoice_item.getTotal_price());
+            invoice_item.getInvoice().setTotal_tax_basis(invoice_item.getInvoice().getTotal_tax_basis()+(invoice_item.getVat_basis()*invoice_item.getTotal_amount()));
+            invoice_item.getInvoice().setTotal_vat(invoice_item.getInvoice().getTotal_vat()+(invoice_item.getVat_amount()*invoice_item.getTotal_amount()));
+        }else if(type=="remove"){
+            invoice_item.getInvoice().setTotal_price(invoice_item.getInvoice().getTotal_price()-invoice_item.getTotal_price());
+            invoice_item.getInvoice().setTotal_tax_basis(invoice_item.getInvoice().getTotal_tax_basis()-(invoice_item.getVat_basis()*invoice_item.getTotal_amount()));
+            invoice_item.getInvoice().setTotal_vat(invoice_item.getInvoice().getTotal_vat()-(invoice_item.getVat_amount()*invoice_item.getTotal_amount()));
+        }else if(type=="update"){
+            Invoice_item oldII=repository.findOne(invoice_item.getInvoice_item_id());
+
+            invoice_item.getInvoice().setTotal_price(invoice_item.getInvoice().getTotal_price()-oldII.getTotal_price()+invoice_item.getTotal_price());
+            invoice_item.getInvoice().setTotal_tax_basis(invoice_item.getInvoice().getTotal_tax_basis()-(oldII.getVat_basis()*oldII.getTotal_amount())+(invoice_item.getVat_basis()*invoice_item.getTotal_amount()));
+            invoice_item.getInvoice().setTotal_vat(invoice_item.getInvoice().getTotal_vat()-(oldII.getVat_amount()*oldII.getTotal_amount())+(invoice_item.getVat_amount()*invoice_item.getTotal_amount()));
+        }
+
+        invoiceService.update(invoice_item.getInvoice(),username);
     }
 }

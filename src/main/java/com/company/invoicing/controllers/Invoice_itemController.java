@@ -50,20 +50,30 @@ public class Invoice_itemController {
 
     @AuthorityAnnotation(method = "create",table = "invoice_item")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public void create(@RequestBody Invoice_item invoice_item){
-        service.create(invoice_item);
+    public void create(@RequestBody Invoice_item invoice_item,HttpServletRequest httpServletRequest){
+        String token = httpServletRequest.getHeader(tokenHeader);
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        //service.create(invoice_item);
+        service.create(invoice_item,username);
+
     }
 
     @AuthorityAnnotation(method = "update",table = "invoice_item")
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public void update(@RequestBody Invoice_item invoice_item) {
-    service.update(invoice_item);
+    public void update(@RequestBody Invoice_item invoice_item,HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader(tokenHeader);
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        //service.update(invoice_item);
+        service.update(invoice_item,username);
     }
 
     @AuthorityAnnotation(method = "delete",table = "invoice_item")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public void remove(@PathVariable long id) {
-        service.remove(id);
+    public void remove(@PathVariable long id,HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader(tokenHeader);
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        //service.remove(id);
+        service.remove(id, username);
     }
 
     @AuthorityAnnotation(method = "search",table = "invoice_item")

@@ -4,6 +4,8 @@ import com.company.invoicing.models.Price_list_item;
 import com.company.invoicing.models.Purchase_order;
 import com.company.invoicing.models.Purchase_order_item;
 import com.company.invoicing.repositoriums.Purchase_order_itemRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.List;
 
 @Service
 public class Purchase_order_itemService {
+
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private Purchase_order_itemRepository repository;
@@ -87,5 +91,25 @@ public class Purchase_order_itemService {
             }
         }
         return purchase_order_items;
+    }
+
+    public void create(Purchase_order_item purchase_order_item, String username){
+        //purchase_order_item=repository.save(purchase_order_item);
+        //purchase_order_item=generatePrice(purchase_order_item);
+        purchase_order_item=repository.save(purchase_order_item);
+        logger.info("Korisnik sa username: "+username+" je uradio operaciju: create u tabeli: purchase_order_item a objekat je: "+purchase_order_item.toString());
+    }
+
+    public void update(Purchase_order_item purchase_order_item, String username){
+        //purchase_order_item=repository.save(purchase_order_item);
+        //purchase_order_item=generatePrice(purchase_order_item);
+        purchase_order_item=repository.save(purchase_order_item);
+        logger.info("Korisnik sa username: "+username+" je uradio operaciju: update u tabeli: purchase_order_item a objekat je: "+purchase_order_item.toString());
+    }
+
+    public void remove(Long id, String username){
+        Purchase_order_item poi=findOne(id);
+        repository.delete(id);
+        logger.info("Korisnik sa username: "+username+" je uradio operaciju: delete u tabeli: purchase_order_item a objekat je: "+poi.toString());
     }
 }

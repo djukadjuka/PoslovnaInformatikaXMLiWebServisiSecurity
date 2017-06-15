@@ -6,6 +6,8 @@ import com.company.invoicing.models.Purchase_order;
 import com.company.invoicing.models.Purchase_order_item;
 import com.company.invoicing.repositoriums.InvoiceRepository;
 import com.company.invoicing.repositoriums.Invoice_itemRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import java.util.List;
 
 @Service
 public class InvoiceService {
+
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private InvoiceRepository repository;
@@ -91,9 +95,7 @@ public class InvoiceService {
         return purchase_orders;
     }
 
-    public void generateInvoice(Long id){
-        System.out.println("dobavljen id je: "+id);
-
+    /*public void generateInvoice(Long id){
         Purchase_order purchase_order=purchase_order_service.findOne(id);
 
         Invoice invoice=new Invoice();
@@ -105,19 +107,14 @@ public class InvoiceService {
         invoice.setReference_number("97");
         invoice.setDate(new Date());
         invoice.setDate_of_currency(new Date());
-        System.out.println("prosao datume");
         List<Purchase_order> lista=invoice.getPurchase_orders();
         lista.add(purchase_order);
-        System.out.println("prosao");
         invoice.setPurchase_orders(lista);
-        System.out.println("prosao i ");
-        //invoice=repository.save(invoice);
-        repository.save(invoice);
-        System.out.println("prosao i ostalo");
+        invoice=repository.save(invoice);
 
         invoice_item_service.generateInvoiceItems(invoice,purchase_order.getPurchase_order_items());
 
-    }
+    }*/
 
     public List<Invoice_item> allIIs(Long id) {
         Invoice invoice=repository.findOne(id);
@@ -132,5 +129,61 @@ public class InvoiceService {
             }
         }
         return invoices;
+    }
+
+    public void create(Invoice invoice,String username){
+        if(invoice.getFiscal_year().getActive() && !invoice.getBusiness_partner().getType_of_bp().equals("supplier")){
+            if(invoice.getDate().getTime()>new Date().getTime())
+                invoice.setDate(new Date());
+            if(invoice.getDate_of_currency().getTime()<invoice.getDate().getTime())
+                invoice.setDate(new Date());
+            invoice.setInvoice_number(invoice.getFiscal_year().getInvoices().size() + 1);
+            invoice.setBilling_account(invoice.getBusiness_partner().getCompany().getCurrent_account());
+            invoice.setReference_number("97");
+            invoice=repository.save(invoice);
+            logger.info("Korisnik sa username: "+username+" je uradio operaciju: create u tabeli: invoice a objekat je: "+invoice.toString());
+        }
+    }
+
+    public void update(Invoice invoice, String username){
+        if(invoice.getFiscal_year().getActive() && !invoice.getBusiness_partner().getType_of_bp().equals("supplier")){
+            if(invoice.getDate().getTime()>new Date().getTime())
+                invoice.setDate(new Date());
+            if(invoice.getDate_of_currency().getTime()<invoice.getDate().getTime())
+                invoice.setDate(new Date());
+            invoice.setBilling_account(invoice.getBusiness_partner().getCompany().getCurrent_account());
+            invoice=repository.save(invoice);
+            logger.info("Korisnik sa username: "+username+" je uradio operaciju: update u tabeli: invoice a objekat je: "+invoice.toString());
+        }
+
+    }
+
+    public void remove(Long id, String username){
+        Invoice i = findOne(id);
+        repository.delete(id);
+        logger.info("Korisnik sa username: "+username+" je uradio operaciju: delete u tabeli: invoice a objekat je: "+i.toString());
+    }
+
+    public void generateInvoice(Long id,String username){
+        Purchase_order purchase_order=purchase_order_service.findOne(id);
+
+        Invoice invoice=new Invoice();
+        invoice.setCompany(purchase_order.getCompany());
+        invoice.setBusiness_partner(purchase_order.getBusiness_partner());
+        invoice.setFiscal_year(purchase_order.getFiscal_year());
+        invoice.setBilling_account(purchase_order.getCompany().getCurrent_account());
+        invoice.setInvoice_number(invoice.getFiscal_year().getInvoices().size() + 1);
+        invoice.setReference_number("97");
+        invoice.setDate(new Date());
+        invoice.setDate_of_currency(new Date());
+        List<Purchase_order> lista=invoice.getPurchase_orders();
+        lista.add(purchase_order);
+        invoice.setPurchase_orders(lista);
+        invoice=repository.save(invoice);
+        logger.info("Korisnik sa username: "+username+" je uradio operaciju: create u tabeli: invoice a objekat je: "+invoice.toString());
+
+        //invoice_item_service.generateInvoiceItems(invoice,purchase_order.getPurchase_order_items());
+        invoice_item_service.generateInvoiceItems(invoice,purchase_order.getPurchase_order_items(),username);
+
     }
 }

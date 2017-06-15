@@ -57,20 +57,29 @@ public class Purchase_orderController {
 
     @AuthorityAnnotation(method = "create",table = "purchase_order")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public void create(@RequestBody Purchase_order purchase_order){
-        service.create(purchase_order);
+    public void create(@RequestBody Purchase_order purchase_order,HttpServletRequest httpServletRequest){
+        String token = httpServletRequest.getHeader(tokenHeader);
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        //service.create(purchase_order);
+        service.create(purchase_order,username);
     }
 
     @AuthorityAnnotation(method = "update",table = "purchase_order")
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public void update(@RequestBody Purchase_order purchase_order) {
-    service.update(purchase_order);
+    public void update(@RequestBody Purchase_order purchase_order,HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader(tokenHeader);
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        //service.update(purchase_order);
+        service.update(purchase_order,username);
     }
 
     @AuthorityAnnotation(method = "delete",table = "purchase_order")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public void remove(@PathVariable long id) {
-        service.remove(id);
+    public void remove(@PathVariable long id,HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader(tokenHeader);
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        //service.remove(id);
+        service.remove(id,username);
     }
 
     @AuthorityAnnotation(method = "search",table = "purchase_order")
@@ -84,4 +93,6 @@ public class Purchase_orderController {
     public void exportToXML(@PathVariable Long id) {
         service.exportToXML(id);
     }
+
+
 }
