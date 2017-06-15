@@ -121,4 +121,13 @@ public class Fiscal_year{
         this.purchase_orders = purchase_orders;
     }
 
+    @Override
+    public String toString() {
+        return "Fiscal_year{" +
+                "fiscal_year_id=" + fiscal_year_id +
+                ", company=" + company +
+                ", number_of_fy=" + number_of_fy +
+                ", active=" + active +
+                '}';
+    }
 }

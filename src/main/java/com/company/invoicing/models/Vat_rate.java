@@ -73,4 +73,13 @@ public class Vat_rate{
         this.percentage_of_vatr = percentage_of_vatr;
     }
 
+    @Override
+    public String toString() {
+        return "Vat_rate{" +
+                "vat_rate_id=" + vat_rate_id +
+                ", vat_type=" + vat_type +
+                ", date=" + date +
+                ", percentage_of_vatr=" + percentage_of_vatr +
+                '}';
+    }
 }

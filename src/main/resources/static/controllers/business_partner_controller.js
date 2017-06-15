@@ -8,7 +8,24 @@ app.controller("business_partner_controller", function($scope,$http,$cookies,$lo
 
      $cookies.put('repositorium','business_partner');
      $cookies.put('subObjectsOne','company');
-     $cookies.put('subObjectsTwo','company');
+     $cookies.put('subObjectsTwo',null);
+     $.ajax({
+             url: '/company/getAllPossible',
+             type: "GET",
+             contentType: "application/json; charset=utf-8",
+             dataType: "json",
+             headers: $scope.createAuthorizationTokenHeader(),
+             success: function (data, textStatus, jqXHR) {
+                 console.log("proslo");
+                 $scope.$apply(function() {
+                     $scope.subObjectsTwo = data;
+                     $scope.objectsTwo=angular.copy($scope.subObjectsTwo);
+                 });
+             },
+             error: function (jqXHR, textStatus, errorThrown) {
+                 console.log("nije proslo");
+             }
+         });
      $cookies.put('subObjectsThree',null);
      $cookies.put('subObjectsFour',null);
 
@@ -18,7 +35,7 @@ app.controller("business_partner_controller", function($scope,$http,$cookies,$lo
 
      $scope.setObjects();
      $scope.setSubObjects();
-     $scope.setSubObjectsTwo();
+     //$scope.setSubObjectsTwo();
 
      $scope.obj={};
      $scope.state=$cookies.get('state');

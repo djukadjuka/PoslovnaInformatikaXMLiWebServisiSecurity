@@ -77,4 +77,11 @@ public class Vat_type{
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "Vat_type{" +
+                "vat_type_id=" + vat_type_id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

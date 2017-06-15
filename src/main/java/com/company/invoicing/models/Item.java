@@ -156,4 +156,15 @@ public class Item{
         this.purchase_order_items = purchase_order_items;
     }
 
+    @Override
+    public String toString() {
+        return "Item{" +
+                "item_id=" + item_id +
+                ", item_group=" + item_group +
+                ", units_of_measurement=" + units_of_measurement +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", is_service=" + is_service +
+                '}';
+    }
 }

@@ -229,4 +229,18 @@ public class Company{
     public void setCompany_partners(List<Business_partner> company_partners) {
         this.company_partners = company_partners;
     }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "company_id=" + company_id +
+                ", name='" + name + '\'' +
+                ", tin=" + tin +
+                ", city='" + city + '\'' +
+                ", adress='" + adress + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", company_number=" + company_number +
+                ", current_account='" + current_account + '\'' +
+                '}';
+    }
 }

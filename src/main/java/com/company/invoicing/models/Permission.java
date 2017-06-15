@@ -61,4 +61,12 @@ public class Permission {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Permission{" +
+                "permission_id=" + permission_id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

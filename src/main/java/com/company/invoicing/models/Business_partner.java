@@ -109,4 +109,14 @@ public class Business_partner{
     public void setInvoices(List<Invoice> invoices) {
         this.invoices = invoices;
     }
+
+    @Override
+    public String toString() {
+        return "Business_partner{" +
+                "business_partner_id=" + business_partner_id +
+                ", company=" + company +
+                ", company_partner=" + company_partner +
+                ", type_of_bp='" + type_of_bp + '\'' +
+                '}';
+    }
 }

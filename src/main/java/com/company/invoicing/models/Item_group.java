@@ -77,4 +77,12 @@ public class Item_group{
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "Item_group{" +
+                "item_group_id=" + item_group_id +
+                ", vat_type=" + vat_type +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

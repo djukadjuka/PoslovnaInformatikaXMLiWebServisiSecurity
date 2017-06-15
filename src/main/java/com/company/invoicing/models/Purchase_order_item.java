@@ -108,4 +108,15 @@ public class Purchase_order_item{
         this.item = item;
     }
 
+    @Override
+    public String toString() {
+        return "Purchase_order_item{" +
+                "purchase_order_item_id=" + purchase_order_item_id +
+                ", price_list_item_id=" + price_list_item_id +
+                ", total_amount=" + total_amount +
+                ", total_price=" + total_price +
+                ", purchase_order=" + purchase_order +
+                ", item=" + item +
+                '}';
+    }
 }

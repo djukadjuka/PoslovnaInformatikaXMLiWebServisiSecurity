@@ -42,6 +42,12 @@ public class CompanyController {
             return service.findAllForUser(user.getCompany().getCompany_id());
     }
 
+    @AuthorityAnnotation(method = "getAll",table = "company")
+    @RequestMapping(value = "/getAllPossible", method = RequestMethod.GET)
+    public List<Company> getAllPossible(){
+        return service.findAll();
+    }
+
     @AuthorityAnnotation(method = "getOne",table = "company")
     @RequestMapping(value = "/{id}" , method = RequestMethod.GET)
     public Company find(@PathVariable long id){

@@ -85,4 +85,15 @@ public class Price_list_item{
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Price_list_item{" +
+                "price_list_item_id=" + price_list_item_id +
+                ", price_list=" + price_list +
+                ", item=" + item +
+                ", currency=" + currency +
+                ", price=" + price +
+                '}';
+    }
 }

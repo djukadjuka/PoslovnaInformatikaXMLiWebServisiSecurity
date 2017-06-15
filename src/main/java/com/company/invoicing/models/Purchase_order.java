@@ -142,4 +142,16 @@ public class Purchase_order{
     public void setInvoices(List<Invoice> invoices) {
         this.invoices = invoices;
     }
+
+    @Override
+    public String toString() {
+        return "Purchase_order{" +
+                "purchase_order_id=" + purchase_order_id +
+                ", fiscal_year=" + fiscal_year +
+                ", business_partner=" + business_partner +
+                ", company=" + company +
+                ", date=" + date +
+                ", purchase_order_number=" + purchase_order_number +
+                '}';
+    }
 }

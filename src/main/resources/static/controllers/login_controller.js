@@ -1,13 +1,12 @@
 app.controller('login_controller', function($rootScope, $scope, $http, $location,$q,$window,$cookies) {
 
-
-
-  if($cookies.get("token")!=null){
-    $scope.logged=true;
-  }
-  else{
+  if($cookies.get("token")==null){
     $scope.logged=false;
     window.location.href="#/login";
+  }
+  else{
+    $scope.logged=true;
+    window.location.href="#/my_account";
   }
 
   $scope.credentials = {};
@@ -38,15 +37,35 @@ app.controller('login_controller', function($rootScope, $scope, $http, $location
     };
 
   $scope.logout = function() {
-    alert("klik na logout");
-    $cookies.put("token",null);
-    $cookies.put("uloga",null);
-    $cookies.put('repositorium',null);
-    $cookies.put('subObjectsOne',null);
-    $cookies.put('subObjectsTwo',null);
-    $cookies.put('subObjectsThree',null);
-    $cookies.put('subObjectsFour',null);
-    $scope.logged=false;
-    window.location.href="#/login";
+    $.ajax({
+            url: "/login?logout",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            headers: createAuthorizationTokenHeader(),
+            success: function (data, textStatus, jqXHR) {
+                $cookies.remove('token');
+                $cookies.remove('repositorium');
+                $cookies.remove('subObjectsOne');
+                $cookies.remove('subObjectsTwo');
+                $cookies.remove('subObjectsThree');
+                $cookies.remove('subObjectsFour');
+                $scope.logged=false;
+                window.location.href="#/login";
+                location.reload();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("nije proslo");
+            }
+        });
   }
+
+  function createAuthorizationTokenHeader() {
+          var token = $cookies.get("token");
+          if (token) {
+              return {"Authorization": token};
+          } else {
+              return {};
+          }
+      }
 });

@@ -62,4 +62,11 @@ public class Price_list{
         this.price_list_items = price_list_items;
     }
 
+    @Override
+    public String toString() {
+        return "Price_list{" +
+                "price_list_id=" + price_list_id +
+                ", valid_from=" + valid_from +
+                '}';
+    }
 }

@@ -86,4 +86,12 @@ public class Units_of_measurement{
         this.items = items;
     }
 
+    @Override
+    public String toString() {
+        return "Units_of_measurement{" +
+                "units_of_measurement_id=" + units_of_measurement_id +
+                ", abbreviation='" + abbreviation + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

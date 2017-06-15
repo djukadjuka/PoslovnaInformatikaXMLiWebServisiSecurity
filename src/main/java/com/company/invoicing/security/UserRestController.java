@@ -43,5 +43,4 @@ public class UserRestController {
         User user=userService.findByUsername(username);
         return user;
     }
-
 }

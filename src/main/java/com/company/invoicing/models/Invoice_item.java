@@ -152,4 +152,19 @@ public class Invoice_item{
         this.total_price = total_price;
     }
 
+    @Override
+    public String toString() {
+        return "Invoice_item{" +
+                "invoice_item_id=" + invoice_item_id +
+                ", invoice=" + invoice +
+                ", item=" + item +
+                ", total_amount=" + total_amount +
+                ", price=" + price +
+                ", discount=" + discount +
+                ", vat_basis=" + vat_basis +
+                ", vat_rate=" + vat_rate +
+                ", vat_amount=" + vat_amount +
+                ", total_price=" + total_price +
+                '}';
+    }
 }

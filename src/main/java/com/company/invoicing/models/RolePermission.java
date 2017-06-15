@@ -76,4 +76,14 @@ public class RolePermission {
     public void setTabela(Tabela tabela) {
         this.tabela = tabela;
     }
+
+    @Override
+    public String toString() {
+        return "RolePermission{" +
+                "rolepermission_id=" + rolepermission_id +
+                ", permission=" + permission +
+                ", role=" + role +
+                ", tabela=" + tabela +
+                '}';
+    }
 }
