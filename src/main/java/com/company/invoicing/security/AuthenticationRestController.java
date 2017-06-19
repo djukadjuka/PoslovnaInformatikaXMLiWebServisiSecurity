@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -44,6 +45,9 @@ public class AuthenticationRestController {
     @RequestMapping(value = "${jwt.route.authentication.path}", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest, Device device) throws AuthenticationException {
         // Perform the security
+        System.out.println(authenticationRequest.getUsername());
+        System.out.println(authenticationRequest.getPassword());
+
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authenticationRequest.getUsername(),
@@ -54,6 +58,7 @@ public class AuthenticationRestController {
 
         // Reload password post-security so we can generate token
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        System.out.println(userDetails.getPassword());
         final String token = jwtTokenUtil.generateToken(userDetails, device);
 
         // Return the token
@@ -80,12 +85,18 @@ public class AuthenticationRestController {
         String token = request.getHeader(tokenHeader);
         String username = jwtTokenUtil.getUsernameFromToken(token);
         logger.info("Korisnik sa username: "+username+" se uspesno izlogovao.");
-        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        CookieClearingLogoutHandler cookieClearingLogoutHandler = new CookieClearingLogoutHandler(AbstractRememberMeServices.SPRING_SECURITY_REMEMBER_ME_COOKIE_KEY);
-        SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
-        cookieClearingLogoutHandler.logout(request, response, auth);
-        securityContextLogoutHandler.logout(request, response, auth);*/
-        //return "redirect:/login";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            cookie.setMaxAge(0);
+            cookie.setValue(null);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+        }
+        HttpSession session= request.getSession();
+        SecurityContextHolder.clearContext();
+        if(session == null) {
+            session.invalidate();
+        }
         return true;
     }
 

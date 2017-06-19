@@ -1,4 +1,4 @@
-/*C12*/SET SCHEMA PUBLIC
+/*C11*/SET SCHEMA PUBLIC
 alter table business_partner drop constraint UKb4sgt1f49ddy6b6x2753tljx4
 alter table business_partner add constraint UKb4sgt1f49ddy6b6x2753tljx4 unique (company, company_partner)
 alter table invoice_item drop constraint UKh6ufo2uw5eb0bjre2njbt4050
@@ -9,11 +9,3 @@ alter table purchase_order_item drop constraint UKbi6rteunlxncjgoq6vsninqcb
 alter table purchase_order_item add constraint UKbi6rteunlxncjgoq6vsninqcb unique (purchase_order, item)
 alter table role_permission drop constraint UKf7q4684g8k9uy34thqusxvy41
 alter table role_permission add constraint UKf7q4684g8k9uy34thqusxvy41 unique (permission, role, tabela)
-/*C13*/SET SCHEMA PUBLIC
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 33
-INSERT INTO VAT_TYPE VALUES(321,'pera')
-COMMIT
-DELETE FROM VAT_TYPE WHERE VAT_TYPE_ID=310
-COMMIT
-DELETE FROM VAT_TYPE WHERE VAT_TYPE_ID=321
-COMMIT

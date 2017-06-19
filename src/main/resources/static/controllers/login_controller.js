@@ -37,6 +37,7 @@ app.controller('login_controller', function($rootScope, $scope, $http, $location
     };
 
   $scope.logout = function() {
+    console.log($cookies);
     $.ajax({
             url: "/login?logout",
             type: "GET",
@@ -44,12 +45,12 @@ app.controller('login_controller', function($rootScope, $scope, $http, $location
             dataType: "json",
             headers: createAuthorizationTokenHeader(),
             success: function (data, textStatus, jqXHR) {
-                $cookies.remove('token');
+                /*$cookies.remove('token');
                 $cookies.remove('repositorium');
                 $cookies.remove('subObjectsOne');
                 $cookies.remove('subObjectsTwo');
                 $cookies.remove('subObjectsThree');
-                $cookies.remove('subObjectsFour');
+                $cookies.remove('subObjectsFour');*/
                 $scope.logged=false;
                 window.location.href="#/login";
                 location.reload();
