@@ -1,6 +1,8 @@
 package com.company.invoicing.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.rkpunjal.sqlsafe.SQLInjectionSafe;
+import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,12 +17,16 @@ public class Currency{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long currency_id;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @XmlElement
     @Column(length = 50,unique = true)
     @NotNull
     @Size(min = 3, max = 50)
     private String name;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @XmlElement
     @Column(length = 3,unique = true)
     @NotNull

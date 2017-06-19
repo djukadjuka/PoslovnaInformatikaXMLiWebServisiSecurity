@@ -1,6 +1,8 @@
 package com.company.invoicing.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.rkpunjal.sqlsafe.SQLInjectionSafe;
+import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
 import java.util.List;
@@ -30,6 +32,8 @@ public class Business_partner{
     @JoinColumn(name="company_partner")
     private Company company_partner;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @XmlElement
     @NotNull
     private String type_of_bp;

@@ -1,6 +1,8 @@
 package com.company.invoicing.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.rkpunjal.sqlsafe.SQLInjectionSafe;
+import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,6 +24,8 @@ public class Vat_type{
     @OneToMany(mappedBy="vat_type")
     private List<Vat_rate> vat_rates;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @Column(length = 50,unique=true)
     @NotNull
     @Size(min = 3, max = 50)

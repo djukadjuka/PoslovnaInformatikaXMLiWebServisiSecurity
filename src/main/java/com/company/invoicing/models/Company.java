@@ -1,6 +1,8 @@
 package com.company.invoicing.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.rkpunjal.sqlsafe.SQLInjectionSafe;
+import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,6 +22,8 @@ public class Company{
     @XmlAttribute
     private long company_id;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @XmlElement
     @Column(length = 50,unique = true)
     @NotNull
@@ -31,16 +35,22 @@ public class Company{
     @Column(length = 10,unique = true)
     private int tin;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @XmlElement
     @Column(length = 50)
     @Size(max = 50)
     private String city;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @XmlElement
     @Column(length = 50)
     @Size(max = 50)
     private String adress;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @XmlElement
     @Column(length = 50)
     @Size(max = 50)
@@ -51,6 +61,8 @@ public class Company{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int company_number;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @XmlElement
     @NotNull
     @Column(length = 10,unique = true)

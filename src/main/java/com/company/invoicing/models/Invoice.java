@@ -1,6 +1,8 @@
 package com.company.invoicing.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.rkpunjal.sqlsafe.SQLInjectionSafe;
+import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -47,11 +49,15 @@ public class Invoice{
     @NotNull
     private double total_price;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @NotNull
     @Column(length = 10)
     @Size(min=10, max = 10)
     private String billing_account;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @NotNull
     @Column(length = 2)
     @Size(min=2, max = 2)

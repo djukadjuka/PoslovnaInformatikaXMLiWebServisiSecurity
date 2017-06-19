@@ -1,5 +1,8 @@
 package com.company.invoicing.models;
 
+import com.github.rkpunjal.sqlsafe.SQLInjectionSafe;
+import org.hibernate.validator.constraints.SafeHtml;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -13,10 +16,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long user_id;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @NotNull
     @Column(unique = true)
     private String username;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @NotNull
     private String password;
 

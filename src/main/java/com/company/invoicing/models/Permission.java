@@ -1,6 +1,8 @@
 package com.company.invoicing.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.rkpunjal.sqlsafe.SQLInjectionSafe;
+import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,6 +18,8 @@ public class Permission {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long permission_id;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @NotNull
     @Column(unique = true)
     private String name;

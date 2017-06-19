@@ -1,6 +1,8 @@
 package com.company.invoicing.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.rkpunjal.sqlsafe.SQLInjectionSafe;
+import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,6 +24,8 @@ public class Item_group{
     @NotNull
     private Vat_type vat_type;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @Column(length = 50, unique = true)
     @NotNull
     @Size(min = 3, max = 50)

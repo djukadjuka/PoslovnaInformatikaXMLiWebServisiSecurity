@@ -1,6 +1,8 @@
 package com.company.invoicing.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.rkpunjal.sqlsafe.SQLInjectionSafe;
+import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
 import java.util.List;
@@ -29,12 +31,16 @@ public class Item{
     @NotNull
     private Units_of_measurement units_of_measurement;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @XmlElement
     @Column(length = 50,unique = true)
     @NotNull
     @Size(min = 3, max = 50)
     private String name;
 
+    @SQLInjectionSafe
+    @SafeHtml
     @XmlElement
     @Column(length = 50)
     @Size( max = 50)
